@@ -1,0 +1,237 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- namespace必须指向Dao接口 -->
+<mapper namespace="com.bluemobi.www.data.dao.recruit.RecruitInformantInfoDao">
+
+	<resultMap id="colomnResult" type="com.bluemobi.www.data.model.recruit.RecruitInformantInfo">
+		<id property="id" column="id" />
+		<result property="informantsId" column="informantsId" />
+		<result property="beInformantsId" column="beInformantsId" />
+		<result property="recruitId" column="recruitId" />
+		<result property="typeId" column="typeId" />
+		<result property="content" column="content" />
+		<result property="createDate" column="createDate" />
+		<result property="status" column="status" />
+		<association property="informantsInfo"
+			select="com.bluemobi.www.data.dao.member.MemberInfoDao.selectById"
+			column="informantsId"></association>
+		<association property="beInformantsInfo"
+			select="com.bluemobi.www.data.dao.member.MemberInfoDao.selectById"
+			column="beInformantsId"></association>
+		<association property="recruitInfo"
+			select="com.bluemobi.www.data.dao.recruit.RecruitInfoDao.selectById"
+			column="recruitId"></association>
+		<association property="informantType"
+			select="com.bluemobi.www.data.dao.recruit.RecruitInformantTypeDao.selectById"
+			column="typeId"></association>
+	</resultMap>
+	<!-- 动态sql -->
+	<sql id="colomnResult">
+		<![CDATA[
+	     id,
+	     informantsId,
+	     beInformantsId,
+	     recruitId,
+	     typeId,
+	     content,
+	     DATE_FORMAT(createDate,'%Y-%m-%d %H:%i:%S') as createDate,
+	     status
+	 ]]>
+	</sql>
+	<insert id="insert">
+	   insert into recruit_informant_info  
+	   <trim prefix="(" suffix=")" suffixOverrides=",">
+			     <if test="id!=null">id,</if>
+			     <if test="informantsId!=null">informantsId,</if>
+			     <if test="beInformantsId!=null">beInformantsId,</if>
+			     <if test="recruitId!=null">recruitId,</if>
+			     <if test="typeId!=null">typeId,</if>
+			     <if test="content!=null">content,</if>
+			     <if test="createDate!=null">createDate,</if>
+			     <if test="status!=null">status,</if>
+		</trim>
+	   	<trim prefix="values(" suffix=")" suffixOverrides=",">
+			     <if test="id!=null">#{id},</if>
+			     <if test="informantsId!=null">#{informantsId},</if>
+			     <if test="beInformantsId!=null">#{beInformantsId},</if>
+			     <if test="recruitId!=null">#{recruitId},</if>
+			     <if test="typeId!=null">#{typeId},</if>
+			     <if test="content!=null">#{content},</if>
+			     <if test="createDate!=null">#{createDate},</if>
+			     <if test="status!=null">#{status},</if>
+		</trim>
+	</insert>
+
+	<update id="update">
+	   update recruit_informant_info 
+	   <set>
+			     <if test="id!=null">id=#{id},</if>
+			     <if test="informantsId!=null">informantsId=#{informantsId},</if>
+			     <if test="beInformantsId!=null">beInformantsId=#{beInformantsId},</if>
+			     <if test="recruitId!=null">recruitId=#{recruitId},</if>
+			     <if test="typeId!=null">typeId=#{typeId},</if>
+			     <if test="content!=null">content=#{content},</if>
+			     <if test="createDate!=null">createDate=#{createDate},</if>
+			     <if test="status!=null">status=#{status},</if>
+		</set>
+		where 
+	   		 id=#{id} 
+	</update>
+
+	<delete id="delete">
+	   delete from
+	     recruit_informant_info 
+	   where 
+	    id=#{id} 
+	</delete>
+
+	<select id="selectEntity" resultMap="colomnResult">
+	   select 
+	<include refid="colomnResult" /> 
+	   from recruit_informant_info
+	  <where>
+				<if test=" id != null and id != '' ">
+					and id=#{id} 
+				</if>
+				<if test=" informantsId != null and informantsId != '' ">
+					and informantsId=#{informantsId} 
+				</if>
+				<if test=" beInformantsId != null and beInformantsId != '' ">
+					and beInformantsId=#{beInformantsId} 
+				</if>
+				<if test=" recruitId != null and recruitId != '' ">
+					and recruitId=#{recruitId} 
+				</if>
+				<if test=" typeId != null and typeId != '' ">
+					and typeId=#{typeId} 
+				</if>
+				<if test=" content != null and content != '' ">
+					and content=#{content} 
+				</if>
+				<if test=" createDate != null and createDate != '' ">
+					and createDate=#{createDate} 
+				</if>
+				<if test=" status != null and status != '' ">
+					and status=#{status} 
+				</if>
+		</where>
+	</select>
+	
+	<!-- 根据条件信息 -->
+	<select id="selectAll"  resultMap="colomnResult">
+		select
+		<include refid="colomnResult" /> 
+		<![CDATA[
+			from recruit_informant_info
+		]]>
+		<where>
+				<if test=" id != null and id != '' ">
+					and id=#{id} 
+				</if>
+				<if test=" informantsId != null and informantsId != '' ">
+					and informantsId=#{informantsId} 
+				</if>
+				<if test=" beInformantsId != null and beInformantsId != '' ">
+					and beInformantsId=#{beInformantsId} 
+				</if>
+				<if test=" recruitId != null and recruitId != '' ">
+					and recruitId=#{recruitId} 
+				</if>
+				<if test=" typeId != null and typeId != '' ">
+					and typeId=#{typeId} 
+				</if>
+				<if test=" content != null and content != '' ">
+					and content=#{content} 
+				</if>
+				<if test=" createDate != null and createDate != '' ">
+					and createDate=#{createDate} 
+				</if>
+				<if test=" status != null and status != '' ">
+					and status=#{status} 
+				</if>
+		</where>
+		<if test="sort != null">
+				order by ${sort} ${order}
+		</if>
+	</select>
+	<!-- 根据条件查询数量 -->
+	<select id="selectCount"  resultType="int">
+
+		select count(id) from recruit_informant_info
+		<where>
+				<if test=" id != null and id != '' ">
+					and id=#{id} 
+				</if>
+				<if test=" informantsId != null and informantsId != '' ">
+					and informantsId=#{informantsId} 
+				</if>
+				<if test=" beInformantsId != null and beInformantsId != '' ">
+					and beInformantsId=#{beInformantsId} 
+				</if>
+				<if test=" recruitId != null and recruitId != '' ">
+					and recruitId=#{recruitId} 
+				</if>
+				<if test=" typeId != null and typeId != '' ">
+					and typeId=#{typeId} 
+				</if>
+				<if test=" content != null and content != '' ">
+					and content=#{content} 
+				</if>
+				<if test=" createDate != null and createDate != '' ">
+					and createDate=#{createDate} 
+				</if>
+				<if test=" status != null and status != '' ">
+					and status=#{status} 
+				</if>
+		</where>
+	</select>
+	<!-- 根据主键查询信息 -->
+	<select id="selectById"  resultMap="colomnResult">
+		select
+		<include refid="colomnResult" /> 
+		<![CDATA[
+			from recruit_informant_info where 
+			
+			   	 id=#{id} 
+		]]>
+		
+	</select>
+	
+	<!-- 批量删除 -->
+	<select id="selectByIds" parameterType="java.util.List" resultMap="colomnResult">
+		select
+		<include refid="colomnResult" /> 
+		 from recruit_informant_info where id in
+		<foreach item="idList" index="index" collection="list" open="(" separator="," close=")">
+  			#{idList}
+ 		</foreach>
+	</select>
+		
+	<!-- 批量删除 -->
+	<delete id="batchDelete" parameterType="java.util.List">
+		delete from recruit_informant_info where id in
+		<foreach item="idList" index="index" collection="list" open="(" separator="," close=")">
+  			#{idList}
+ 		</foreach>
+	</delete>
+	
+	<!-- 批量修改 -->
+	<update id="batchUpdate" parameterType="java.util.HashMap">
+		update recruit_informant_info
+		<set>
+			     <if test="id!=null">id=#{id},</if>
+			     <if test="informantsId!=null">informantsId=#{informantsId},</if>
+			     <if test="beInformantsId!=null">beInformantsId=#{beInformantsId},</if>
+			     <if test="recruitId!=null">recruitId=#{recruitId},</if>
+			     <if test="typeId!=null">typeId=#{typeId},</if>
+			     <if test="content!=null">content=#{content},</if>
+			     <if test="createDate!=null">createDate=#{createDate},</if>
+			     <if test="status!=null">status=#{status},</if>
+		</set>
+		where id in
+		<foreach item="idList" index="index" collection="list" open="(" separator="," close=")">
+  			#{idList}
+ 		</foreach>
+	</update>
+</mapper> 

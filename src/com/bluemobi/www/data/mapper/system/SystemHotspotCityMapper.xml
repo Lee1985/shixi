@@ -1,0 +1,223 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- namespace必须指向Dao接口 -->
+<mapper namespace="com.bluemobi.www.data.dao.system.SystemHotspotCityDao">
+	
+	<resultMap id="colomnResult" type="com.bluemobi.www.data.model.system.SystemHotspotCity">
+		<id property="id" column="id" />
+		<result property="cityName" column="cityName" />
+		<result property="orderList" column="orderList" />
+		<result property="spell" column="spell" />
+		<result property="zipcode" column="zipcode" />
+		<result property="status" column="status" />
+		<result property="createDate" column="createDate" />
+		<result property="createUser" column="createUser" />
+	</resultMap>
+	<!-- 动态sql -->
+	<sql id="colomnResult">
+		<![CDATA[
+	     id,
+	     cityName,
+	     orderList,
+	     spell,
+	     zipcode,
+	     status,
+	     DATE_FORMAT(createDate,'%Y-%m-%d %H:%i:%S') as createDate,
+	     createUser
+	 ]]>
+	</sql>
+	<insert id="insert">
+	   insert into system_hotspot_city  
+	   <trim prefix="(" suffix=")" suffixOverrides=",">
+			     <if test="id!=null">id,</if>
+			     <if test="cityName!=null">cityName,</if>
+			     <if test="orderList!=null">orderList,</if>
+			     <if test="spell!=null">spell,</if>
+			     <if test="zipcode!=null">zipcode,</if>
+			     <if test="status!=null">status,</if>
+			     <if test="createDate!=null">createDate,</if>
+			     <if test="createUser!=null">createUser,</if>
+		</trim>
+	   	<trim prefix="values(" suffix=")" suffixOverrides=",">
+			     <if test="id!=null">#{id},</if>
+			     <if test="cityName!=null">#{cityName},</if>
+			     <if test="orderList!=null">#{orderList},</if>
+			     <if test="spell!=null">#{spell},</if>
+			     <if test="zipcode!=null">#{zipcode},</if>
+			     <if test="status!=null">#{status},</if>
+			     <if test="createDate!=null">#{createDate},</if>
+			     <if test="createUser!=null">#{createUser},</if>
+		</trim>
+	</insert>
+
+	<update id="update">
+	   update system_hotspot_city 
+	   <set>
+			     <if test="id!=null">id=#{id},</if>
+			     <if test="cityName!=null">cityName=#{cityName},</if>
+			     <if test="orderList!=null">orderList=#{orderList},</if>
+			     <if test="spell!=null">spell=#{spell},</if>
+			     <if test="zipcode!=null">zipcode=#{zipcode},</if>
+			     <if test="status!=null">status=#{status},</if>
+			     <if test="createDate!=null">createDate=#{createDate},</if>
+			     <if test="createUser!=null">createUser=#{createUser},</if>
+		</set>
+		where 
+	   		 id=#{id} 
+	</update>
+
+	<delete id="delete">
+	   delete from
+	     system_hotspot_city 
+	   where 
+	    id=#{id} 
+	</delete>
+
+	<select id="selectEntity" resultMap="colomnResult">
+	   select 
+	<include refid="colomnResult" /> 
+	   from system_hotspot_city
+	  <where>
+				<if test=" id != null and id != '' ">
+					and id=#{id} 
+				</if>
+				<if test=" cityName != null and cityName != '' ">
+					and cityName=#{cityName} 
+				</if>
+				<if test=" orderList != null and orderList != '' ">
+					and orderList=#{orderList} 
+				</if>
+				<if test=" spell != null and spell != '' ">
+					and spell=#{spell} 
+				</if>
+				<if test=" zipcode != null and zipcode != '' ">
+					and zipcode=#{zipcode} 
+				</if>
+				<if test=" status != null and status != '' ">
+					and status=#{status} 
+				</if>
+				<if test=" createDate != null and createDate != '' ">
+					and createDate=#{createDate} 
+				</if>
+				<if test=" createUser != null and createUser != '' ">
+					and createUser=#{createUser} 
+				</if>
+		</where>
+	</select>
+	
+	<!-- 根据条件信息 -->
+	<select id="selectAll"  resultMap="colomnResult">
+		select
+		<include refid="colomnResult" /> 
+		<![CDATA[
+			from system_hotspot_city
+		]]>
+		<where>
+				<if test=" id != null and id != '' ">
+					and id=#{id} 
+				</if>
+				<if test=" cityName != null and cityName != '' ">
+					and cityName=#{cityName} 
+				</if>
+				<if test=" orderList != null and orderList != '' ">
+					and orderList=#{orderList} 
+				</if>
+				<if test=" spell != null and spell != '' ">
+					and spell=#{spell} 
+				</if>
+				<if test=" zipcode != null and zipcode != '' ">
+					and zipcode=#{zipcode} 
+				</if>
+				<if test=" status != null and status != '' ">
+					and status=#{status} 
+				</if>
+				<if test=" createDate != null and createDate != '' ">
+					and createDate=#{createDate} 
+				</if>
+				<if test=" createUser != null and createUser != '' ">
+					and createUser=#{createUser} 
+				</if>
+		</where>
+		<if test="sort != null">
+				order by ${sort} ${order}
+		</if>
+	</select>
+	<!-- 根据条件查询数量 -->
+	<select id="selectCount"  resultType="int">
+
+		select count(id) from system_hotspot_city
+		<where>
+				<if test=" id != null and id != '' ">
+					and id=#{id} 
+				</if>
+				<if test=" cityName != null and cityName != '' ">
+					and cityName=#{cityName} 
+				</if>
+				<if test=" orderList != null and orderList != '' ">
+					and orderList=#{orderList} 
+				</if>
+				<if test=" spell != null and spell != '' ">
+					and spell=#{spell} 
+				</if>
+				<if test=" zipcode != null and zipcode != '' ">
+					and zipcode=#{zipcode} 
+				</if>
+				<if test=" status != null and status != '' ">
+					and status=#{status} 
+				</if>
+				<if test=" createDate != null and createDate != '' ">
+					and createDate=#{createDate} 
+				</if>
+				<if test=" createUser != null and createUser != '' ">
+					and createUser=#{createUser} 
+				</if>
+		</where>
+	</select>
+	<!-- 根据主键查询信息 -->
+	<select id="selectById"  resultMap="colomnResult">
+		select
+		<include refid="colomnResult" /> 
+		<![CDATA[
+			from system_hotspot_city where			
+			   	 id=#{id} 
+		]]>		
+	</select>
+	
+	<!-- 批量删除 -->
+	<select id="selectByIds" parameterType="java.util.List" resultMap="colomnResult">
+		select
+		<include refid="colomnResult" /> 
+		 from system_hotspot_city where id in
+		<foreach item="idList" index="index" collection="list" open="(" separator="," close=")">
+  			#{idList}
+ 		</foreach>
+	</select>
+		
+	<!-- 批量删除 -->
+	<delete id="batchDelete" parameterType="java.util.List">
+		delete from system_hotspot_city where id in
+		<foreach item="idList" index="index" collection="list" open="(" separator="," close=")">
+  			#{idList}
+ 		</foreach>
+	</delete>
+	
+	<!-- 批量修改 -->
+	<update id="batchUpdate" parameterType="java.util.HashMap">
+		update system_hotspot_city
+		<set>
+			     <if test="id!=null">id=#{id},</if>
+			     <if test="cityName!=null">cityName=#{cityName},</if>
+			     <if test="orderList!=null">orderList=#{orderList},</if>
+			     <if test="spell!=null">spell=#{spell},</if>
+			     <if test="zipcode!=null">zipcode=#{zipcode},</if>
+			     <if test="status!=null">status=#{status},</if>
+			     <if test="createDate!=null">createDate=#{createDate},</if>
+			     <if test="createUser!=null">createUser=#{createUser},</if>
+		</set>
+		where id in
+		<foreach item="idList" index="index" collection="list" open="(" separator="," close=")">
+  			#{idList}
+ 		</foreach>
+	</update>
+</mapper> 

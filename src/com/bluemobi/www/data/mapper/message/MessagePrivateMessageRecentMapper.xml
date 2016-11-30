@@ -1,0 +1,307 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- namespace必须指向Dao接口 -->
+<mapper namespace="com.bluemobi.www.data.dao.message.MessagePrivateMessageRecentDao">
+
+	<resultMap id="colomnResult" type="com.bluemobi.www.data.model.message.MessagePrivateMessageRecent">
+		<id property="id" column="id" />
+		<result property="memberId" column="memberId" />
+		<result property="rencentContactId" column="rencentContactId" />
+		<result property="editTime" column="editTime" />
+		<result property="readStatus" column="readStatus" />
+		<result property="type" column="type" />
+		<result property="recentContent" column="recentContent" />		
+		<result property="unreadMessageCount" column="unreadMessageCount" />
+		<result property="recentRoleId" column="recentRoleId" />
+	</resultMap>
+	<!-- 动态sql -->
+	<sql id="colomnResult">
+		<![CDATA[
+	     id,
+	     memberId,
+	     rencentContactId,
+	     editTime,
+	     readStatus,
+	     type,
+	     recentContent,
+	     unreadMessageCount,
+	     recentRoleId
+	 ]]>
+	</sql>
+	<insert id="insert">
+	   insert into message_private_message_recent  
+	   <trim prefix="(" suffix=")" suffixOverrides=",">
+			     <if test="id!=null">id,</if>
+			     <if test="memberId!=null">memberId,</if>
+			     <if test="rencentContactId!=null">rencentContactId,</if>
+			     <if test="editTime!=null">editTime,</if>
+			     <if test="readStatus!=null">readStatus,</if>
+			     <if test="type!=null">type,</if>
+			     <if test="recentContent!=null">recentContent,</if>
+			     <if test="unreadMessageCount!=null">unreadMessageCount,</if>
+			     <if test="recentRoleId!=null">recentRoleId,</if>
+		</trim>
+	   	<trim prefix="values(" suffix=")" suffixOverrides=",">
+			     <if test="id!=null">#{id},</if>
+			     <if test="memberId!=null">#{memberId},</if>
+			     <if test="rencentContactId!=null">#{rencentContactId},</if>
+			     <if test="editTime!=null">#{editTime},</if>
+			     <if test="readStatus!=null">#{readStatus},</if>
+			     <if test="type!=null">#{type},</if>
+			     <if test="recentContent!=null">#{recentContent},</if>
+			     <if test="unreadMessageCount!=null">#{unreadMessageCount},</if>
+			     <if test="recentRoleId!=null">#{recentRoleId},</if>
+		</trim>
+	</insert>
+
+	<update id="update">
+	   update message_private_message_recent 
+	   <set>
+			     <if test="id!=null">id=#{id},</if>
+			     <if test="memberId!=null">memberId=#{memberId},</if>
+			     <if test="rencentContactId!=null">rencentContactId=#{rencentContactId},</if>
+			     <if test="editTime!=null">editTime=#{editTime},</if>
+			     <if test="readStatus!=null">readStatus=#{readStatus},</if>
+			     <if test="type!=null">type=#{type},</if>
+			     <if test="recentContent!=null">recentContent=#{recentContent},</if>
+			     <if test="unreadMessageCount!=null">unreadMessageCount=#{unreadMessageCount},</if>
+			     <if test="recentRoleId!=null">recentRoleId=#{recentRoleId},</if>			     
+		</set>
+		where 
+	   		 id=#{id} 
+	</update>
+
+	<delete id="delete">
+	   delete from
+	     message_private_message_recent 
+	   where 
+	    id=#{id} 
+	</delete>
+
+	<select id="selectEntity" resultMap="colomnResult">
+	   select 
+	<include refid="colomnResult" /> 
+	   from message_private_message_recent
+	  <where>
+				<if test=" id != null and id != '' ">
+					and id=#{id} 
+				</if>
+				<if test=" memberId != null and memberId != '' ">
+					and memberId=#{memberId} 
+				</if>
+				<if test=" rencentContactId != null and rencentContactId != '' ">
+					and rencentContactId=#{rencentContactId} 
+				</if>
+				<if test=" editTime != null and editTime != '' ">
+					and editTime=#{editTime} 
+				</if>
+				<if test=" readStatus != null and readStatus != '' ">
+					and readStatus=#{readStatus} 
+				</if>
+				<if test=" type != null and type != '' ">
+					and type=#{type} 
+				</if>
+				<if test=" recentContent != null and recentContent != '' ">
+					and recentContent=#{recentContent} 
+				</if>
+				<if test=" unreadMessageCount != null and unreadMessageCount != '' ">
+					and unreadMessageCount=#{unreadMessageCount} 
+				</if>
+				<if test=" unreadMessageCount != null and unreadMessageCount != '' ">
+					and recentRoleId=#{recentRoleId} 
+				</if>		
+		</where>
+	</select>
+	
+	<!-- 根据条件信息 -->
+	<select id="selectAll"  resultMap="colomnResult">
+		select
+		<include refid="colomnResult" /> 
+		<![CDATA[
+			from message_private_message_recent
+		]]>
+		<where>
+				<if test=" id != null and id != '' ">
+					and id=#{id} 
+				</if>
+				<if test=" memberId != null and memberId != '' ">
+					and memberId=#{memberId} 
+				</if>
+				<if test=" rencentContactId != null and rencentContactId != '' ">
+					and rencentContactId=#{rencentContactId} 
+				</if>
+				<if test=" editTime != null and editTime != '' ">
+					and editTime=#{editTime} 
+				</if>
+				<if test=" readStatus != null and readStatus != '' ">
+					and readStatus=#{readStatus} 
+				</if>
+				<if test=" type != null and type != '' ">
+					and type=#{type} 
+				</if>
+				<if test=" recentContent != null and recentContent != '' ">
+					and recentContent=#{recentContent} 
+				</if>
+				<if test=" unreadMessageCount != null and unreadMessageCount != '' ">
+					and unreadMessageCount=#{unreadMessageCount} 
+				</if>
+				<if test=" recentRoleId != null and recentRoleId != '' ">
+					and recentRoleId=#{recentRoleId} 
+				</if>				
+		</where>
+		<if test="sort != null">
+				order by ${sort} ${order}
+		</if>
+	</select>
+		
+	<select id="selectByType"  resultMap="colomnResult">
+		select * from (
+		select <include refid="colomnResult" /> from message_private_message_recent where memberId=#{memberId}
+		union all
+		select <include refid="colomnResult" /> from message_private_message_recent where rencentContactId=#{memberId}) t		
+		<!-- 官方私信 -->
+		<if test="type != null and type == '1'.toString()">
+			where t.memberId in (select id from member_info where identityStatus = '1' and status = '1')
+		</if>
+		<!-- 私人私信 -->
+		<if test="type != null and type == '2'.toString()">
+			<![CDATA[
+				where t.memberId in (select id from member_info where identityStatus <> '1' and realNameStatus = '1' and status = '1')
+			]]>					 											
+		</if>
+	</select>
+	
+	
+	<!-- 根据条件查询数量 -->
+	<select id="selectCount"  resultType="int">
+
+		select count(id) from message_private_message_recent
+		<where>
+				<if test=" id != null and id != '' ">
+					and id=#{id} 
+				</if>
+				<if test=" memberId != null and memberId != '' ">
+					and memberId=#{memberId} 
+				</if>
+				<if test=" rencentContactId != null and rencentContactId != '' ">
+					and rencentContactId=#{rencentContactId} 
+				</if>
+				<if test=" editTime != null and editTime != '' ">
+					and editTime=#{editTime} 
+				</if>
+				<if test=" readStatus != null and readStatus != '' ">
+					and readStatus=#{readStatus} 
+				</if>
+				<if test=" type != null and type != '' ">
+					and type=#{type} 
+				</if>
+				<if test=" recentContent != null and recentContent != '' ">
+					and recentContent=#{recentContent} 
+				</if>
+				<if test=" unreadMessageCount != null and unreadMessageCount != '' ">
+					and unreadMessageCount=#{unreadMessageCount} 
+				</if>	
+				<if test=" recentRoleId != null and recentRoleId != '' ">
+					and recentRoleId=#{recentRoleId} 
+				</if>			
+		</where>
+	</select>
+	<!-- 根据主键查询信息 -->
+	<select id="selectById"  resultMap="colomnResult">
+		select
+		<include refid="colomnResult" /> 
+		<![CDATA[
+			from message_private_message_recent where 
+			
+			   	 id=#{id} 
+		]]>
+		
+	</select>
+	
+	<!-- 批量删除 -->
+	<select id="selectByIds" parameterType="java.util.List" resultMap="colomnResult">
+		select
+		<include refid="colomnResult" /> 
+		 from message_private_message_recent where id in
+		<foreach item="idList" index="index" collection="list" open="(" separator="," close=")">
+  			#{idList}
+ 		</foreach>
+	</select>
+		
+	<!-- 批量删除 -->
+	<delete id="batchDelete" parameterType="java.util.List">
+		delete from message_private_message_recent where id in
+		<foreach item="idList" index="index" collection="list" open="(" separator="," close=")">
+  			#{idList}
+ 		</foreach>
+	</delete>
+	
+	<!-- 批量修改 -->
+	<update id="batchUpdate" parameterType="java.util.HashMap">
+		update message_private_message_recent
+		<set>
+			     <if test="id!=null">id=#{id},</if>
+			     <if test="memberId!=null">memberId=#{memberId},</if>
+			     <if test="rencentContactId!=null">rencentContactId=#{rencentContactId},</if>
+			     <if test="editTime!=null">editTime=#{editTime},</if>
+			     <if test="readStatus!=null">readStatus=#{readStatus},</if>
+			     <if test="type!=null">type=#{type},</if>
+			     <if test="recentContent!=null">recentContent=#{recentContent},</if>
+			     <if test="unreadMessageCount!=null">unreadMessageCount=#{unreadMessageCount},</if>
+			     <if test="recentRoleId!=null">recentRoleId=#{recentRoleId},</if>			     
+		</set>
+		where id in
+		<foreach item="idList" index="index" collection="list" open="(" separator="," close=")">
+  			#{idList}
+ 		</foreach>
+	</update>
+	
+	<!-- 后台私信管理 -->	
+	<select id="selectPrivateMessageRecord" resultMap="colomnResult">
+		select
+			a.memberId,
+			b.nickname,
+			count(a.memberId) as contactNumber,
+			max(a.editTime) as recentContactDate,
+			a.type
+		from
+			message_private_message_recent a left JOIN
+			member_info b on a.memberId = b.id			
+		<where>
+			<if test="nickname != null and nickname != ''">
+				and b.nickname like concat('%','${nickname}','%' )
+			</if>
+		</where>		
+		group by a.memberId				
+	</select>	
+		
+	<!-- 根据条件查询数量 -->
+	<select id="selectPrivateMessageRecordCount"  resultType="int">
+		select count(*) 
+		  from message_private_letter a left join
+		  member_info b on a.memberId = b.id
+		<where>
+			<if test="nickname != null and nickname != ''">
+				and b.nickname like concat('%','${nickname}','%' )
+			</if>
+		</where>
+	</select>
+	
+	<!-- 查询联系人 -->
+	<select id="selectRecentContactRecord" resultMap="colomnResult">
+		SELECT
+			a.memberId,
+			a.rencentContactId,
+  			b.nickname,
+			a.recentContent,
+  			a.editTime as recentContactDate
+		  FROM
+			message_private_message_recent a left join member_info b on a.rencentContactId=b.id
+		  WHERE
+			memberId = #{memberId}
+			<if test="nickname != null and nickname != ''">
+				and b.nickname like concat('%','${nickname}','%' )
+			</if>
+	</select>
+</mapper> 

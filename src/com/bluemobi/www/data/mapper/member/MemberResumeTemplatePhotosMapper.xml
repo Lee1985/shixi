@@ -1,0 +1,304 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- namespace必须指向Dao接口 -->
+<mapper namespace="com.bluemobi.www.data.dao.member.MemberResumeTemplatePhotosDao">
+
+	<resultMap id="colomnResult" type="com.bluemobi.www.data.model.member.MemberResumeTemplatePhotos">
+		<id property="id" column="id" />
+		<result property="title" column="title" />
+		<result property="resumeId" column="resumeId" />
+		<result property="imgUuid1" column="imgUuid1" />
+		<result property="imgUuid2" column="imgUuid2" />
+		<result property="imgUuid3" column="imgUuid3" />
+		<result property="imgUuid4" column="imgUuid4" />
+		<result property="imgUuid5" column="imgUuid5" />
+		<result property="imgUuidAll" column="imgUuidAll" />
+		<result property="width" column="width" />
+		<result property="height" column="height" />
+		<result property="createDate" column="createDate" />
+		
+		<association property="pictureInfo1"
+			select="com.bluemobi.www.data.dao.system.SystemPictureInfoDao.selectEntityByUuid"
+			column="{uuid=imgUuid1}"></association>
+		<association property="pictureInfo2"
+			select="com.bluemobi.www.data.dao.system.SystemPictureInfoDao.selectEntityByUuid"
+			column="{uuid=imgUuid2}"></association>
+		<association property="pictureInfo3"
+			select="com.bluemobi.www.data.dao.system.SystemPictureInfoDao.selectEntityByUuid"
+			column="{uuid=imgUuid3}"></association>
+		<association property="pictureInfo4"
+			select="com.bluemobi.www.data.dao.system.SystemPictureInfoDao.selectEntityByUuid"
+			column="{uuid=imgUuid4}"></association>
+		<association property="pictureInfo5"
+			select="com.bluemobi.www.data.dao.system.SystemPictureInfoDao.selectEntityByUuid"
+			column="{uuid=imgUuid5}"></association>
+		<association property="pictureInfoAll"
+			select="com.bluemobi.www.data.dao.system.SystemPictureInfoDao.selectEntityByUuid"
+			column="{uuid=imgUuidAll}"></association>
+	</resultMap>
+	<!-- 动态sql -->
+	<sql id="colomnResult">
+		<![CDATA[
+	     id,
+	     title,
+	     resumeId,
+	     imgUuid1,
+	     imgUuid2,
+	     imgUuid3,
+	     imgUuid4,
+	     imgUuid5,
+	     imgUuidAll,
+	     width,
+	     height,
+	     DATE_FORMAT(createDate,'%Y-%m-%d %H:%i:%S') as createDate
+	 ]]>
+	</sql>
+	<insert id="insert">
+	   insert into member_resume_template_photos  
+	   <trim prefix="(" suffix=")" suffixOverrides=",">
+			     <if test="id!=null">id,</if>
+			     <if test="title!=null">title,</if>
+			     <if test="resumeId!=null">resumeId,</if>
+			     <if test="imgUuid1!=null">imgUuid1,</if>
+			     <if test="imgUuid2!=null">imgUuid2,</if>
+			     <if test="imgUuid3!=null">imgUuid3,</if>
+			     <if test="imgUuid4!=null">imgUuid4,</if>
+			     <if test="imgUuid5!=null">imgUuid5,</if>
+			     <if test="imgUuidAll!=null">imgUuidAll,</if>
+			     <if test="width!=null">width,</if>
+			     <if test="height!=null">height,</if>
+			     <if test="createDate!=null">createDate,</if>
+		</trim>
+	   	<trim prefix="values(" suffix=")" suffixOverrides=",">
+			     <if test="id!=null">#{id},</if>
+			     <if test="title!=null">#{title},</if>
+			     <if test="resumeId!=null">#{resumeId},</if>
+			     <if test="imgUuid1!=null">#{imgUuid1},</if>
+			     <if test="imgUuid2!=null">#{imgUuid2},</if>
+			     <if test="imgUuid3!=null">#{imgUuid3},</if>
+			     <if test="imgUuid4!=null">#{imgUuid4},</if>
+			     <if test="imgUuid5!=null">#{imgUuid5},</if>
+			     <if test="imgUuidAll!=null">#{imgUuidAll},</if>
+			     <if test="width!=null">#{width},</if>
+			     <if test="height!=null">#{height},</if>
+			     <if test="createDate!=null">#{createDate},</if>
+		</trim>
+	</insert>
+
+	<update id="update">
+	   update member_resume_template_photos 
+	   <set>
+			     <if test="id!=null">id=#{id},</if>
+			     <if test="title!=null">title=#{title},</if>
+			     <if test="resumeId!=null">resumeId=#{resumeId},</if>
+			     <if test="imgUuid1!=null">imgUuid1=#{imgUuid1},</if>
+			     <if test="imgUuid2!=null">imgUuid2=#{imgUuid2},</if>
+			     <if test="imgUuid3!=null">imgUuid3=#{imgUuid3},</if>
+			     <if test="imgUuid4!=null">imgUuid4=#{imgUuid4},</if>
+			     <if test="imgUuid5!=null">imgUuid5=#{imgUuid5},</if>
+			     <if test="imgUuidAll!=null">imgUuidAll=#{imgUuidAll},</if>
+			     <if test="width!=null">width=#{width},</if>
+			     <if test="height!=null">height=#{height},</if>
+			     <if test="createDate!=null">createDate=#{createDate},</if>
+		</set>
+		where 
+	   		 id=#{id} 
+	</update>
+
+	<delete id="delete">
+	   delete from
+	     member_resume_template_photos 
+	   where 
+	    id=#{id} 
+	</delete>
+
+	<select id="selectEntity" resultMap="colomnResult">
+	   select 
+	<include refid="colomnResult" /> 
+	   from member_resume_template_photos
+	  <where>
+				<if test=" id != null and id != '' ">
+					and id=#{id} 
+				</if>
+				<if test=" title != null and title != '' ">
+					and title=#{title} 
+				</if>
+				<if test=" resumeId != null and resumeId != '' ">
+					and resumeId=#{resumeId} 
+				</if>
+				<if test=" imgUuid1 != null and imgUuid1 != '' ">
+					and imgUuid1=#{imgUuid1} 
+				</if>
+				<if test=" imgUuid2 != null and imgUuid2 != '' ">
+					and imgUuid2=#{imgUuid2} 
+				</if>
+				<if test=" imgUuid3 != null and imgUuid3 != '' ">
+					and imgUuid3=#{imgUuid3} 
+				</if>
+				<if test=" imgUuid4 != null and imgUuid4 != '' ">
+					and imgUuid4=#{imgUuid4} 
+				</if>
+				<if test=" imgUuid5 != null and imgUuid5 != '' ">
+					and imgUuid5=#{imgUuid5} 
+				</if>
+				<if test=" imgUuidAll != null and imgUuidAll != '' ">
+					and imgUuidAll=#{imgUuidAll} 
+				</if>
+				<if test=" width != null and width != '' ">
+					and width=#{width} 
+				</if>
+				<if test=" height != null and height != '' ">
+					and height=#{height} 
+				</if>
+				<if test=" createDate != null and createDate != '' ">
+					and createDate=#{createDate} 
+				</if>
+		</where>
+	</select>
+	
+	<!-- 根据条件信息 -->
+	<select id="selectAll"  resultMap="colomnResult">
+		select
+		<include refid="colomnResult" /> 
+		<![CDATA[
+			from member_resume_template_photos
+		]]>
+		<where>
+				<if test=" id != null and id != '' ">
+					and id=#{id} 
+				</if>
+				<if test=" title != null and title != '' ">
+					and title=#{title} 
+				</if>
+				<if test=" resumeId != null and resumeId != '' ">
+					and resumeId=#{resumeId} 
+				</if>
+				<if test=" imgUuid1 != null and imgUuid1 != '' ">
+					and imgUuid1=#{imgUuid1} 
+				</if>
+				<if test=" imgUuid2 != null and imgUuid2 != '' ">
+					and imgUuid2=#{imgUuid2} 
+				</if>
+				<if test=" imgUuid3 != null and imgUuid3 != '' ">
+					and imgUuid3=#{imgUuid3} 
+				</if>
+				<if test=" imgUuid4 != null and imgUuid4 != '' ">
+					and imgUuid4=#{imgUuid4} 
+				</if>
+				<if test=" imgUuid5 != null and imgUuid5 != '' ">
+					and imgUuid5=#{imgUuid5} 
+				</if>
+				<if test=" imgUuidAll != null and imgUuidAll != '' ">
+					and imgUuidAll=#{imgUuidAll} 
+				</if>
+				<if test=" width != null and width != '' ">
+					and width=#{width} 
+				</if>
+				<if test=" height != null and height != '' ">
+					and height=#{height} 
+				</if>
+				<if test=" createDate != null and createDate != '' ">
+					and createDate=#{createDate} 
+				</if>
+		</where>
+		<if test="sort != null">
+				order by ${sort} ${order}
+		</if>
+	</select>
+	<!-- 根据条件查询数量 -->
+	<select id="selectCount"  resultType="int">
+
+		select count(id) from member_resume_template_photos
+		<where>
+				<if test=" id != null and id != '' ">
+					and id=#{id} 
+				</if>
+				<if test=" title != null and title != '' ">
+					and title=#{title} 
+				</if>
+				<if test=" resumeId != null and resumeId != '' ">
+					and resumeId=#{resumeId} 
+				</if>
+				<if test=" imgUuid1 != null and imgUuid1 != '' ">
+					and imgUuid1=#{imgUuid1} 
+				</if>
+				<if test=" imgUuid2 != null and imgUuid2 != '' ">
+					and imgUuid2=#{imgUuid2} 
+				</if>
+				<if test=" imgUuid3 != null and imgUuid3 != '' ">
+					and imgUuid3=#{imgUuid3} 
+				</if>
+				<if test=" imgUuid4 != null and imgUuid4 != '' ">
+					and imgUuid4=#{imgUuid4} 
+				</if>
+				<if test=" imgUuid5 != null and imgUuid5 != '' ">
+					and imgUuid5=#{imgUuid5} 
+				</if>
+				<if test=" imgUuidAll != null and imgUuidAll != '' ">
+					and imgUuidAll=#{imgUuidAll} 
+				</if>
+				<if test=" width != null and width != '' ">
+					and width=#{width} 
+				</if>
+				<if test=" height != null and height != '' ">
+					and height=#{height} 
+				</if>
+				<if test=" createDate != null and createDate != '' ">
+					and createDate=#{createDate} 
+				</if>
+		</where>
+	</select>
+	<!-- 根据主键查询信息 -->
+	<select id="selectById"  resultMap="colomnResult">
+		select
+		<include refid="colomnResult" /> 
+		<![CDATA[
+			from member_resume_template_photos where 
+			
+			   	 id=#{id} 
+		]]>
+		
+	</select>
+	
+	<!-- 批量删除 -->
+	<select id="selectByIds" parameterType="java.util.List" resultMap="colomnResult">
+		select
+		<include refid="colomnResult" /> 
+		 from member_resume_template_photos where id in
+		<foreach item="idList" index="index" collection="list" open="(" separator="," close=")">
+  			#{idList}
+ 		</foreach>
+	</select>
+		
+	<!-- 批量删除 -->
+	<delete id="batchDelete" parameterType="java.util.List">
+		delete from member_resume_template_photos where id in
+		<foreach item="idList" index="index" collection="list" open="(" separator="," close=")">
+  			#{idList}
+ 		</foreach>
+	</delete>
+	
+	<!-- 批量修改 -->
+	<update id="batchUpdate" parameterType="java.util.HashMap">
+		update member_resume_template_photos
+		<set>
+			     <if test="id!=null">id=#{id},</if>
+			     <if test="title!=null">title=#{title},</if>
+			     <if test="resumeId!=null">resumeId=#{resumeId},</if>
+			     <if test="imgUuid1!=null">imgUuid1=#{imgUuid1},</if>
+			     <if test="imgUuid2!=null">imgUuid2=#{imgUuid2},</if>
+			     <if test="imgUuid3!=null">imgUuid3=#{imgUuid3},</if>
+			     <if test="imgUuid4!=null">imgUuid4=#{imgUuid4},</if>
+			     <if test="imgUuid5!=null">imgUuid5=#{imgUuid5},</if>
+			     <if test="imgUuidAll!=null">imgUuidAll=#{imgUuidAll},</if>
+			     <if test="width!=null">width=#{width},</if>
+			     <if test="height!=null">height=#{height},</if>
+			     <if test="createDate!=null">createDate=#{createDate},</if>
+		</set>
+		where id in
+		<foreach item="idList" index="index" collection="list" open="(" separator="," close=")">
+  			#{idList}
+ 		</foreach>
+	</update>
+</mapper> 

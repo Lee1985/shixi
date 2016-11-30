@@ -1,0 +1,538 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- namespace必须指向Dao接口 -->
+<mapper namespace="com.bluemobi.www.data.dao.recruit.RecruitInfoDao">
+
+	<resultMap id="colomnResult" type="com.bluemobi.www.data.model.recruit.RecruitInfo">
+		<id property="id" column="id" />
+		<result property="memberId" column="memberId" />
+		<result property="title" column="title" />
+		<result property="type" column="type" />
+		<result property="cityCode" column="cityCode" />
+		<result property="publishStatus" column="publishStatus" />
+		<result property="lableCode" column="lableCode" />
+		<result property="director" column="director" />
+		<result property="screenwriter" column="screenwriter" />
+		<result property="startDate" column="startDate" />
+		<result property="endDate" column="endDate" />
+		<result property="deadline" column="deadline" />
+		<result property="status" column="status" />
+		<result property="scriptOutline" column="scriptOutline" />
+		<result property="remark" column="remark" />
+		<result property="createDate" column="createDate" />
+		<result property="isDelete" column="isDelete" />
+		<result property="lableName" column="lableName" />
+		<result property="nickname" column="nickname" />
+		<result property="urlPath" column="urlPath" />
+		<result property="viewNum" column="viewNum" />
+		<result property="deadlineDate" column="deadlineDate" />
+		<result property="modify" column="modify" />
+		<result property="startDateStr" column="startDateStr" />
+		<result property="endDateStr" column="endDateStr" />
+		<result property="deadlineStr" column="deadlineStr" />
+		<association property="memberInfo"
+			select="com.bluemobi.www.data.dao.member.MemberInfoDao.selectById"
+			column="memberId"></association>
+		<association property="category"
+			select="com.bluemobi.www.data.dao.recruit.RecruitCategoryDao.selectById"
+			column="lableCode"></association>
+		<association property="city"
+			select="com.bluemobi.www.data.dao.system.SystemHotspotCityDao.selectById"
+			column="cityCode"></association>
+	</resultMap>
+	<!-- 动态sql -->
+	<sql id="colomnResult">
+		<![CDATA[
+	     id,
+	     memberId,
+	     title,
+	     type,
+	     cityCode,
+	     publishStatus,
+	     lableCode,
+	     director,
+	     screenwriter,
+	     DATE_FORMAT(startDate,'%Y-%m-%d') as startDate,
+	     DATE_FORMAT(endDate,'%Y-%m-%d') as endDate,
+	     DATE_FORMAT(deadline,'%Y-%m-%d') as deadline,
+	     status,
+	     scriptOutline,
+	     remark,
+	     DATE_FORMAT(createDate,'%Y-%m-%d %H:%i:%S') as createDate,
+	     isDelete,
+	     viewNum,
+	     deadline as deadlineDate,
+	     modify,
+	     DATE_FORMAT(startDate,'%Y年%m月%d日') as startDateStr,
+	     DATE_FORMAT(endDate,'%Y年%m月%d日') as endDateStr,
+	     DATE_FORMAT(deadline,'%Y年%m月%d日') as deadlineStr
+	 ]]>
+	</sql>
+	<insert id="insert">
+	   insert into recruit_info  
+	   <trim prefix="(" suffix=")" suffixOverrides=",">
+			     <if test="id!=null">id,</if>
+			     <if test="memberId!=null">memberId,</if>
+			     <if test="title!=null">title,</if>
+			     <if test="type!=null">type,</if>
+			     <if test="cityCode!=null">cityCode,</if>
+			     <if test="publishStatus!=null">publishStatus,</if>
+			     <if test="lableCode!=null">lableCode,</if>
+			     <if test="director!=null">director,</if>
+			     <if test="screenwriter!=null">screenwriter,</if>
+			     <if test="startDate!=null">startDate,</if>
+			     <if test="endDate!=null">endDate,</if>
+			     <if test="deadline!=null">deadline,</if>
+			     <if test="status!=null">status,</if>
+			     <if test="scriptOutline!=null">scriptOutline,</if>
+			     <if test="remark!=null">remark,</if>
+			     <if test="createDate!=null">createDate,</if>
+			     <if test="isDelete!=null">isDelete,</if>
+			     <if test="viewNum!=null">viewNum,</if>
+			     <if test="modify!=null">modify,</if>
+		</trim>
+	   	<trim prefix="values(" suffix=")" suffixOverrides=",">
+			     <if test="id!=null">#{id},</if>
+			     <if test="memberId!=null">#{memberId},</if>
+			     <if test="title!=null">#{title},</if>
+			     <if test="type!=null">#{type},</if>
+			     <if test="cityCode!=null">#{cityCode},</if>
+			     <if test="publishStatus!=null">#{publishStatus},</if>
+			     <if test="lableCode!=null">#{lableCode},</if>
+			     <if test="director!=null">#{director},</if>
+			     <if test="screenwriter!=null">#{screenwriter},</if>
+			     <if test="startDate!=null">#{startDate},</if>
+			     <if test="endDate!=null">#{endDate},</if>
+			     <if test="deadline!=null">#{deadline},</if>
+			     <if test="status!=null">#{status},</if>
+			     <if test="scriptOutline!=null">#{scriptOutline},</if>
+			     <if test="remark!=null">#{remark},</if>
+			     <if test="createDate!=null">#{createDate},</if>
+			     <if test="isDelete!=null">#{isDelete},</if>
+			     <if test="viewNum!=null">#{viewNum},</if>
+			     <if test="modify!=null">#{modify},</if>
+		</trim>
+	</insert>
+
+	<update id="update">
+	   update recruit_info 
+	   <set>
+			     <if test="id!=null">id=#{id},</if>
+			     <if test="memberId!=null">memberId=#{memberId},</if>
+			     <if test="title!=null">title=#{title},</if>
+			     <if test="type!=null">type=#{type},</if>
+			     <if test="cityCode!=null">cityCode=#{cityCode},</if>
+			     <if test="publishStatus!=null">publishStatus=#{publishStatus},</if>
+			     <if test="lableCode!=null">lableCode=#{lableCode},</if>
+			     <if test="director!=null">director=#{director},</if>
+			     <if test="screenwriter!=null">screenwriter=#{screenwriter},</if>
+			     <if test="startDate!=null">startDate=#{startDate},</if>
+			     <if test="endDate!=null">endDate=#{endDate},</if>
+			     <if test="deadline!=null">deadline=#{deadline},</if>
+			     <if test="status!=null">status=#{status},</if>
+			     <if test="scriptOutline!=null">scriptOutline=#{scriptOutline},</if>
+			     <if test="remark!=null">remark=#{remark},</if>
+			     <if test="createDate!=null">createDate=#{createDate},</if>
+			     <if test="isDelete!=null">isDelete=#{isDelete},</if>
+			     <if test="viewNum!=null">viewNum=#{viewNum},</if>
+			     <if test="modify!=null">modify=#{modify},</if>
+		</set>
+		where 
+	   		 id=#{id} 
+	</update>
+	
+	<update id="updateViewNum">
+	   update recruit_info 
+	   set viewNum = viewNum + 1
+		where 
+	   		 id=#{id} 
+	</update>
+
+	<delete id="delete">
+	   delete from
+	     recruit_info 
+	   where 
+	    id=#{id} 
+	</delete>
+
+	<select id="selectEntity" resultMap="colomnResult">
+	   select 
+	<include refid="colomnResult" /> 
+	   from recruit_info
+	  <where>
+				<if test=" id != null and id != '' ">
+					and id=#{id} 
+				</if>
+				<if test=" memberId != null and memberId != '' ">
+					and memberId=#{memberId} 
+				</if>
+				<if test=" title != null and title != '' ">
+					and title=#{title} 
+				</if>
+				<if test=" type != null and type != '' ">
+					and type=#{type} 
+				</if>
+				<if test=" cityCode != null and cityCode != '' ">
+					and cityCode=#{cityCode} 
+				</if>
+				<if test=" publishStatus != null and publishStatus != '' ">
+					and publishStatus=#{publishStatus} 
+				</if>
+				<if test=" lableCode != null and lableCode != '' ">
+					and lableCode=#{lableCode} 
+				</if>
+				<if test=" director != null and director != '' ">
+					and director=#{director} 
+				</if>
+				<if test=" screenwriter != null and screenwriter != '' ">
+					and screenwriter=#{screenwriter} 
+				</if>
+				<if test=" startDate != null and startDate != '' ">
+					and startDate=#{startDate} 
+				</if>
+				<if test=" endDate != null and endDate != '' ">
+					and endDate=#{endDate} 
+				</if>
+				<if test=" deadline != null and deadline != '' ">
+					and deadline=#{deadline} 
+				</if>
+				<if test=" status != null and status != '' ">
+					and status=#{status} 
+				</if>
+				<if test=" scriptOutline != null and scriptOutline != '' ">
+					and scriptOutline=#{scriptOutline} 
+				</if>
+				<if test=" remark != null and remark != '' ">
+					and remark=#{remark} 
+				</if>
+				<if test=" createDate != null and createDate != '' ">
+					and createDate=#{createDate} 
+				</if>
+				<if test=" isDelete != null and isDelete != '' ">
+					and isDelete=#{isDelete} 
+				</if>
+				<if test=" viewNum != null and viewNum != '' ">
+					and viewNum=#{viewNum} 
+				</if>
+				<if test=" modify != null and modify != '' ">
+					and modify=#{modify} 
+				</if>
+				<if test=" lableCodes != null and lableCodes != '' ">
+					and lableCode in 
+					<foreach item="codeList" index="index" collection="list" open="(" separator="," close=")">
+			  			#{codeList}
+			 		</foreach>
+		 		</if>
+		</where>
+	</select>
+	
+	<!-- 根据条件信息 -->
+	<select id="selectAll"  resultMap="colomnResult">
+		select
+		<include refid="colomnResult" /> 
+		<![CDATA[
+			from recruit_info
+		]]>
+		<where>
+				<if test=" id != null and id != '' ">
+					and id=#{id} 
+				</if>
+				<if test=" memberId != null and memberId != '' ">
+					and memberId=#{memberId} 
+				</if>
+				<if test=" title != null and title != '' ">
+					and (title like '%${title}%' or memberId in (select id from member_info where nickname = #{title}) )
+				</if>
+				<if test=" type != null and type != '' ">
+					and type=#{type} 
+				</if>
+				<if test=" cityCode != null and cityCode != '' ">
+					and cityCode=#{cityCode} 
+				</if>
+				<if test=" publishStatus != null and publishStatus != '' ">
+					and publishStatus=#{publishStatus} 
+				</if>
+				<if test=" lableCode != null and lableCode != '' ">
+					and lableCode=#{lableCode} 
+				</if>
+				<if test=" director != null and director != '' ">
+					and director=#{director} 
+				</if>
+				<if test=" screenwriter != null and screenwriter != '' ">
+					and screenwriter=#{screenwriter} 
+				</if>
+				<if test=" startDate != null and startDate != '' ">
+					and startDate=#{startDate} 
+				</if>
+				<if test=" endDate != null and endDate != '' ">
+					and endDate=#{endDate} 
+				</if>
+				<if test=" deadline != null and deadline != '' ">
+					and deadline=#{deadline} 
+				</if>
+				<!-- 前端显示 招募列表 只显示已发布和修改未发布的-->
+				<if test=" status != null and status != '' and status =='1'.toString() ">
+					and status in ('1','3')
+				</if>
+				<!-- 后台显示 招募信息管理 显示已发布、已拒绝、已禁用、修改未发布-->
+				<if test=" status != null and status != '' and status =='2'.toString() ">
+					and status in ('1','3','5')
+				</if>
+				<!-- 后台显示 -->
+				<if test=" status != null and status != '' and status =='-1'.toString() ">
+					and status not in ('0','3','4') and status is not null
+				</if>
+				<if test=" scriptOutline != null and scriptOutline != '' ">
+					and scriptOutline=#{scriptOutline} 
+				</if>
+				<if test=" remark != null and remark != '' ">
+					and remark=#{remark} 
+				</if>
+				<if test=" createDate != null and createDate != '' ">
+					and createDate=#{createDate} 
+				</if>
+				<if test=" isDelete != null and isDelete != '' ">
+					and isDelete=#{isDelete} 
+				</if>
+				<if test=" memberName != null and memberName != '' ">
+					and memberId in (select id from member_info where nickname = #{memberName}) 
+				</if>
+				<if test=" viewNum != null and viewNum != '' ">
+					and viewNum=#{viewNum} 
+				</if>
+				<if test=" dateNow != null and dateNow != '' ">
+					and deadline>=#{dateNow} 
+				</if>
+				<if test=" modify != null and modify != '' ">
+					and modify=#{modify} 
+				</if>
+				<if test=" lableCodes != null and lableCodes != '' ">
+					and lableCode in 
+					<foreach item="codeList" index="index" collection="codeList" open="(" separator="," close=")">
+			  			#{codeList}
+			 		</foreach>
+		 		</if>
+		 		<if test="hideDeadlineDate != null and hideDeadlineDate != '' ">
+		 			<![CDATA[
+		 				and deadline > now()
+		 			]]>
+		 		</if>
+		 		<if test="realNameIdentity != null and realNameIdentity != '' ">
+		 			and memberId in (select id from member_info where realNameStatus = '1')
+		 		</if>			
+		</where>
+		<if test="sort != null">
+				order by ${sort} ${order}
+		</if>
+	</select>
+	<!-- 根据条件查询数量 -->
+	<select id="selectCount"  resultType="int">
+
+		select count(id) from recruit_info
+		<where>
+				<if test=" id != null and id != '' ">
+					and id=#{id} 
+				</if>
+				<if test=" memberId != null and memberId != '' ">
+					and memberId=#{memberId} 
+				</if>
+				<if test=" title != null and title != '' ">
+					and title=#{title} 
+				</if>
+				<if test=" type != null and type != '' ">
+					and type=#{type} 
+				</if>
+				<if test=" cityCode != null and cityCode != '' ">
+					and cityCode=#{cityCode} 
+				</if>
+				<if test=" publishStatus != null and publishStatus != '' ">
+					and publishStatus=#{publishStatus} 
+				</if>
+				<if test=" lableCode != null and lableCode != '' ">
+					and lableCode=#{lableCode} 
+				</if>
+				<if test=" director != null and director != '' ">
+					and director=#{director} 
+				</if>
+				<if test=" screenwriter != null and screenwriter != '' ">
+					and screenwriter=#{screenwriter} 
+				</if>
+				<if test=" startDate != null and startDate != '' ">
+					and startDate=#{startDate} 
+				</if>
+				<if test=" endDate != null and endDate != '' ">
+					and endDate=#{endDate} 
+				</if>
+				<if test=" deadline != null and deadline != '' ">
+					and deadline=#{deadline} 
+				</if>
+				<if test=" status != null and status != '' ">
+					and status=#{status} 
+				</if>
+				<if test=" scriptOutline != null and scriptOutline != '' ">
+					and scriptOutline=#{scriptOutline} 
+				</if>
+				<if test=" remark != null and remark != '' ">
+					and remark=#{remark} 
+				</if>
+				<if test=" createDate != null and createDate != '' ">
+					and createDate=#{createDate} 
+				</if>
+				<if test=" isDelete != null and isDelete != '' ">
+					and isDelete=#{isDelete} 
+				</if>
+				<if test=" viewNum != null and viewNum != '' ">
+					and viewNum=#{viewNum} 
+				</if>
+				<if test=" modify != null and modify != '' ">
+					and modify=#{modify} 
+				</if>
+				<if test="hideDeadlineDate != null and hideDeadlineDate != '' ">
+		 			<![CDATA[
+		 				and deadline > now()
+		 			]]>
+		 		</if>
+		</where>
+	</select>
+	<!-- 根据主键查询信息 -->
+	<select id="selectById"  resultMap="colomnResult">
+		select
+		<include refid="colomnResult" /> 
+		<![CDATA[
+			from recruit_info where 
+			
+			   	 id=#{id} 
+		]]>
+		
+	</select>
+	
+	<!-- 批量删除 -->
+	<select id="selectByIds" parameterType="java.util.List" resultMap="colomnResult">
+		select
+		<include refid="colomnResult" /> 
+		 from recruit_info where id in
+		<foreach item="idList" index="index" collection="list" open="(" separator="," close=")">
+  			#{idList}
+ 		</foreach>
+	</select>
+		
+	<!-- 批量删除 -->
+	<delete id="batchDelete" parameterType="java.util.List">
+		delete from recruit_info where id in
+		<foreach item="idList" index="index" collection="list" open="(" separator="," close=")">
+  			#{idList}
+ 		</foreach>
+	</delete>
+	
+	<!-- 批量修改 -->
+	<select id="batchSelectByMemberId" resultMap="colomnResult">
+		select
+		<include refid="colomnResult" /> 
+		<![CDATA[
+			from recruit_info
+		]]>
+		where memberId in
+		<foreach item="idList" index="index" collection="list" open="(" separator="," close=")">
+  			#{idList}
+ 		</foreach>
+ 		and status = '1'
+ 		and isDelete = '0'
+ 		<if test=" dateNow != null and dateNow != '' ">
+ 			<![CDATA[
+				and deadline > now()
+			]]>
+		</if>
+ 		<if test="sort != null">
+				order by ${sort} ${order}
+		</if>
+	</select>
+	
+	<!-- 批量修改 -->
+	<update id="batchUpdate" parameterType="java.util.HashMap">
+		update recruit_info
+		<set>
+			     <if test="id!=null">id=#{id},</if>
+			     <if test="memberId!=null">memberId=#{memberId},</if>
+			     <if test="title!=null">title=#{title},</if>
+			     <if test="type!=null">type=#{type},</if>
+			     <if test="cityCode!=null">cityCode=#{cityCode},</if>
+			     <if test="publishStatus!=null and publishStatus!=''">publishStatus=#{publishStatus},</if>
+			     <if test="lableCode!=null">lableCode=#{lableCode},</if>
+			     <if test="director!=null">director=#{director},</if>
+			     <if test="screenwriter!=null">screenwriter=#{screenwriter},</if>
+			     <if test="startDate!=null">startDate=#{startDate},</if>
+			     <if test="endDate!=null">endDate=#{endDate},</if>
+			     <if test="deadline!=null">deadline=#{deadline},</if>
+			     <if test="status!=null and status!=''">status=#{status},</if>
+			     <if test="scriptOutline!=null">scriptOutline=#{scriptOutline},</if>
+			     <if test="remark!=null">remark=#{remark},</if>
+			     <if test="createDate!=null">createDate=#{createDate},</if>
+			     <if test="isDelete!=null and isDelete!=''">isDelete=#{isDelete},</if>
+			     <if test="viewNum!=null">viewNum=#{viewNum},</if>
+			     <if test="modify!=null">modify=#{modify},</if>
+		</set>
+		where id in
+		<foreach item="idList" index="index" collection="list" open="(" separator="," close=")">
+  			#{idList}
+ 		</foreach>
+	</update>
+	
+	
+	<!-- 批量修改 -->
+	<update id="batchUpdateByMemberId" parameterType="java.util.HashMap">
+		update recruit_info
+		<set>
+			     <if test="type!=null">type=#{type},</if>
+		</set>
+		where memberId = #{memberId}
+	</update>
+		
+	<!-- 根据条件信息 -->
+	<select id="selectInfoAll"  resultMap="colomnResult">
+		select
+		r.id,
+		r.title,
+	    r.type,
+	    c.name as lableName,
+	    r.publishStatus,
+	    r.lableCode,
+		m.nickname as nickname,
+		p.urlPath as urlPath
+		<![CDATA[
+			from recruit_info r , recruit_category c , member_info m , system_picture_info p
+		]]>
+		<where>
+			and r.lableCode = c.id
+			and r.memberId = m.id
+			and m.imgUuid = p.uuid
+				<if test=" memberId != null and memberId != '' ">
+					and r.memberId=#{memberId} 
+				</if>
+				<if test=" title != null and title != '' ">
+					and r.title like '%${title}%'
+				</if>
+				<if test=" type != null and type != '' ">
+					and r.type=#{type} 
+				</if>
+				<if test=" cityCode != null and cityCode != '' ">
+					and r.cityCode=#{cityCode} 
+				</if>
+				<if test=" publishStatus != null and publishStatus != '' ">
+					and r.publishStatus=#{publishStatus} 
+				</if>
+				<if test=" lableCode != null and lableCode != '' ">
+					and r.lableCode=#{lableCode} 
+				</if>
+				<if test=" status != null and status != '' ">
+					and r.status=#{status} 
+				</if>
+				<if test=" isDelete != null and isDelete != '' ">
+					and r.isDelete=#{isDelete} 
+				</if>
+		</where>
+		<if test="sort != null">
+				order by ${sort} ${order}
+		</if>
+	</select>		
+</mapper> 

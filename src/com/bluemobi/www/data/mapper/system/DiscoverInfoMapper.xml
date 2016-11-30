@@ -1,0 +1,226 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- namespace必须指向Dao接口 -->
+<mapper namespace="com.bluemobi.www.data.dao.system.DiscoverInfoDao">
+
+	<resultMap id="colomnResult" type="com.bluemobi.www.data.model.system.DiscoverInfo">
+		<id property="id" column="id" />
+		<result property="title" column="title" />
+		<result property="type" column="type" />
+		<result property="cover" column="cover" />
+		<result property="businessId" column="businessId" />
+		<result property="orderList" column="orderList" />
+		<result property="status" column="status" />
+		<result property="createTime" column="createTime" />
+	</resultMap>
+	
+	<!-- 动态sql -->
+	<sql id="colomnResult">
+		<![CDATA[
+	     id,
+	     type,
+	     cover,
+	     businessId,
+	     orderList,
+	     status,
+	     createTime,
+	     title
+	 ]]>
+	</sql>
+	<insert id="insert">
+	   insert into discover_info  
+	   <trim prefix="(" suffix=")" suffixOverrides=",">
+			     <if test="id!=null">id,</if>
+			     <if test="type!=null">type,</if>
+			     <if test="cover!=null">cover,</if>
+			     <if test="businessId!=null">businessId,</if>
+			     <if test="orderList!=null">orderList,</if>
+			     <if test="status!=null">status,</if>
+			     <if test="createTime!=null">createTime,</if>
+			     <if test="title!=null">title,</if>
+		</trim>
+	   	<trim prefix="values(" suffix=")" suffixOverrides=",">
+			     <if test="id!=null">#{id},</if>
+			     <if test="type!=null">#{type},</if>
+			     <if test="cover!=null">#{cover},</if>
+			     <if test="businessId!=null">#{businessId},</if>
+			     <if test="orderList!=null">#{orderList},</if>
+			     <if test="status!=null">#{status},</if>
+			     <if test="createTime!=null">#{createTime},</if>
+			     <if test="title!=null">#{title},</if>
+		</trim>
+	</insert>
+
+	<update id="update">
+	   update discover_info 
+	   <set>
+			     <if test="id!=null">id=#{id},</if>
+			     <if test="type!=null">type=#{type},</if>
+			     <if test="cover!=null">cover=#{cover},</if>
+			     <if test="businessId!=null">businessId=#{businessId},</if>
+			     <if test="orderList!=null">orderList=#{orderList},</if>
+			     <if test="status!=null">status=#{status},</if>
+			     <if test="createTime!=null">createTime=#{createTime},</if>
+			     <if test="title!=null">title=#{title},</if>
+		</set>
+		where 
+	   		 id=#{id} 
+	</update>
+
+	<delete id="delete">
+	   delete from
+	     discover_info 
+	   where 
+	    id=#{id} 
+	</delete>
+
+	<select id="selectEntity" resultMap="colomnResult">
+	   select 
+	<include refid="colomnResult" /> 
+	   from discover_info
+	  <where>
+				<if test=" id != null and id != '' ">
+					and id=#{id} 
+				</if>
+				<if test=" type != null and type != '' ">
+					and type=#{type} 
+				</if>
+				<if test=" cover != null and cover != '' ">
+					and cover=#{cover} 
+				</if>
+				<if test=" businessId != null and businessId != '' ">
+					and businessId=#{businessId} 
+				</if>
+				<if test=" orderList != null and orderList != '' ">
+					and orderList=#{orderList} 
+				</if>
+				<if test=" status != null and status != '' ">
+					and status=#{status} 
+				</if>
+				<if test=" createTime != null and createTime != '' ">
+					and createTime=#{createTime} 
+				</if>
+				<if test=" title != null and title != '' ">
+					and title=#{title} 
+				</if>
+		</where>
+	</select>
+	
+	<!-- 根据条件信息 -->
+	<select id="selectAll"  resultMap="colomnResult">
+		select
+		<include refid="colomnResult" /> 
+		<![CDATA[
+			from discover_info
+		]]>
+		<where>
+				<if test=" id != null and id != '' ">
+					and id=#{id} 
+				</if>
+				<if test=" type != null and type != '' ">
+					and type=#{type} 
+				</if>
+				<if test=" cover != null and cover != '' ">
+					and cover=#{cover} 
+				</if>
+				<if test=" businessId != null and businessId != '' ">
+					and businessId=#{businessId} 
+				</if>
+				<if test=" orderList != null and orderList != '' ">
+					and orderList=#{orderList} 
+				</if>
+				<if test=" status != null and status != '' ">
+					and status=#{status} 
+				</if>
+				<if test=" createTime != null and createTime != '' ">
+					and createTime=#{createTime} 
+				</if>
+				<if test=" title != null and title != '' ">
+					and title=#{title} 
+				</if>
+		</where>
+		<if test="sort != null">
+				order by ${sort} ${order}
+		</if>
+	</select>
+	<!-- 根据条件查询数量 -->
+	<select id="selectCount"  resultType="int">
+
+		select count(id) from discover_info
+		<where>
+				<if test=" id != null and id != '' ">
+					and id=#{id} 
+				</if>
+				<if test=" type != null and type != '' ">
+					and type=#{type} 
+				</if>
+				<if test=" cover != null and cover != '' ">
+					and cover=#{cover} 
+				</if>
+				<if test=" businessId != null and businessId != '' ">
+					and businessId=#{businessId} 
+				</if>
+				<if test=" orderList != null and orderList != '' ">
+					and orderList=#{orderList} 
+				</if>
+				<if test=" status != null and status != '' ">
+					and status=#{status} 
+				</if>
+				<if test=" createTime != null and createTime != '' ">
+					and createTime=#{createTime} 
+				</if>
+				<if test=" title != null and title != '' ">
+					and title=#{title} 
+				</if>
+		</where>
+	</select>
+	<!-- 根据主键查询信息 -->
+	<select id="selectById"  resultMap="colomnResult">
+		select
+		<include refid="colomnResult" /> 
+		<![CDATA[
+			from discover_info where 
+			
+			   	 id=#{id} 
+		]]>
+		
+	</select>
+	
+	<!-- 批量删除 -->
+	<select id="selectByIds" parameterType="java.util.List" resultMap="colomnResult">
+		select
+		<include refid="colomnResult" /> 
+		 from discover_info where id in
+		<foreach item="idList" index="index" collection="list" open="(" separator="," close=")">
+  			#{idList}
+ 		</foreach>
+	</select>
+		
+	<!-- 批量删除 -->
+	<delete id="batchDelete" parameterType="java.util.List">
+		delete from discover_info where id in
+		<foreach item="idList" index="index" collection="list" open="(" separator="," close=")">
+  			#{idList}
+ 		</foreach>
+	</delete>
+	
+	<!-- 批量修改 -->
+	<update id="batchUpdate" parameterType="java.util.HashMap">
+		update discover_info
+		<set>
+			     <if test="id!=null">id=#{id},</if>
+			     <if test="type!=null">type=#{type},</if>
+			     <if test="cover!=null">cover=#{cover},</if>
+			     <if test="businessId!=null">businessId=#{businessId},</if>
+			     <if test="orderList!=null">orderList=#{orderList},</if>
+			     <if test="status!=null">status=#{status},</if>
+			     <if test="createTime!=null">createTime=#{createTime},</if>
+			     <if test="title!=null">title=#{title},</if>
+		</set>
+		where id in
+		<foreach item="idList" index="index" collection="list" open="(" separator="," close=")">
+  			#{idList}
+ 		</foreach>
+	</update>
+</mapper> 

@@ -1,0 +1,305 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- namespace必须指向Dao接口 -->
+<mapper namespace="com.bluemobi.www.data.dao.activity.ActivityVideoInfoDao">
+	
+	<resultMap id="colomnResult" type="com.bluemobi.www.data.model.activity.ActivityVideoInfo">
+		<id property="id" column="id" />
+		<result property="activityId" column="activityId" />
+		<result property="memberId" column="memberId" />
+		<result property="videoId" column="videoId" />
+		<result property="viewNum" column="viewNum" />
+		<result property="shareNum" column="shareNum" />
+		<result property="likeNum" column="likeNum" />
+		<result property="commentNum" column="commentNum" />
+		<result property="createDate" column="createDate" />
+		<result property="status" column="status" />
+		<result property="isHot" column="isHot" />
+		<result property="phoneType" column="phoneType" />
+		
+		<association property="activityInfo"
+			select="com.bluemobi.www.data.dao.activity.ActivityInfoDao.selectById"
+			column="activityId"></association>
+		<association property="memberInfo"
+			select="com.bluemobi.www.data.dao.member.MemberInfoDao.selectById"
+			column="memberId"></association>
+		<association property="fileInfo"
+			select="com.bluemobi.www.data.dao.system.SystemFileInfoDao.selectEntityByUuid"
+			column="{uuid=videoId}"></association>
+	</resultMap>
+	<!-- 动态sql -->
+	<sql id="colomnResult">
+		<![CDATA[
+	     id,
+	     activityId,
+	     memberId,
+	     videoId,
+	     viewNum,
+	     shareNum,
+	     likeNum,
+	     commentNum,
+	     DATE_FORMAT(createDate,'%Y-%m-%d %H:%i:%S') as createDate,
+	     status,
+	     isHot,
+	     phoneType
+	 ]]>
+	</sql>
+	<insert id="insert">
+	   insert into activity_video_info  
+	   <trim prefix="(" suffix=")" suffixOverrides=",">
+			     <if test="id!=null">id,</if>
+			     <if test="activityId!=null">activityId,</if>
+			     <if test="memberId!=null">memberId,</if>
+			     <if test="videoId!=null">videoId,</if>
+			     <if test="viewNum!=null">viewNum,</if>
+			     <if test="shareNum!=null">shareNum,</if>
+			     <if test="likeNum!=null">likeNum,</if>
+			     <if test="commentNum!=null">commentNum,</if>
+			     <if test="createDate!=null">createDate,</if>
+			     <if test="status!=null">status,</if>
+			     <if test="isHot!=null">isHot,</if>
+			     <if test="phoneType!=null">phoneType,</if>			     
+		</trim>
+	   	<trim prefix="values(" suffix=")" suffixOverrides=",">
+			     <if test="id!=null">#{id},</if>
+			     <if test="activityId!=null">#{activityId},</if>
+			     <if test="memberId!=null">#{memberId},</if>
+			     <if test="videoId!=null">#{videoId},</if>
+			     <if test="viewNum!=null">#{viewNum},</if>
+			     <if test="shareNum!=null">#{shareNum},</if>
+			     <if test="likeNum!=null">#{likeNum},</if>
+			     <if test="commentNum!=null">#{commentNum},</if>
+			     <if test="createDate!=null">#{createDate},</if>
+			     <if test="status!=null">#{status},</if>
+			     <if test="isHot!=null">#{isHot},</if>
+			     <if test="phoneType!=null">#{phoneType},</if>			     
+		</trim>
+	</insert>
+
+	<update id="update">
+	   update activity_video_info 
+	   <set>
+			     <if test="id!=null">id=#{id},</if>
+			     <if test="activityId!=null">activityId=#{activityId},</if>
+			     <if test="memberId!=null">memberId=#{memberId},</if>
+			     <if test="videoId!=null">videoId=#{videoId},</if>
+			     <if test="viewNum!=null">viewNum=#{viewNum},</if>
+			     <if test="shareNum!=null">shareNum=#{shareNum},</if>
+			     <if test="likeNum!=null">likeNum=#{likeNum},</if>
+			     <if test="commentNum!=null">commentNum=#{commentNum},</if>
+			     <if test="createDate!=null">createDate=#{createDate},</if>
+			     <if test="status!=null">status=#{status},</if>
+			     <if test="isHot!=null">isHot=#{isHot},</if>
+			     <if test="phoneType!=null">phoneType=#{phoneType},</if>
+		</set>
+		where 
+	   		 id=#{id} 
+	</update>
+	
+	<update id="addShareNum">
+	   update activity_video_info 
+			set shareNum=shareNum+1
+		where 
+	   		 id=#{id} 
+	</update>
+
+	<delete id="delete">
+	   delete from
+	     activity_video_info 
+	   where 
+	    id=#{id} 
+	</delete>
+
+	<select id="selectEntity" resultMap="colomnResult">
+	   select 
+	<include refid="colomnResult" /> 
+	   from activity_video_info
+	  <where>
+				<if test=" id != null and id != '' ">
+					and id=#{id} 
+				</if>
+				<if test=" activityId != null and activityId != '' ">
+					and activityId=#{activityId} 
+				</if>
+				<if test=" memberId != null and memberId != '' ">
+					and memberId=#{memberId} 
+				</if>
+				<if test=" videoId != null and videoId != '' ">
+					and videoId=#{videoId} 
+				</if>
+				<if test=" viewNum != null and viewNum != '' ">
+					and viewNum=#{viewNum} 
+				</if>
+				<if test=" shareNum != null and shareNum != '' ">
+					and shareNum=#{shareNum} 
+				</if>
+				<if test=" likeNum != null and likeNum != '' ">
+					and likeNum=#{likeNum} 
+				</if>
+				<if test=" commentNum != null and commentNum != '' ">
+					and commentNum=#{commentNum} 
+				</if>
+				<if test=" createDate != null and createDate != '' ">
+					and createDate=#{createDate} 
+				</if>
+				<if test=" status != null and status != '' ">
+					and status=#{status} 
+				</if>
+				<if test=" isHot != null and isHot != '' ">
+					and isHot=#{isHot} 
+				</if>
+				<if test=" phoneType != null and phoneType != '' ">
+					and phoneType=#{phoneType} 
+				</if>				
+		</where>
+	</select>
+	
+	<!-- 根据条件信息 -->
+	<select id="selectAll"  resultMap="colomnResult">
+		select
+		<include refid="colomnResult" /> 
+		<![CDATA[
+			from activity_video_info
+		]]>
+		<where>
+				<if test=" id != null and id != '' ">
+					and id=#{id} 
+				</if>
+				<if test=" activityId != null and activityId != '' ">
+					and activityId=#{activityId} 
+				</if>
+				<if test=" memberId != null and memberId != '' ">
+					and memberId=#{memberId} 
+				</if>
+				<if test=" videoId != null and videoId != '' ">
+					and videoId=#{videoId} 
+				</if>
+				<if test=" viewNum != null and viewNum != '' ">
+					and viewNum=#{viewNum} 
+				</if>
+				<if test=" shareNum != null and shareNum != '' ">
+					and shareNum=#{shareNum} 
+				</if>
+				<if test=" likeNum != null and likeNum != '' ">
+					and likeNum=#{likeNum} 
+				</if>
+				<if test=" commentNum != null and commentNum != '' ">
+					and commentNum=#{commentNum} 
+				</if>
+				<if test=" createDate != null and createDate != '' ">
+					and createDate=#{createDate} 
+				</if>
+				<if test=" status != null and status != '' ">
+					and status=#{status} 
+				</if>
+				<if test=" isHot != null and isHot != '' ">
+					and isHot=#{isHot} 
+				</if>
+				<if test=" memberName != null and memberName != '' ">
+					and memberId in (select id from member_info where nickname = #{memberName}) 
+				</if>
+				<if test=" phoneType != null and phoneType != '' ">
+					and phoneType=#{phoneType} 
+				</if>
+				
+		</where>
+		<if test="sort != null">
+				order by ${sort} ${order}				
+		</if>
+	</select>
+	<!-- 根据条件查询数量 -->
+	<select id="selectCount"  resultType="int">
+		select count(id) from activity_video_info
+		<where>
+				<if test=" id != null and id != '' ">
+					and id=#{id} 
+				</if>
+				<if test=" activityId != null and activityId != '' ">
+					and activityId=#{activityId} 
+				</if>
+				<if test=" memberId != null and memberId != '' ">
+					and memberId=#{memberId} 
+				</if>
+				<if test=" videoId != null and videoId != '' ">
+					and videoId=#{videoId} 
+				</if>
+				<if test=" viewNum != null and viewNum != '' ">
+					and viewNum=#{viewNum} 
+				</if>
+				<if test=" shareNum != null and shareNum != '' ">
+					and shareNum=#{shareNum} 
+				</if>
+				<if test=" likeNum != null and likeNum != '' ">
+					and likeNum=#{likeNum} 
+				</if>
+				<if test=" commentNum != null and commentNum != '' ">
+					and commentNum=#{commentNum} 
+				</if>
+				<if test=" createDate != null and createDate != '' ">
+					and createDate=#{createDate} 
+				</if>
+				<if test=" status != null and status != '' ">
+					and status=#{status} 
+				</if>
+				<if test=" isHot != null and isHot != '' ">
+					and isHot=#{isHot} 
+				</if>
+				<if test=" phoneType != null and phoneType != '' ">
+					and phoneType=#{phoneType}
+				</if>				
+		</where>
+	</select>
+	<!-- 根据主键查询信息 -->
+	<select id="selectById"  resultMap="colomnResult">
+		select
+		<include refid="colomnResult" /> 
+		<![CDATA[
+			from activity_video_info where 
+			
+			   	 id=#{id} 
+		]]>
+		
+	</select>
+	
+	<!-- 批量删除 -->
+	<select id="selectByIds" parameterType="java.util.List" resultMap="colomnResult">
+		select
+		<include refid="colomnResult" /> 
+		 from activity_video_info where id in
+		<foreach item="idList" index="index" collection="list" open="(" separator="," close=")">
+  			#{idList}
+ 		</foreach>
+	</select>
+		
+	<!-- 批量删除 -->
+	<delete id="batchDelete" parameterType="java.util.List">
+		delete from activity_video_info where id in
+		<foreach item="idList" index="index" collection="list" open="(" separator="," close=")">
+  			#{idList}
+ 		</foreach>
+	</delete>
+	
+	<!-- 批量修改 -->
+	<update id="batchUpdate" parameterType="java.util.HashMap">
+		update activity_video_info
+		<set>
+			     <if test="id!=null">id=#{id},</if>
+			     <if test="activityId!=null">activityId=#{activityId},</if>
+			     <if test="memberId!=null">memberId=#{memberId},</if>
+			     <if test="videoId!=null">videoId=#{videoId},</if>
+			     <if test="viewNum!=null">viewNum=#{viewNum},</if>
+			     <if test="shareNum!=null">shareNum=#{shareNum},</if>
+			     <if test="likeNum!=null">likeNum=#{likeNum},</if>
+			     <if test="commentNum!=null">commentNum=#{commentNum},</if>
+			     <if test="createDate!=null">createDate=#{createDate},</if>
+			     <if test="status!=null">status=#{status},</if>
+			     <if test="isHot!=null">isHot=#{isHot},</if>
+			     <if test="phoneType!=null">phoneType=#{phoneType},</if>			     
+		</set>
+		where id in
+		<foreach item="idList" index="index" collection="list" open="(" separator="," close=")">
+  			#{idList}
+ 		</foreach>
+	</update>
+</mapper> 

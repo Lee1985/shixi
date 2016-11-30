@@ -1,0 +1,351 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- namespace必须指向Dao接口 -->
+<mapper namespace="com.bluemobi.www.data.dao.recruit.RecruitRoleInfoTempDao">
+
+	<resultMap id="colomnResult" type="com.bluemobi.www.data.model.recruit.RecruitRoleInfoTemp">
+		<id property="id" column="id" />
+		<result property="recruitId" column="recruitId" />
+		<result property="roleId" column="roleId" />
+		<result property="name" column="name" />
+		<result property="sex" column="sex" />
+		<result property="lableCode" column="lableCode" />
+		<result property="paidMin" column="paidMin" />
+		<result property="paidMax" column="paidMax" />
+		<result property="paidType" column="paidType" />
+		<result property="requirement" column="requirement" />
+		<result property="dialogue" column="dialogue" />
+		<result property="imgUuid" column="imgUuid" />
+		<result property="isDelete" column="isDelete" />
+		<result property="status" column="status" />
+		<result property="createDate" column="createDate" />
+		<result property="operType" column="operType" />
+		<association property="pictureInfo"
+			select="com.bluemobi.www.data.dao.system.SystemPictureInfoDao.selectEntityByUuid"
+			column="{uuid=imgUuid}"></association>
+		<association property="recruitInfo"
+			select="com.bluemobi.www.data.dao.recruit.RecruitInfoTempDao.selectById"
+			column="recruitId"></association>
+	</resultMap>
+	<!-- 动态sql -->
+	<sql id="colomnResult">
+		<![CDATA[
+	     id,
+	     recruitId,
+	     roleId,
+	     name,
+	     sex,
+	     lableCode,
+	     paidMin,
+	     paidMax,
+	     paidType,
+	     requirement,
+	     dialogue,
+	     imgUuid,
+	     isDelete,
+	     status,
+	     DATE_FORMAT(createDate,'%Y-%m-%d %H:%i:%S') as createDate,
+	     operType
+	 ]]>
+	</sql>
+	<insert id="insert">
+	   insert into recruit_role_info_temp  
+	   <trim prefix="(" suffix=")" suffixOverrides=",">
+			     <if test="id!=null">id,</if>
+			     <if test="recruitId!=null">recruitId,</if>
+			     <if test="roleId!=null">roleId,</if>
+			     <if test="name!=null">name,</if>
+			     <if test="sex!=null">sex,</if>
+			     <if test="lableCode!=null">lableCode,</if>
+			     <if test="paidMin!=null">paidMin,</if>
+			     <if test="paidMax!=null">paidMax,</if>
+			     <if test="paidType!=null">paidType,</if>
+			     <if test="requirement!=null">requirement,</if>
+			     <if test="dialogue!=null">dialogue,</if>
+			     <if test="imgUuid!=null">imgUuid,</if>
+			     <if test="isDelete!=null">isDelete,</if>
+			     <if test="status!=null">status,</if>
+			     <if test="createDate!=null">createDate,</if>
+			     <if test="operType!=null">operType,</if>
+		</trim>
+	   	<trim prefix="values(" suffix=")" suffixOverrides=",">
+			     <if test="id!=null">#{id},</if>
+			     <if test="recruitId!=null">#{recruitId},</if>
+			     <if test="roleId!=null">#{roleId},</if>
+			     <if test="name!=null">#{name},</if>
+			     <if test="sex!=null">#{sex},</if>
+			     <if test="lableCode!=null">#{lableCode},</if>
+			     <if test="paidMin!=null">#{paidMin},</if>
+			     <if test="paidMax!=null">#{paidMax},</if>
+			     <if test="paidType!=null">#{paidType},</if>
+			     <if test="requirement!=null">#{requirement},</if>
+			     <if test="dialogue!=null">#{dialogue},</if>
+			     <if test="imgUuid!=null">#{imgUuid},</if>
+			     <if test="isDelete!=null">#{isDelete},</if>
+			     <if test="status!=null">#{status},</if>
+			     <if test="createDate!=null">#{createDate},</if>
+			     <if test="operType!=null">#{operType},</if>
+		</trim>
+	</insert>
+
+	<update id="update">
+	   update recruit_role_info_temp 
+	   <set>
+			     <if test="id!=null">id=#{id},</if>
+			     <if test="recruitId!=null">recruitId=#{recruitId},</if>
+			     <if test="roleId!=null">roleId=#{roleId},</if>
+			     <if test="name!=null">name=#{name},</if>
+			     <if test="sex!=null">sex=#{sex},</if>
+			     <if test="lableCode!=null">lableCode=#{lableCode},</if>
+			     <if test="paidMin!=null">paidMin=#{paidMin},</if>
+			     <if test="paidMax!=null">paidMax=#{paidMax},</if>
+			     <if test="paidType!=null">paidType=#{paidType},</if>
+			     <if test="requirement!=null">requirement=#{requirement},</if>
+			     <if test="dialogue!=null">dialogue=#{dialogue},</if>
+			     <if test="imgUuid!=null">imgUuid=#{imgUuid},</if>
+			     <if test="isDelete!=null">isDelete=#{isDelete},</if>
+			     <if test="status!=null">status=#{status},</if>
+			     <if test="createDate!=null">createDate=#{createDate},</if>
+			     <if test="operType!=null">operType=#{operType},</if>
+		</set>
+		where 
+	   		 id=#{id} 
+	</update>
+
+	<delete id="delete">
+	   delete from
+	     recruit_role_info_temp 
+	   where 
+	    id=#{id} 
+	</delete>
+
+	<select id="selectEntity" resultMap="colomnResult">
+	   select 
+	<include refid="colomnResult" /> 
+	   from recruit_role_info_temp
+	  <where>
+				<if test=" id != null and id != '' ">
+					and id=#{id} 
+				</if>
+				<if test=" recruitId != null and recruitId != '' ">
+					and recruitId=#{recruitId} 
+				</if>
+				<if test=" roleId != null and roleId != '' ">
+					and roleId=#{roleId} 
+				</if>
+				<if test=" name != null and name != '' ">
+					and name=#{name} 
+				</if>
+				<if test=" sex != null and sex != '' ">
+					and sex=#{sex} 
+				</if>
+				<if test=" lableCode != null and lableCode != '' ">
+					and lableCode=#{lableCode} 
+				</if>
+				<if test=" paidMin != null and paidMin != '' ">
+					and paidMin=#{paidMin} 
+				</if>
+				<if test=" paidMax != null and paidMax != '' ">
+					and paidMax=#{paidMax} 
+				</if>
+				<if test=" paidType != null and paidType != '' ">
+					and paidType=#{paidType} 
+				</if>
+				<if test=" requirement != null and requirement != '' ">
+					and requirement=#{requirement} 
+				</if>
+				<if test=" dialogue != null and dialogue != '' ">
+					and dialogue=#{dialogue} 
+				</if>
+				<if test=" imgUuid != null and imgUuid != '' ">
+					and imgUuid=#{imgUuid} 
+				</if>
+				<if test=" isDelete != null and isDelete != '' ">
+					and isDelete=#{isDelete} 
+				</if>
+				<if test=" status != null and status != '' ">
+					and status=#{status} 
+				</if>
+				<if test=" createDate != null and createDate != '' ">
+					and createDate=#{createDate} 
+				</if>
+				<if test=" operType != null and operType != '' ">
+					and operType=#{operType} 
+				</if>
+		</where>
+	</select>
+	
+	<!-- 根据条件信息 -->
+	<select id="selectAll"  resultMap="colomnResult">
+		select
+		<include refid="colomnResult" /> 
+		<![CDATA[
+			from recruit_role_info_temp
+		]]>
+		<where>
+				<if test=" id != null and id != '' ">
+					and id=#{id} 
+				</if>
+				<if test=" recruitId != null and recruitId != '' ">
+					and recruitId=#{recruitId} 
+				</if>
+				<if test=" roleId != null and roleId != '' ">
+					and roleId=#{roleId} 
+				</if>
+				<if test=" name != null and name != '' ">
+					and name=#{name} 
+				</if>
+				<if test=" sex != null and sex != '' ">
+					and sex=#{sex} 
+				</if>
+				<if test=" lableCode != null and lableCode != '' ">
+					and lableCode=#{lableCode} 
+				</if>
+				<if test=" paidMin != null and paidMin != '' ">
+					and paidMin=#{paidMin} 
+				</if>
+				<if test=" paidMax != null and paidMax != '' ">
+					and paidMax=#{paidMax} 
+				</if>
+				<if test=" paidType != null and paidType != '' ">
+					and paidType=#{paidType} 
+				</if>
+				<if test=" requirement != null and requirement != '' ">
+					and requirement=#{requirement} 
+				</if>
+				<if test=" dialogue != null and dialogue != '' ">
+					and dialogue=#{dialogue} 
+				</if>
+				<if test=" imgUuid != null and imgUuid != '' ">
+					and imgUuid=#{imgUuid} 
+				</if>
+				<if test=" isDelete != null and isDelete != '' ">
+					and isDelete=#{isDelete} 
+				</if>
+				<if test=" status != null and status != '' ">
+					and status=#{status} 
+				</if>
+				<if test=" createDate != null and createDate != '' ">
+					and createDate=#{createDate} 
+				</if>
+				<if test=" operType != null and operType != '' ">
+					and operType=#{operType} 
+				</if>
+		</where>
+		<if test="sort != null">
+				order by ${sort} ${order}
+		</if>
+	</select>
+	<!-- 根据条件查询数量 -->
+	<select id="selectCount"  resultType="int">
+
+		select count(id) from recruit_role_info_temp
+		<where>
+				<if test=" id != null and id != '' ">
+					and id=#{id} 
+				</if>
+				<if test=" recruitId != null and recruitId != '' ">
+					and recruitId=#{recruitId} 
+				</if>
+				<if test=" roleId != null and roleId != '' ">
+					and roleId=#{roleId} 
+				</if>
+				<if test=" name != null and name != '' ">
+					and name=#{name} 
+				</if>
+				<if test=" sex != null and sex != '' ">
+					and sex=#{sex} 
+				</if>
+				<if test=" lableCode != null and lableCode != '' ">
+					and lableCode=#{lableCode} 
+				</if>
+				<if test=" paidMin != null and paidMin != '' ">
+					and paidMin=#{paidMin} 
+				</if>
+				<if test=" paidMax != null and paidMax != '' ">
+					and paidMax=#{paidMax} 
+				</if>
+				<if test=" paidType != null and paidType != '' ">
+					and paidType=#{paidType} 
+				</if>
+				<if test=" requirement != null and requirement != '' ">
+					and requirement=#{requirement} 
+				</if>
+				<if test=" dialogue != null and dialogue != '' ">
+					and dialogue=#{dialogue} 
+				</if>
+				<if test=" imgUuid != null and imgUuid != '' ">
+					and imgUuid=#{imgUuid} 
+				</if>
+				<if test=" isDelete != null and isDelete != '' ">
+					and isDelete=#{isDelete} 
+				</if>
+				<if test=" status != null and status != '' ">
+					and status=#{status} 
+				</if>
+				<if test=" createDate != null and createDate != '' ">
+					and createDate=#{createDate} 
+				</if>
+				<if test=" operType != null and operType != '' ">
+					and operType=#{operType} 
+				</if>
+		</where>
+	</select>
+	<!-- 根据主键查询信息 -->
+	<select id="selectById"  resultMap="colomnResult">
+		select
+		<include refid="colomnResult" /> 
+		<![CDATA[
+			from recruit_role_info_temp where 
+			
+			   	 id=#{id} 
+		]]>
+		
+	</select>
+	
+	<!-- 批量删除 -->
+	<select id="selectByIds" parameterType="java.util.List" resultMap="colomnResult">
+		select
+		<include refid="colomnResult" /> 
+		 from recruit_role_info_temp where id in
+		<foreach item="idList" index="index" collection="list" open="(" separator="," close=")">
+  			#{idList}
+ 		</foreach>
+	</select>
+		
+	<!-- 批量删除 -->
+	<delete id="batchDelete" parameterType="java.util.List">
+		delete from recruit_role_info_temp where id in
+		<foreach item="idList" index="index" collection="list" open="(" separator="," close=")">
+  			#{idList}
+ 		</foreach>
+	</delete>
+	
+	<!-- 批量修改 -->
+	<update id="batchUpdate" parameterType="java.util.HashMap">
+		update recruit_role_info_temp
+		<set>
+			     <if test="id!=null">id=#{id},</if>
+			     <if test="recruitId!=null">recruitId=#{recruitId},</if>
+			     <if test="roleId!=null">roleId=#{roleId},</if>
+			     <if test="name!=null">name=#{name},</if>
+			     <if test="sex!=null">sex=#{sex},</if>
+			     <if test="lableCode!=null">lableCode=#{lableCode},</if>
+			     <if test="paidMin!=null">paidMin=#{paidMin},</if>
+			     <if test="paidMax!=null">paidMax=#{paidMax},</if>
+			     <if test="paidType!=null">paidType=#{paidType},</if>
+			     <if test="requirement!=null">requirement=#{requirement},</if>
+			     <if test="dialogue!=null">dialogue=#{dialogue},</if>
+			     <if test="imgUuid!=null">imgUuid=#{imgUuid},</if>
+			     <if test="isDelete!=null">isDelete=#{isDelete},</if>
+			     <if test="status!=null">status=#{status},</if>
+			     <if test="createDate!=null">createDate=#{createDate},</if>
+			     <if test="operType!=null">operType=#{operType},</if>
+		</set>
+		where id in
+		<foreach item="idList" index="index" collection="list" open="(" separator="," close=")">
+  			#{idList}
+ 		</foreach>
+	</update>
+</mapper> 

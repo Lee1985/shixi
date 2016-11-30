@@ -1,0 +1,532 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- namespace必须指向Dao接口 -->
+<mapper namespace="com.bluemobi.www.data.dao.member.MemberResumeTemplateDao">
+
+	<resultMap id="colomnResult" type="com.bluemobi.www.data.model.member.MemberResumeTemplate">
+		<id property="id" column="id" />
+		<result property="memberId" column="memberId" />
+		<result property="realName" column="realName" />
+		<result property="sex" column="sex" />
+		<result property="height" column="height" />
+		<result property="weight" column="weight" />
+		<result property="school" column="school" />
+		<result property="cityCode" column="cityCode" />
+		<result property="roleLabel" column="roleLabel" />
+		<result property="skillLabel" column="skillLabel" />
+		<result property="imgUuid" column="imgUuid" />
+		<result property="status" column="status" />
+		<result property="imgUuid1" column="imgUuid1" />
+		<result property="imgUuid2" column="imgUuid2" />
+		<result property="imgUuid3" column="imgUuid3" />
+		<result property="imgUuid4" column="imgUuid4" />
+		<result property="imgUuid5" column="imgUuid5" />
+		<result property="imgUuid6" column="imgUuid6" />
+		<result property="videoUuid" column="videoUuid" />
+		<result property="createDate" column="createDate" />
+		<result property="updateDate" column="updateDate" />
+		<result property="chest" column="chest" />
+		<result property="waist" column="waist" />
+		<result property="hipline" column="hipline" />
+		<result property="birthday" column="birthday" />
+		<result property="completion" column="completion" />
+		
+		<association property="memberInfo"
+			select="com.bluemobi.www.data.dao.member.MemberInfoDao.selectById"
+			column="memberId"></association>
+		<association property="pictureInfo"
+			select="com.bluemobi.www.data.dao.system.SystemPictureInfoDao.selectEntityByUuid"
+			column="{uuid=imgUuid}"></association>
+		<association property="pictureInfo1"
+			select="com.bluemobi.www.data.dao.system.SystemPictureInfoDao.selectEntityByUuid"
+			column="{uuid=imgUuid1}"></association>
+		<association property="pictureInfo2"
+			select="com.bluemobi.www.data.dao.system.SystemPictureInfoDao.selectEntityByUuid"
+			column="{uuid=imgUuid2}"></association>
+		<association property="pictureInfo3"
+			select="com.bluemobi.www.data.dao.system.SystemPictureInfoDao.selectEntityByUuid"
+			column="{uuid=imgUuid3}"></association>
+		<association property="pictureInfo4"
+			select="com.bluemobi.www.data.dao.system.SystemPictureInfoDao.selectEntityByUuid"
+			column="{uuid=imgUuid4}"></association>
+		<association property="pictureInfo5"
+			select="com.bluemobi.www.data.dao.system.SystemPictureInfoDao.selectEntityByUuid"
+			column="{uuid=imgUuid5}"></association>
+		<association property="pictureInfo6"
+			select="com.bluemobi.www.data.dao.system.SystemPictureInfoDao.selectEntityByUuid"
+			column="{uuid=imgUuid6}"></association>
+			
+		<association property="fileInfo"
+			select="com.bluemobi.www.data.dao.system.SystemFileInfoDao.selectEntityByUuid"
+			column="{uuid=videoUuid}"></association>
+	</resultMap>
+	<!-- 动态sql -->
+	<sql id="colomnResult">
+		<![CDATA[
+	     id,
+	     memberId,
+	     realName,
+	     sex,
+	     height,
+	     weight,
+	     school,
+	     cityCode,
+	     roleLabel,
+	     skillLabel,
+	     imgUuid,
+	     status,
+	     imgUuid1,
+	     imgUuid2,
+	     imgUuid3,
+	     imgUuid4,
+	     imgUuid5,
+	     imgUuid6,
+	     videoUuid,
+	     DATE_FORMAT(createDate,'%Y-%m-%d %H:%i:%S') as createDate,
+	     DATE_FORMAT(updateDate,'%Y-%m-%d %H:%i:%S') as updateDate,
+	     chest,
+	     waist,
+	     hipline,
+	     DATE_FORMAT(birthday,'%Y-%m-%d') as birthday,
+	     DATE_FORMAT(birthday,'%Y年%m月%d日') as birthdayStr,
+	     completion
+	 ]]>
+	</sql>
+	<insert id="insert">
+	   insert into member_resume_template  
+	   <trim prefix="(" suffix=")" suffixOverrides=",">
+			     <if test="id!=null">id,</if>
+			     <if test="memberId!=null">memberId,</if>
+			     <if test="realName!=null">realName,</if>
+			     <if test="sex!=null">sex,</if>
+			     <if test="height!=null">height,</if>
+			     <if test="weight!=null">weight,</if>
+			     <if test="school!=null">school,</if>
+			     <if test="cityCode!=null">cityCode,</if>
+			     <if test="roleLabel!=null">roleLabel,</if>
+			     <if test="skillLabel!=null">skillLabel,</if>
+			     <if test="imgUuid!=null">imgUuid,</if>
+			     <if test="status!=null">status,</if>
+			     <if test="imgUuid1!=null">imgUuid1,</if>
+			     <if test="imgUuid2!=null">imgUuid2,</if>
+			     <if test="imgUuid3!=null">imgUuid3,</if>
+			     <if test="imgUuid4!=null">imgUuid4,</if>
+			     <if test="imgUuid5!=null">imgUuid5,</if>
+			     <if test="imgUuid6!=null">imgUuid6,</if>
+			     <if test="videoUuid!=null">videoUuid,</if>
+			     <if test="createDate!=null">createDate,</if>
+			     <if test="updateDate!=null">updateDate,</if>
+			     <if test="chest!=null">chest,</if>
+			     <if test="waist!=null">waist,</if>
+			     <if test="hipline!=null">hipline,</if>
+			     <if test="birthday!=null">birthday,</if>
+			     <if test="completion!=null">completion,</if>
+		</trim>
+	   	<trim prefix="values(" suffix=")" suffixOverrides=",">
+			     <if test="id!=null">#{id},</if>
+			     <if test="memberId!=null">#{memberId},</if>
+			     <if test="realName!=null">#{realName},</if>
+			     <if test="sex!=null">#{sex},</if>
+			     <if test="height!=null">#{height},</if>
+			     <if test="weight!=null">#{weight},</if>
+			     <if test="school!=null">#{school},</if>
+			     <if test="cityCode!=null">#{cityCode},</if>
+			     <if test="roleLabel!=null">#{roleLabel},</if>
+			     <if test="skillLabel!=null">#{skillLabel},</if>
+			     <if test="imgUuid!=null">#{imgUuid},</if>
+			     <if test="status!=null">#{status},</if>
+			     <if test="imgUuid1!=null">#{imgUuid1},</if>
+			     <if test="imgUuid2!=null">#{imgUuid2},</if>
+			     <if test="imgUuid3!=null">#{imgUuid3},</if>
+			     <if test="imgUuid4!=null">#{imgUuid4},</if>
+			     <if test="imgUuid5!=null">#{imgUuid5},</if>
+			     <if test="imgUuid6!=null">#{imgUuid6},</if>
+			     <if test="videoUuid!=null">#{videoUuid},</if>
+			     <if test="createDate!=null">#{createDate},</if>
+			     <if test="updateDate!=null">#{updateDate},</if>
+			     <if test="chest!=null">#{chest},</if>
+			     <if test="waist!=null">#{waist},</if>
+			     <if test="hipline!=null">#{hipline},</if>
+			     <if test="birthday!=null">#{birthday},</if>
+			     <if test="completion!=null">#{completion},</if>
+			     
+		</trim>
+	</insert>
+
+	<update id="update">
+	   update member_resume_template 
+	   <set>
+			     <if test="id!=null">id=#{id},</if>
+			     <if test="memberId!=null">memberId=#{memberId},</if>
+			     <if test="realName!=null">realName=#{realName},</if>
+			     <if test="sex!=null">sex=#{sex},</if>
+			     <if test="height!=null">height=#{height},</if>
+			     <if test="weight!=null">weight=#{weight},</if>
+			     <if test="school!=null">school=#{school},</if>
+			     <if test="cityCode!=null">cityCode=#{cityCode},</if>
+			     <if test="roleLabel!=null">roleLabel=#{roleLabel},</if>
+			     <if test="skillLabel!=null">skillLabel=#{skillLabel},</if>
+			     <if test="imgUuid!=null">imgUuid=#{imgUuid},</if>
+			     <if test="status!=null">status=#{status},</if>
+			     <if test="imgUuid1!=null">imgUuid1=#{imgUuid1},</if>
+			     <if test="imgUuid2!=null">imgUuid2=#{imgUuid2},</if>
+			     <if test="imgUuid3!=null">imgUuid3=#{imgUuid3},</if>
+			     <if test="imgUuid4!=null">imgUuid4=#{imgUuid4},</if>
+			     <if test="imgUuid5!=null">imgUuid5=#{imgUuid5},</if>
+			     <if test="imgUuid6!=null">imgUuid6=#{imgUuid6},</if>
+			     <if test="videoUuid!=null">videoUuid=#{videoUuid},</if>
+			     <if test="createDate!=null">createDate=#{createDate},</if>
+			     <if test="updateDate!=null">updateDate=#{updateDate},</if>
+			     <if test="chest!=null">chest=#{chest},</if>
+			     <if test="waist!=null">waist=#{waist},</if>
+			     <if test="hipline!=null">hipline=#{hipline},</if>
+			     <if test="birthday!=null">birthday=#{birthday},</if>
+			     <if test="birthday!=null">completion=#{completion},</if>			     
+		</set>
+		where 
+	   		 id=#{id} 
+	</update>
+
+	<delete id="delete">
+	   delete from
+	     member_resume_template 
+	   where 
+	    id=#{id} 
+	</delete>
+
+	<select id="selectEntity" resultMap="colomnResult">
+	   select 
+	<include refid="colomnResult" /> 
+	   from member_resume_template
+	  <where>
+				<if test=" id != null and id != '' ">
+					and id=#{id} 
+				</if>
+				<if test=" memberId != null and memberId != '' ">
+					and memberId=#{memberId} 
+				</if>
+				<if test=" realName != null and realName != '' ">
+					and realName=#{realName} 
+				</if>
+				<if test=" sex != null and sex != '' ">
+					and sex=#{sex} 
+				</if>
+				<if test=" height != null and height != '' ">
+					and height=#{height} 
+				</if>
+				<if test=" weight != null and weight != '' ">
+					and weight=#{weight} 
+				</if>
+				<if test=" school != null and school != '' ">
+					and school=#{school} 
+				</if>
+				<if test=" cityCode != null and cityCode != '' ">
+					and cityCode=#{cityCode} 
+				</if>
+				<if test=" roleLabel != null and roleLabel != '' ">
+					and roleLabel=#{roleLabel} 
+				</if>
+				<if test=" skillLabel != null and skillLabel != '' ">
+					and skillLabel=#{skillLabel} 
+				</if>
+				<if test=" imgUuid != null and imgUuid != '' ">
+					and imgUuid=#{imgUuid} 
+				</if>
+				<if test=" status != null and status != '' ">
+					and status=#{status} 
+				</if>
+				<if test=" imgUuid1 != null and imgUuid1 != '' ">
+					and imgUuid1=#{imgUuid1} 
+				</if>
+				<if test=" imgUuid2 != null and imgUuid2 != '' ">
+					and imgUuid2=#{imgUuid2} 
+				</if>
+				<if test=" imgUuid3 != null and imgUuid3 != '' ">
+					and imgUuid3=#{imgUuid3} 
+				</if>
+				<if test=" imgUuid4 != null and imgUuid4 != '' ">
+					and imgUuid4=#{imgUuid4} 
+				</if>
+				<if test=" imgUuid5 != null and imgUuid5 != '' ">
+					and imgUuid5=#{imgUuid5} 
+				</if>
+				<if test=" imgUuid6 != null and imgUuid6 != '' ">
+					and imgUuid6=#{imgUuid6} 
+				</if>
+				<if test=" videoUuid != null and videoUuid != '' ">
+					and videoUuid=#{videoUuid} 
+				</if>
+				<if test=" createDate != null and createDate != '' ">
+					and createDate=#{createDate} 
+				</if>
+				<if test=" updateDate != null and updateDate != '' ">
+					and updateDate=#{updateDate} 
+				</if>
+				<if test=" chest != null and chest != '' ">
+					and chest=#{chest} 
+				</if>
+				<if test=" waist != null and waist != '' ">
+					and waist=#{waist} 
+				</if>
+				<if test=" hipline != null and hipline != '' ">
+					and hipline=#{hipline} 
+				</if>
+				<if test=" birthday != null and birthday != '' ">
+					and birthday=#{birthday} 
+				</if>
+				<if test=" completion != null and completion != '' ">
+					and completion=#{completion} 
+				</if>				
+		</where>
+	</select>
+	
+	<!-- 根据条件信息 -->
+	<select id="selectAll"  resultMap="colomnResult">
+		select
+		<include refid="colomnResult" /> 
+		<![CDATA[
+			from member_resume_template
+		]]>
+		<where>
+				<if test=" id != null and id != '' ">
+					and id=#{id} 
+				</if>
+				<if test=" memberId != null and memberId != '' ">
+					and memberId=#{memberId} 
+				</if>
+				<if test=" realName != null and realName != '' ">
+					and realName=#{realName} 
+				</if>
+				<if test=" sex != null and sex != '' ">
+					and sex=#{sex} 
+				</if>
+				<if test=" height != null and height != '' ">
+					and height=#{height} 
+				</if>
+				<if test=" weight != null and weight != '' ">
+					and weight=#{weight} 
+				</if>
+				<if test=" school != null and school != '' ">
+					and school=#{school} 
+				</if>
+				<if test=" cityCode != null and cityCode != '' ">
+					and cityCode=#{cityCode} 
+				</if>
+				<if test=" roleLabel != null and roleLabel != '' ">
+					and roleLabel=#{roleLabel} 
+				</if>
+				<if test=" skillLabel != null and skillLabel != '' ">
+					and skillLabel=#{skillLabel} 
+				</if>
+				<if test=" imgUuid != null and imgUuid != '' ">
+					and imgUuid=#{imgUuid} 
+				</if>
+				<if test=" status != null and status != '' ">
+					and status=#{status} 
+				</if>
+				<if test=" imgUuid1 != null and imgUuid1 != '' ">
+					and imgUuid1=#{imgUuid1} 
+				</if>
+				<if test=" imgUuid2 != null and imgUuid2 != '' ">
+					and imgUuid2=#{imgUuid2} 
+				</if>
+				<if test=" imgUuid3 != null and imgUuid3 != '' ">
+					and imgUuid3=#{imgUuid3} 
+				</if>
+				<if test=" imgUuid4 != null and imgUuid4 != '' ">
+					and imgUuid4=#{imgUuid4} 
+				</if>
+				<if test=" imgUuid5 != null and imgUuid5 != '' ">
+					and imgUuid5=#{imgUuid5} 
+				</if>
+				<if test=" imgUuid6 != null and imgUuid6 != '' ">
+					and imgUuid6=#{imgUuid6} 
+				</if>
+				<if test=" videoUuid != null and videoUuid != '' ">
+					and videoUuid=#{videoUuid} 
+				</if>
+				<if test=" createDate != null and createDate != '' ">
+					and createDate=#{createDate} 
+				</if>
+				<if test=" updateDate != null and updateDate != '' ">
+					and updateDate=#{updateDate} 
+				</if>
+				<if test=" chest != null and chest != '' ">
+					and chest=#{chest} 
+				</if>
+				<if test=" waist != null and waist != '' ">
+					and waist=#{waist} 
+				</if>
+				<if test=" hipline != null and hipline != '' ">
+					and hipline=#{hipline} 
+				</if>
+				<if test=" birthday != null and birthday != '' ">
+					and birthday=#{birthday} 
+				</if>
+				<if test=" completion != null and completion != '' ">
+					and completion=#{completion} 
+				</if>
+				<if test=" showStatus != null and showStatus != '' ">
+					and status in (1,2,3,4) 
+				</if>				
+		</where>
+		<if test="sort != null">
+				order by ${sort} ${order}
+		</if>
+	</select>
+	<!-- 根据条件查询数量 -->
+	<select id="selectCount"  resultType="int">
+
+		select count(id) from member_resume_template
+		<where>
+				<if test=" id != null and id != '' ">
+					and id=#{id} 
+				</if>
+				<if test=" memberId != null and memberId != '' ">
+					and memberId=#{memberId} 
+				</if>
+				<if test=" realName != null and realName != '' ">
+					and realName=#{realName} 
+				</if>
+				<if test=" sex != null and sex != '' ">
+					and sex=#{sex} 
+				</if>
+				<if test=" height != null and height != '' ">
+					and height=#{height} 
+				</if>
+				<if test=" weight != null and weight != '' ">
+					and weight=#{weight} 
+				</if>
+				<if test=" school != null and school != '' ">
+					and school=#{school} 
+				</if>
+				<if test=" cityCode != null and cityCode != '' ">
+					and cityCode=#{cityCode} 
+				</if>
+				<if test=" roleLabel != null and roleLabel != '' ">
+					and roleLabel=#{roleLabel} 
+				</if>
+				<if test=" skillLabel != null and skillLabel != '' ">
+					and skillLabel=#{skillLabel} 
+				</if>
+				<if test=" imgUuid != null and imgUuid != '' ">
+					and imgUuid=#{imgUuid} 
+				</if>
+				<if test=" status != null and status != '' ">
+					and status=#{status} 
+				</if>
+				<if test=" imgUuid1 != null and imgUuid1 != '' ">
+					and imgUuid1=#{imgUuid1} 
+				</if>
+				<if test=" imgUuid2 != null and imgUuid2 != '' ">
+					and imgUuid2=#{imgUuid2} 
+				</if>
+				<if test=" imgUuid3 != null and imgUuid3 != '' ">
+					and imgUuid3=#{imgUuid3} 
+				</if>
+				<if test=" imgUuid4 != null and imgUuid4 != '' ">
+					and imgUuid4=#{imgUuid4} 
+				</if>
+				<if test=" imgUuid5 != null and imgUuid5 != '' ">
+					and imgUuid5=#{imgUuid5} 
+				</if>
+				<if test=" imgUuid6 != null and imgUuid6 != '' ">
+					and imgUuid6=#{imgUuid6} 
+				</if>
+				<if test=" videoUuid != null and videoUuid != '' ">
+					and videoUuid=#{videoUuid} 
+				</if>
+				<if test=" createDate != null and createDate != '' ">
+					and createDate=#{createDate} 
+				</if>
+				<if test=" updateDate != null and updateDate != '' ">
+					and updateDate=#{updateDate} 
+				</if>
+				<if test=" chest != null and chest != '' ">
+					and chest=#{chest} 
+				</if>
+				<if test=" waist != null and waist != '' ">
+					and waist=#{waist} 
+				</if>
+				<if test=" hipline != null and hipline != '' ">
+					and hipline=#{hipline} 
+				</if>
+				<if test=" birthday != null and birthday != '' ">
+					and birthday=#{birthday} 
+				</if>
+				<if test=" completion != null and completion != '' ">
+					and completion=#{completion} 
+				</if>			
+				<if test=" showStatus != null and showStatus != '' ">
+					and status in (1,2,3,4) 
+				</if>	
+		</where>
+	</select>
+	<!-- 根据主键查询信息 -->
+	<select id="selectById"  resultMap="colomnResult">
+		select
+		<include refid="colomnResult" /> 
+		<![CDATA[
+			from member_resume_template where 
+			
+			   	 id=#{id} 
+		]]>
+		
+	</select>
+	
+	<!-- 批量删除 -->
+	<select id="selectByIds" parameterType="java.util.List" resultMap="colomnResult">
+		select
+		<include refid="colomnResult" /> 
+		 from member_resume_template where id in
+		<foreach item="idList" index="index" collection="list" open="(" separator="," close=")">
+  			#{idList}
+ 		</foreach>
+	</select>
+		
+	<!-- 批量删除 -->
+	<delete id="batchDelete" parameterType="java.util.List">
+		delete from member_resume_template where id in
+		<foreach item="idList" index="index" collection="list" open="(" separator="," close=")">
+  			#{idList}
+ 		</foreach>
+	</delete>
+	
+	<!-- 批量修改 -->
+	<update id="batchUpdate" parameterType="java.util.HashMap">
+		update member_resume_template
+		<set>
+			     <if test="id!=null">id=#{id},</if>
+			     <if test="memberId!=null">memberId=#{memberId},</if>
+			     <if test="realName!=null">realName=#{realName},</if>
+			     <if test="sex!=null">sex=#{sex},</if>
+			     <if test="height!=null">height=#{height},</if>
+			     <if test="weight!=null">weight=#{weight},</if>
+			     <if test="school!=null">school=#{school},</if>
+			     <if test="cityCode!=null">cityCode=#{cityCode},</if>
+			     <if test="roleLabel!=null">roleLabel=#{roleLabel},</if>
+			     <if test="skillLabel!=null">skillLabel=#{skillLabel},</if>
+			     <if test="imgUuid!=null">imgUuid=#{imgUuid},</if>
+			     <if test="status!=null">status=#{status},</if>
+			     <if test="imgUuid1!=null">imgUuid1=#{imgUuid1},</if>
+			     <if test="imgUuid2!=null">imgUuid2=#{imgUuid2},</if>
+			     <if test="imgUuid3!=null">imgUuid3=#{imgUuid3},</if>
+			     <if test="imgUuid4!=null">imgUuid4=#{imgUuid4},</if>
+			     <if test="imgUuid5!=null">imgUuid5=#{imgUuid5},</if>
+			     <if test="imgUuid6!=null">imgUuid6=#{imgUuid6},</if>
+			     <if test="videoUuid!=null">videoUuid=#{videoUuid},</if>
+			     <if test="createDate!=null">createDate=#{createDate},</if>
+			     <if test="updateDate!=null">updateDate=#{updateDate},</if>
+			     <if test="chest!=null">chest=#{chest},</if>
+			     <if test="waist!=null">waist=#{waist},</if>
+			     <if test="hipline!=null">hipline=#{hipline},</if>
+			     <if test="birthday!=null">birthday=#{birthday},</if>
+			     <if test="birthday!=null">completion=#{completion},</if>			     
+		</set>
+		where id in
+		<foreach item="idList" index="index" collection="list" open="(" separator="," close=")">
+  			#{idList}
+ 		</foreach>
+	</update>
+</mapper> 

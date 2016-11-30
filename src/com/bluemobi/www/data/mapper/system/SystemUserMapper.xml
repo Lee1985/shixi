@@ -1,0 +1,183 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.bluemobi.www.data.dao.system.SystemUserDao">
+
+	<resultMap id="commonResultMap" type="SystemUserInfo">
+		<id property="id" column="id" />
+		<result property="userId" column="userId" />
+		<result property="userName" column="userName" />
+		<result property="userPwd" column="userPwd" />
+		<result property="roleId" column="roleId" />
+		<result property="mobile" column="mobile" />
+		<result property="email" column="email" />
+		<result property="address" column="address" />
+		<result property="status" column="status" />
+		<result property="isDelete" column="isDelete" />
+		<result property="description" column="description" />
+		<association property="systemRole"
+			select="com.bluemobi.www.data.dao.system.SystemRoleDao.selectById"
+			column="roleId"></association>
+	</resultMap>
+	<!-- 动态sql -->
+	<sql id="colomnResult">
+		<![CDATA[
+	   id,userId,userName,userPwd,roleId,mobile,email,address,status,isDelete,description
+	 ]]>
+	</sql>
+	<sql id="commonWhere">
+	<where>
+		<if test="true">
+			and id !='root'
+		</if>
+		<if test="userId != null">
+			and userId = #{userId}
+		</if>
+		<if test="userName != null and userName!=''">
+			and userName = #{userName}
+		</if>
+		<if test="userPwd != null">
+			and userPwd = #{userPwd}
+		</if>
+		<if test="roleId != null">
+			and roleId = #{roleId}
+		</if>
+		<if test="mobile != null">
+			and mobile = #{mobile}
+		</if>
+		<if test="email != null">
+			and email = #{email}
+		</if>
+		<if test="status != null">
+			and status = #{status}
+		</if>
+		<if test="isDelete != null">
+			and isDelete = #{isDelete}
+		</if>
+	</where>
+	</sql>
+	<sql id="comWhere">
+	<where>
+		<if test="id != null">
+			and id !='root'
+		</if>
+		<if test="userId != null">
+			and userId = #{userId}
+		</if>
+		<if test="userName != null and userName!=''">
+			and userName = #{userName}
+		</if>
+		<if test="userPwd != null">
+			and userPwd = #{userPwd}
+		</if>
+		<if test="roleId != null">
+			and roleId = #{roleId}
+		</if>
+		<if test="mobile != null">
+			and mobile = #{mobile}
+		</if>
+		<if test="email != null">
+			and email = #{email}
+		</if>
+		<if test="status != null">
+			and status = #{status}
+		</if>
+		<if test="isDelete != null">
+			and isDelete = #{isDelete}
+		</if>
+	</where>
+	</sql>
+	<!-- 根据条件信息 -->
+	<select id="selectAll" resultMap="commonResultMap">
+		select
+		<include refid="colomnResult" /> 
+		<![CDATA[
+			from system_user_info
+		]]>
+		<include refid="commonWhere" /> 
+		<if test="sort != null">
+			order by ${sort} ${order}
+		</if>
+	</select>
+	<!-- 根据条件信息 -->
+	<select id="selectEntity" resultMap="commonResultMap">
+		select
+		<include refid="colomnResult" /> 
+		<![CDATA[
+			from system_user_info
+		]]>
+		<include refid="comWhere" /> 
+
+	</select>
+	<!-- 根据条件查询数量 -->
+	<select id="selectCount" resultType="int">
+
+		select count(id) from system_user_info
+		<include refid="commonWhere" />
+	</select>
+	<!-- 根据主键查询信息 -->
+	<select id="selectById" resultMap="commonResultMap">
+		select
+		<include refid="colomnResult" /> 
+		<![CDATA[
+			from system_user_info where id=#{id}
+		]]>
+
+	</select>
+	<!-- 插入信息 -->
+	<insert id="insert">
+		insert into system_user_info
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="id!=null">id,</if>
+			<if test="userId!=null">userId,</if>
+			<if test="userName!=null">userName,</if>
+			<if test="userPwd!=null">userPwd,</if>
+			<if test="roleId!=null">roleId,</if>
+			<if test="mobile!=null">mobile,</if>
+			<if test="email!=null">email,</if>
+			<if test="address!=null">address,</if>
+			<if test="status!=null">status,</if>
+			<if test="description!=null">description,</if>
+		</trim>
+		<trim prefix="values(" suffix=")" suffixOverrides=",">
+			<if test="id!=null">#{id},</if>
+			<if test="userId!=null">#{userId},</if>
+			<if test="userName!=null">#{userName},</if>
+			<if test="userPwd!=null">#{userPwd},</if>
+			<if test="roleId!=null">#{roleId},</if>
+			<if test="mobile!=null">#{mobile},</if>
+			<if test="email!=null">#{email},</if>
+			<if test="address!=null">#{address},</if>
+			<if test="status!=null">#{status},</if>
+			<if test="description!=null">#{description},</if>
+		</trim>
+
+	</insert>
+	<!-- 根据主键删除信息 -->
+	<delete id="delete">
+		<![CDATA[
+		delete from system_user_info where id=#{id}
+		]]>
+	</delete>
+	<!-- 根据主键更新信息 -->
+	<update id="update">
+		<![CDATA[
+		update system_user_info 
+		]]>
+		<set>
+			<if test="id!=null">id=#{id},</if>
+			<if test="userId!=null">userId=#{userId},</if>
+			<if test="userName!=null">userName=#{userName},</if>
+			<if test="userPwd!=null and userPwd!=''">userPwd=#{userPwd},</if>
+			<if test="roleId!=null">roleId=#{roleId},</if>
+			<if test="mobile!=null">mobile=#{mobile},</if>
+			<if test="email!=null">email=#{email},</if>
+			<if test="address!=null">address=#{address},</if>
+			<if test="status!=null">status=#{status},</if>
+			<if test="isDelete!=null">isDelete=#{isDelete},</if>
+			<if test="description!=null">description=#{description},</if>
+		</set>
+		where id=#{id}
+	</update>
+</mapper> 

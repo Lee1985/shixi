@@ -1,0 +1,228 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- namespace必须指向Dao接口 -->
+<mapper namespace="com.bluemobi.www.data.dao.message.MessagePushNotificationDao">
+
+	<resultMap id="colomnResult" type="com.bluemobi.www.data.model.message.MessagePushNotification">
+		<id property="id" column="id" />
+		<result property="title" column="title" />
+		<result property="type" column="type" />
+		<result property="receiveId" column="receiveId" />
+		<result property="content" column="content" />
+		<result property="createDate" column="createDate" />
+		<result property="status" column="status" />
+		<result property="cid" column="cid" />
+		<association property="receiveInfo"
+			select="com.bluemobi.www.data.dao.member.MemberInfoDao.selectById"
+			column="receiveId"></association>
+	</resultMap>
+	<!-- 动态sql -->
+	<sql id="colomnResult">
+		<![CDATA[
+	     id,
+	     title,
+	     type,
+	     receiveId,
+	     content,
+	     DATE_FORMAT(createDate,'%Y-%m-%d %H:%i:%S') as createDate,
+	     status,
+	     cid
+	 ]]>
+	</sql>
+	<insert id="insert">
+	   insert into message_push_notification  
+	   <trim prefix="(" suffix=")" suffixOverrides=",">
+			     <if test="id!=null">id,</if>
+			     <if test="title!=null">title,</if>
+			     <if test="type!=null">type,</if>
+			     <if test="receiveId!=null">receiveId,</if>
+			     <if test="content!=null">content,</if>
+			     <if test="createDate!=null">createDate,</if>
+			     <if test="status!=null">status,</if>
+			     <if test="cid!=null">cid,</if>
+		</trim>
+	   	<trim prefix="values(" suffix=")" suffixOverrides=",">
+			     <if test="id!=null">#{id},</if>
+			     <if test="title!=null">#{title},</if>
+			     <if test="type!=null">#{type},</if>
+			     <if test="receiveId!=null">#{receiveId},</if>
+			     <if test="content!=null">#{content},</if>
+			     <if test="createDate!=null">#{createDate},</if>
+			     <if test="status!=null">#{status},</if>
+			     <if test="cid!=null">#{cid},</if>
+		</trim>
+	</insert>
+
+	<update id="update">
+	   update message_push_notification 
+	   <set>
+			     <if test="id!=null">id=#{id},</if>
+			     <if test="title!=null">title=#{title},</if>
+			     <if test="type!=null">type=#{type},</if>
+			     <if test="receiveId!=null">receiveId=#{receiveId},</if>
+			     <if test="content!=null">content=#{content},</if>
+			     <if test="createDate!=null">createDate=#{createDate},</if>
+			     <if test="status!=null">status=#{status},</if>
+			     <if test="cid!=null">cid=#{cid},</if>
+		</set>
+		where 
+	   		 id=#{id} 
+	</update>
+
+	<delete id="delete">
+	   delete from
+	     message_push_notification 
+	   where 
+	    id=#{id} 
+	</delete>
+
+	<select id="selectEntity" resultMap="colomnResult">
+	   select 
+	<include refid="colomnResult" /> 
+	   from message_push_notification
+	  <where>
+				<if test=" id != null and id != '' ">
+					and id=#{id} 
+				</if>
+				<if test=" title != null and title != '' ">
+					and title=#{title} 
+				</if>
+				<if test=" type != null and type != '' ">
+					and type=#{type} 
+				</if>
+				<if test=" receiveId != null and receiveId != '' ">
+					and receiveId=#{receiveId} 
+				</if>
+				<if test=" content != null and content != '' ">
+					and content=#{content} 
+				</if>
+				<if test=" createDate != null and createDate != '' ">
+					and createDate=#{createDate} 
+				</if>
+				<if test=" status != null and status != '' ">
+					and status=#{status} 
+				</if>
+				<if test=" cid != null and cid != '' ">
+					and cid=#{cid} 
+				</if>
+		</where>
+	</select>
+	
+	<!-- 根据条件信息 -->
+	<select id="selectAll"  resultMap="colomnResult">
+		select
+		<include refid="colomnResult" /> 
+		<![CDATA[
+			from message_push_notification
+		]]>
+		<where>
+				<if test=" id != null and id != '' ">
+					and id=#{id} 
+				</if>
+				<if test=" title != null and title != '' ">
+					and title like '%${title}%'
+				</if>
+				<if test=" type != null and type != '' ">
+					and type=#{type} 
+				</if>
+				<if test=" receiveId != null and receiveId != '' ">
+					and receiveId=#{receiveId} 
+				</if>
+				<if test=" content != null and content != '' ">
+					and content=#{content} 
+				</if>
+				<if test=" createDate != null and createDate != '' ">
+					and createDate=#{createDate} 
+				</if>
+				<if test=" status != null and status != '' ">
+					and status=#{status} 
+				</if>
+				<if test=" cid != null and cid != '' ">
+					and cid=#{cid} 
+				</if>
+		</where>
+		<if test="sort != null">
+				order by ${sort} ${order}
+		</if>
+	</select>
+	<!-- 根据条件查询数量 -->
+	<select id="selectCount"  resultType="int">
+
+		select count(id) from message_push_notification
+		<where>
+				<if test=" id != null and id != '' ">
+					and id=#{id} 
+				</if>
+				<if test=" title != null and title != '' ">
+					and title=#{title} 
+				</if>
+				<if test=" type != null and type != '' ">
+					and type=#{type} 
+				</if>
+				<if test=" receiveId != null and receiveId != '' ">
+					and receiveId=#{receiveId} 
+				</if>
+				<if test=" content != null and content != '' ">
+					and content=#{content} 
+				</if>
+				<if test=" createDate != null and createDate != '' ">
+					and createDate=#{createDate} 
+				</if>
+				<if test=" status != null and status != '' ">
+					and status=#{status} 
+				</if>
+				<if test=" cid != null and cid != '' ">
+					and cid=#{cid} 
+				</if>
+		</where>
+	</select>
+	<!-- 根据主键查询信息 -->
+	<select id="selectById"  resultMap="colomnResult">
+		select
+		<include refid="colomnResult" /> 
+		<![CDATA[
+			from message_push_notification where 
+			
+			   	 id=#{id} 
+		]]>
+		
+	</select>
+	
+	<!-- 批量删除 -->
+	<select id="selectByIds" parameterType="java.util.List" resultMap="colomnResult">
+		select
+		<include refid="colomnResult" /> 
+		 from message_push_notification where id in
+		<foreach item="idList" index="index" collection="list" open="(" separator="," close=")">
+  			#{idList}
+ 		</foreach>
+	</select>
+		
+	<!-- 批量删除 -->
+	<delete id="batchDelete" parameterType="java.util.List">
+		delete from message_push_notification where id in
+		<foreach item="idList" index="index" collection="list" open="(" separator="," close=")">
+  			#{idList}
+ 		</foreach>
+	</delete>
+	
+	<!-- 批量修改 -->
+	<update id="batchUpdate" parameterType="java.util.HashMap">
+		update message_push_notification
+		<set>
+			     <if test="id!=null">id=#{id},</if>
+			     <if test="title!=null">title=#{title},</if>
+			     <if test="type!=null">type=#{type},</if>
+			     <if test="receiveId!=null">receiveId=#{receiveId},</if>
+			     <if test="content!=null">content=#{content},</if>
+			     <if test="createDate!=null">createDate=#{createDate},</if>
+			     <if test="status!=null">status=#{status},</if>
+			     <if test="cid!=null">cid=#{cid},</if>
+		</set>
+		where id in
+		<foreach item="idList" index="index" collection="list" open="(" separator="," close=")">
+  			#{idList}
+ 		</foreach>
+	</update>
+</mapper> 

@@ -1,0 +1,376 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- namespace必须指向Dao接口 -->
+<mapper namespace="com.bluemobi.www.data.dao.recruit.RecruitApplyInfoDao">
+
+	<resultMap id="colomnResult" type="com.bluemobi.www.data.model.recruit.RecruitApplyInfo">
+		<id property="id" column="id" />
+		<result property="roleId" column="roleId" />
+		<result property="memberId" column="memberId" />
+		<result property="resumeId" column="resumeId" />
+		<result property="videoUuid" column="videoUuid" />
+		<result property="createDate" column="createDate" />
+		<result property="updateDate" column="updateDate" />
+		<result property="status" column="status" />
+		<result property="videoStatus" column="videoStatus" />
+		<result property="level" column="level" />
+		<result property="optional" column="optional" />
+		<result property="completion" column="completion" />
+		<result property="isView" column="isView" />
+		<result property="isContact" column="isContact" />
+		<result property="isVideo" column="isVideo" />
+		<association property="memberInfo"
+			select="com.bluemobi.www.data.dao.member.MemberInfoDao.selectById"
+			column="memberId"></association>
+		<association property="roleInfo"
+			select="com.bluemobi.www.data.dao.recruit.RecruitRoleInfoDao.selectById"
+			column="roleId"></association>
+		<association property="resumeApply"
+			select="com.bluemobi.www.data.dao.member.MemberResumeApplyDao.selectById"
+			column="resumeId"></association>
+		<association property="fileInfo"
+			select="com.bluemobi.www.data.dao.system.SystemFileInfoDao.selectEntityByUuid"
+			column="{uuid=videoUuid}"></association>
+	</resultMap>
+	<!-- 动态sql -->
+	<sql id="colomnResult">
+		<![CDATA[
+	     id,
+	     roleId,
+	     memberId,
+	     resumeId,
+	     videoUuid,
+	     DATE_FORMAT(createDate,'%Y-%m-%d %H:%i:%S') as createDate,
+	     DATE_FORMAT(updateDate,'%Y-%m-%d %H:%i:%S') as updateDate,
+	     status,
+	     videoStatus,
+	     level,
+	     optional,
+	     completion,
+	     isView,
+	     isContact,
+	     isVideo
+	 ]]>
+	</sql>
+	<insert id="insert">
+	   insert into recruit_apply_info  
+	   <trim prefix="(" suffix=")" suffixOverrides=",">
+			     <if test="id!=null">id,</if>
+			     <if test="roleId!=null">roleId,</if>
+			     <if test="memberId!=null">memberId,</if>
+			     <if test="resumeId!=null">resumeId,</if>
+			     <if test="videoUuid!=null">videoUuid,</if>
+			     <if test="createDate!=null">createDate,</if>
+			     <if test="updateDate!=null">updateDate,</if>
+			     <if test="status!=null">status,</if>
+			     <if test="videoStatus!=null">videoStatus,</if>
+			     <if test="level!=null">level,</if>
+			     <if test="optional!=null">optional,</if>
+			     <if test="completion!=null">completion,</if>
+			     <if test="isView!=null">isView,</if>
+			     <if test="isContact!=null">isContact,</if>
+			     <if test="isVideo!=null">isVideo,</if>
+		</trim>
+	   	<trim prefix="values(" suffix=")" suffixOverrides=",">
+			     <if test="id!=null">#{id},</if>
+			     <if test="roleId!=null">#{roleId},</if>
+			     <if test="memberId!=null">#{memberId},</if>
+			     <if test="resumeId!=null">#{resumeId},</if>
+			     <if test="videoUuid!=null">#{videoUuid},</if>
+			     <if test="createDate!=null">#{createDate},</if>
+			     <if test="updateDate!=null">#{updateDate},</if>
+			     <if test="status!=null">#{status},</if>
+			     <if test="videoStatus!=null">#{videoStatus},</if>
+			     <if test="level!=null">#{level},</if>
+			     <if test="optional!=null">#{optional},</if>
+			     <if test="completion!=null">#{completion},</if>
+			     <if test="isView!=null">#{isView},</if>
+			     <if test="isContact!=null">#{isContact},</if>
+			     <if test="isVideo!=null">#{isVideo},</if>
+		</trim>
+	</insert>
+
+	<update id="update">
+	   update recruit_apply_info 
+	   <set>
+			     <if test="roleId!=null">roleId=#{roleId},</if>
+			     <if test="memberId!=null">memberId=#{memberId},</if>
+			     <if test="resumeId!=null">resumeId=#{resumeId},</if>
+			     <if test="videoUuid!=null">videoUuid=#{videoUuid},</if>
+			     <if test="createDate!=null">createDate=#{createDate},</if>
+			     <if test="updateDate!=null">updateDate=#{updateDate},</if>
+			     <if test="status!=null">status=#{status},</if>
+			     <if test="level!=null">level=#{level},</if>
+			     <if test="videoStatus!=null">videoStatus=#{videoStatus},</if>
+			     <if test="optional!=null">optional=#{optional},</if>
+			     <if test="completion!=null">completion=#{completion},</if>
+			     <if test="isView!=null">isView=#{isView},</if>
+			     <if test="isContact!=null">isContact=#{isContact},</if>
+			     <if test="isVideo!=null">isVideo=#{isVideo},</if>
+		</set>
+		where 
+	   		 id=#{id} 
+	</update>
+
+	<delete id="delete">
+	   delete from
+	     recruit_apply_info 
+	   where 
+	    id=#{id} 
+	</delete>
+
+	<select id="selectEntity" resultMap="colomnResult">
+	   select 
+	<include refid="colomnResult" /> 
+	   from recruit_apply_info
+	  <where>
+				<if test=" id != null and id != '' ">
+					and id=#{id} 
+				</if>
+				<if test=" roleId != null and roleId != '' ">
+					and roleId=#{roleId} 
+				</if>
+				<if test=" memberId != null and memberId != '' ">
+					and memberId=#{memberId} 
+				</if>
+				<if test=" resumeId != null and resumeId != '' ">
+					and resumeId=#{resumeId} 
+				</if>
+				<if test=" videoUuid != null and videoUuid != '' ">
+					and videoUuid=#{videoUuid} 
+				</if>
+				<if test=" createDate != null and createDate != '' ">
+					and createDate=#{createDate} 
+				</if>
+				<if test=" updateDate != null and updateDate != '' ">
+					and updateDate=#{updateDate} 
+				</if>
+				<if test=" status != null and status != '' ">
+					and status=#{status} 
+				</if>
+				<if test=" level != null and level != '' ">
+					and level=#{level} 
+				</if>
+				<if test=" videoStatus != null and videoStatus != '' ">
+					and videoStatus=#{videoStatus} 
+				</if>
+				<if test=" optional != null and optional != '' ">
+					and optional=#{optional} 
+				</if>
+				<if test=" completion != null and completion != '' ">
+					and completion=#{completion} 
+				</if>
+				<if test=" isView != null and isView != '' ">
+					and isView=#{isView} 
+				</if>
+				<if test=" isContact != null and isContact != '' ">
+					and isContact=#{isContact} 
+				</if>
+				<if test=" isVideo != null and isVideo != '' ">
+					and isVideo=#{isVideo} 
+				</if>
+		</where>
+	</select>
+	
+	<!-- 根据条件信息 -->
+	<select id="selectAll"  resultMap="colomnResult">
+		select
+		<include refid="colomnResult" /> 
+		<![CDATA[
+			from recruit_apply_info
+		]]>
+		<where>
+				<if test=" id != null and id != '' ">
+					and id=#{id} 
+				</if>
+				<if test=" roleId != null and roleId != '' ">
+					and roleId=#{roleId} 
+				</if>
+				<if test=" memberId != null and memberId != '' ">
+					and memberId=#{memberId} 
+				</if>
+				<if test=" resumeId != null and resumeId != '' ">
+					and resumeId=#{resumeId} 
+				</if>
+				<if test=" videoUuid != null and videoUuid != '' ">
+					and videoUuid=#{videoUuid} 
+				</if>
+				<if test=" createDate != null and createDate != '' ">
+					and createDate &lt; #{createDate} 
+				</if>
+				<if test=" updateDate != null and updateDate != '' ">
+					and updateDate=#{updateDate} 
+				</if>
+				<if test=" status != null and status != '' ">
+					and status=#{status} 
+				</if>
+				<if test=" level != null and level != '' ">
+					and level=#{level} 
+				</if>
+				<if test=" videoStatus != null and videoStatus != '' ">
+					and videoStatus=#{videoStatus} 
+				</if>
+				<if test=" publishName != null and publishName != '' ">
+					and roleId in (select r.id from recruit_role_info r, recruit_info i, member_info m 
+					where r.recruitId = i.id and i.memberId = m.id and m.nickname = #{publishName}) 
+				</if>
+				<if test=" roleName != null and roleName != '' ">
+					and roleId in (select id from recruit_role_info where name = #{roleName})
+				</if>
+				<if test=" recruitName != null and recruitName != '' ">
+					and roleId in (select a.id from recruit_role_info a , recruit_info b 
+					where a.recruitId = b.id and b.title = #{recruitName})
+				</if>
+				<if test=" optional != null and optional != '' ">
+					and optional=#{optional} 
+				</if>
+				<if test=" completion != null and completion != '' ">
+					and completion=#{completion} 
+				</if>
+				<if test=" inLevel != null and inLevel != '' and inLevel == '1'">
+					and level in ('1','2') 
+				</if>
+				<if test=" inLevel != null and inLevel != '' and inLevel == '0'">
+					and level in ('3','4','5') 
+				</if>
+				<if test=" realname != null and realname != ''">
+					and memberId in (select id from member_info where realName = #{realname}) 
+				</if>
+				<if test=" nickname != null and nickname != ''">
+					and memberId in (select id from member_info where nickname = #{nickname}) 
+				</if>
+				<if test=" identityType != null and identityType != '' and identityType == '1'">
+					and memberId in (select id from member_info where identityStatus = '1') 
+				</if>
+				<if test=" identityType != null and identityType != '' and identityType == '2'">
+					and memberId in (select id from member_info where identityStatus != '1') 
+				</if>
+				<if test=" isView != null and isView != '' ">
+					and isView=#{isView} 
+				</if>
+				<if test=" isContact != null and isContact != '' ">
+					and isContact=#{isContact} 
+				</if>
+				<if test=" isVideo != null and isVideo != '' ">
+					and isVideo=#{isVideo} 
+				</if>
+				<if test="resumeIdList != null and resumeIdList.size() > 0">
+					and resumeId in
+					<foreach item="resumeId" index="index" collection="resumeIdList" open="(" separator="," close=")">
+  						#{resumeId}
+ 					</foreach>
+				</if>
+		</where>
+		<if test="sort != null">
+				order by ${sort} ${order}
+		</if>
+	</select>
+	<!-- 根据条件查询数量 -->
+	<select id="selectCount"  resultType="int">
+
+		select count(id) from recruit_apply_info
+		<where>
+				<if test=" id != null and id != '' ">
+					and id=#{id} 
+				</if>
+				<if test=" roleId != null and roleId != '' ">
+					and roleId=#{roleId} 
+				</if>
+				<if test=" memberId != null and memberId != '' ">
+					and memberId=#{memberId} 
+				</if>
+				<if test=" resumeId != null and resumeId != '' ">
+					and resumeId=#{resumeId} 
+				</if>
+				<if test=" videoUuid != null and videoUuid != '' ">
+					and videoUuid=#{videoUuid} 
+				</if>
+				<if test=" createDate != null and createDate != '' ">
+					and createDate=#{createDate} 
+				</if>
+				<if test=" updateDate != null and updateDate != '' ">
+					and updateDate=#{updateDate} 
+				</if>
+				<if test=" status != null and status != '' ">
+					and status=#{status} 
+				</if>
+				<if test=" level != null and level != '' ">
+					and level=#{level} 
+				</if>
+				<if test=" videoStatus != null and videoStatus != '' ">
+					and videoStatus=#{videoStatus} 
+				</if>
+				<if test=" optional != null and optional != '' ">
+					and optional=#{optional} 
+				</if>
+				<if test=" completion != null and completion != '' ">
+					and completion=#{completion} 
+				</if>
+				<if test=" isView != null and isView != '' ">
+					and isView=#{isView} 
+				</if>
+				<if test=" isContact != null and isContact != '' ">
+					and isContact=#{isContact} 
+				</if>
+				<if test=" isVideo != null and isVideo != '' ">
+					and isVideo=#{isVideo} 
+				</if>
+		</where>
+	</select>
+	<!-- 根据主键查询信息 -->
+	<select id="selectById"  resultMap="colomnResult">
+		select
+		<include refid="colomnResult" /> 
+		<![CDATA[
+			from recruit_apply_info where 
+			
+			   	 id=#{id} 
+		]]>
+		
+	</select>
+	
+	<!-- 批量删除 -->
+	<select id="selectByIds" parameterType="java.util.List" resultMap="colomnResult">
+		select
+		<include refid="colomnResult" /> 
+		 from recruit_apply_info where id in
+		<foreach item="idList" index="index" collection="list" open="(" separator="," close=")">
+  			#{idList}
+ 		</foreach>
+	</select>
+		
+	<!-- 批量删除 -->
+	<delete id="batchDelete" parameterType="java.util.List">
+		delete from recruit_apply_info where id in
+		<foreach item="idList" index="index" collection="list" open="(" separator="," close=")">
+  			#{idList}
+ 		</foreach>
+	</delete>
+	
+	<!-- 批量修改 -->
+	<update id="batchUpdate" parameterType="java.util.HashMap">
+		update recruit_apply_info
+		<set>
+			     <if test="id!=null">id=#{id},</if>
+			     <if test="roleId!=null">roleId=#{roleId},</if>
+			     <if test="memberId!=null">memberId=#{memberId},</if>
+			     <if test="resumeId!=null">resumeId=#{resumeId},</if>
+			     <if test="videoUuid!=null">videoUuid=#{videoUuid},</if>
+			     <if test="createDate!=null">createDate=#{createDate},</if>
+			     <if test="updateDate!=null">updateDate=#{updateDate},</if>
+			     <if test="status!=null">status=#{status},</if>
+			     <if test="level!=null">level=#{level},</if>
+			     <if test="videoStatus!=null">videoStatus=#{videoStatus},</if>
+			     <if test="optional!=null">optional=#{optional},</if>
+			     <if test="completion!=null">completion=#{completion},</if>
+			     <if test="isView!=null">isView=#{isView},</if>
+			     <if test="isContact!=null">isContact=#{isContact},</if>
+			     <if test="isVideo!=null">isVideo=#{isVideo},</if>
+		</set>
+		where id in
+		<foreach item="idList" index="index" collection="list" open="(" separator="," close=")">
+  			#{idList}
+ 		</foreach>
+	</update>
+</mapper> 

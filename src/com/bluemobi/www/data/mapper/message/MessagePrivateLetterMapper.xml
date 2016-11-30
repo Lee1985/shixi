@@ -1,0 +1,406 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- namespace必须指向Dao接口 -->
+<mapper namespace="com.bluemobi.www.data.dao.message.MessagePrivateLetterDao">
+
+	<resultMap id="colomnResult" type="com.bluemobi.www.data.model.message.MessagePrivateLetter">
+		<id property="id" column="id" />
+		<result property="roleId" column="roleId" />
+		<result property="recruitId" column="recruitId" />
+		<result property="senderId" column="senderId" />
+		<result property="receiveId" column="receiveId" />
+		<result property="type" column="type" />
+		<result property="sendContent" column="sendContent" />
+		<result property="sendDate" column="sendDate" />
+		<result property="address" column="address" />
+		<result property="replyContent" column="replyContent" />
+		<result property="replyDate" column="replyDate" />
+		<result property="status" column="status" />
+		<result property="interviewDate" column="interviewDate" />
+		<result property="recentlyId" column="recentlyId" />
+		
+		<association property="senderInfo"
+			select="com.bluemobi.www.data.dao.member.MemberInfoDao.selectById"
+			column="senderId"></association>
+		<association property="receiveInfo"
+			select="com.bluemobi.www.data.dao.member.MemberInfoDao.selectById"
+			column="receiveId"></association>
+		<association property="recruitInfo"
+			select="com.bluemobi.www.data.dao.recruit.RecruitInfoDao.selectById"
+			column="recruitId"></association>
+		<association property="roleInfo"
+			select="com.bluemobi.www.data.dao.recruit.RecruitRoleInfoDao.selectById"
+			column="roleId"></association>
+	</resultMap>
+	
+	<resultMap type="map" id="unreadCountResult">
+		<result property="recentlyId" column="recentlyId" />
+		<result property="unreadCount" column="unreadCount" />
+	</resultMap>
+	
+	<!-- 动态sql -->
+	<sql id="colomnResult">
+		<![CDATA[
+	     id,
+	     roleId,
+	     recruitId,
+	     senderId,
+	     receiveId,
+	     type,
+	     sendContent,
+	     DATE_FORMAT(sendDate,'%Y-%m-%d %H:%i:%S') as sendDate,
+	     address,
+	     replyContent,
+	     DATE_FORMAT(replyDate,'%Y-%m-%d %H:%i:%S') as replyDate,
+	     status,
+	     DATE_FORMAT(interviewDate,'%Y-%m-%d %H:%i:%S') as interviewDate,
+	     recentlyId
+	 ]]>
+	</sql>
+	<insert id="insert">
+	   insert into message_private_letter  
+	   <trim prefix="(" suffix=")" suffixOverrides=",">
+			     <if test="id!=null">id,</if>
+			     <if test="roleId!=null">roleId,</if>
+			     <if test="recruitId!=null">recruitId,</if>
+			     <if test="senderId!=null">senderId,</if>
+			     <if test="receiveId!=null">receiveId,</if>
+			     <if test="type!=null">type,</if>
+			     <if test="sendContent!=null">sendContent,</if>
+			     <if test="sendDate!=null">sendDate,</if>
+			     <if test="address!=null">address,</if>
+			     <if test="replyContent!=null">replyContent,</if>
+			     <if test="replyDate!=null">replyDate,</if>
+			     <if test="status!=null">status,</if>
+			     <if test="interviewDate!=null">interviewDate,</if>
+			     <if test="recentlyId!=null">recentlyId,</if>
+		</trim>
+	   	<trim prefix="values(" suffix=")" suffixOverrides=",">
+			     <if test="id!=null">#{id},</if>
+			     <if test="roleId!=null">#{roleId},</if>
+			     <if test="recruitId!=null">#{recruitId},</if>
+			     <if test="senderId!=null">#{senderId},</if>
+			     <if test="receiveId!=null">#{receiveId},</if>
+			     <if test="type!=null">#{type},</if>
+			     <if test="sendContent!=null">#{sendContent},</if>
+			     <if test="sendDate!=null">#{sendDate},</if>
+			     <if test="address!=null">#{address},</if>
+			     <if test="replyContent!=null">#{replyContent},</if>
+			     <if test="replyDate!=null">#{replyDate},</if>
+			     <if test="status!=null">#{status},</if>
+			     <if test="interviewDate!=null">#{interviewDate},</if>
+			     <if test="recentlyId!=null">#{recentlyId},</if>			     
+		</trim>
+	</insert>
+
+	<update id="update">
+	   update message_private_letter 
+	   <set>
+			     <if test="id!=null">id=#{id},</if>
+			     <if test="roleId!=null">roleId=#{roleId},</if>
+			     <if test="recruitId!=null">recruitId=#{recruitId},</if>
+			     <if test="senderId!=null">senderId=#{senderId},</if>
+			     <if test="receiveId!=null">receiveId=#{receiveId},</if>
+			     <if test="type!=null">type=#{type},</if>
+			     <if test="sendContent!=null">sendContent=#{sendContent},</if>
+			     <if test="sendDate!=null">sendDate=#{sendDate},</if>
+			     <if test="address!=null">address=#{address},</if>
+			     <if test="replyContent!=null">replyContent=#{replyContent},</if>
+			     <if test="replyDate!=null">replyDate=#{replyDate},</if>
+			     <if test="status!=null">status=#{status},</if>
+			     <if test="interviewDate!=null">interviewDate=#{interviewDate},</if>
+			     <if test="recentlyId!=null">recentlyId=#{recentlyId},</if>			     
+		</set>
+		where 
+	   		 id=#{id} 
+	</update>
+
+	<delete id="delete">
+	   delete from
+	     message_private_letter 
+	   where 
+	    id=#{id} 
+	</delete>
+
+	<select id="selectEntity" resultMap="colomnResult">
+	   select 
+	<include refid="colomnResult" /> 
+	   from message_private_letter
+	  <where>
+				<if test=" id != null and id != '' ">
+					and id=#{id} 
+				</if>
+				<if test=" roleId != null and roleId != '' ">
+					and roleId=#{roleId} 
+				</if>
+				<if test=" recruitId != null and recruitId != '' ">
+					and recruitId=#{recruitId} 
+				</if>
+				<if test=" senderId != null and senderId != '' ">
+					and senderId=#{senderId} 
+				</if>
+				<if test=" receiveId != null and receiveId != '' ">
+					and receiveId=#{receiveId} 
+				</if>
+				<if test=" type != null and type != '' ">
+					and type=#{type} 
+				</if>
+				<if test=" sendContent != null and sendContent != '' ">
+					and sendContent=#{sendContent} 
+				</if>
+				<if test=" sendDate != null and sendDate != '' ">
+					and sendDate=#{sendDate} 
+				</if>
+				<if test=" address != null and address != '' ">
+					and address=#{address} 
+				</if>
+				<if test=" replyContent != null and replyContent != '' ">
+					and replyContent=#{replyContent} 
+				</if>
+				<if test=" replyDate != null and replyDate != '' ">
+					and replyDate=#{replyDate} 
+				</if>
+				<if test=" status != null and status != '' ">
+					and status=#{status} 
+				</if>
+				<if test=" recruitName != null and recruitName != '' ">
+					and recruitId in (select id from recruit_info where title = #{recruitName}) 
+				</if>
+				<if test=" senderName != null and senderName != '' ">
+					and senderId in (select id from member_info where nickname = #{senderName}) 
+				</if>
+				<if test=" receiveName != null and receiveName != '' ">
+					and receiveId in (select id from member_info where nickname = #{receiveName}) 
+				</if>
+				<if test=" startDate != null and startDate != '' ">
+					and sendDate >= #{startDate} 
+				</if>
+				<if test=" endDate != null and endDate != '' ">
+					and sendDate &lt;= #{endDate} 
+				</if>
+				<if test=" interviewDate != null and interviewDate != '' ">
+					and interviewDate=#{interviewDate} 
+				</if>
+				<if test=" recentlyId != null and recentlyId != '' ">
+					and recentlyId=#{recentlyId} 
+				</if>								
+		</where>
+	</select>
+	
+	<!-- 根据条件信息 -->
+	<select id="selectAll"  resultMap="colomnResult">
+		select
+		<include refid="colomnResult" /> 
+		<![CDATA[
+			from message_private_letter
+		]]>
+		<where>
+				<if test=" id != null and id != '' ">
+					and id=#{id} 
+				</if>
+				<if test=" roleId != null and roleId != '' ">
+					and roleId=#{roleId} 
+				</if>
+				<if test=" recruitId != null and recruitId != '' ">
+					and recruitId=#{recruitId} 
+				</if>
+				<if test=" senderId != null and senderId != '' ">
+					and senderId=#{senderId} 
+				</if>
+				<if test=" receiveId != null and receiveId != '' ">
+					and receiveId=#{receiveId} 
+				</if>
+				<if test=" type != null and type != '' ">
+					and type=#{type} 
+				</if>
+				<if test=" sendContent != null and sendContent != '' ">
+					and sendContent=#{sendContent} 
+				</if>
+				<if test=" sendDate != null and sendDate != '' ">
+					and sendDate=#{sendDate} 
+				</if>
+				<if test=" address != null and address != '' ">
+					and address=#{address} 
+				</if>
+				<if test=" replyContent != null and replyContent != '' ">
+					and replyContent=#{replyContent} 
+				</if>
+				<if test=" replyDate != null and replyDate != '' ">
+					and replyDate=#{replyDate} 
+				</if>
+				<if test=" status != null and status != '' ">
+					and status=#{status} 
+				</if>
+				<if test=" interviewDate != null and interviewDate != '' ">
+					and interviewDate=#{interviewDate} 
+				</if>
+				<if test=" recentlyId != null and recentlyId != '' ">
+					and recentlyId=#{recentlyId} 
+				</if>
+		</where>
+		<if test="sort != null">
+				order by ${sort} ${order}
+		</if>
+	</select>
+	<!-- 根据条件查询数量 -->
+	<select id="selectCount"  resultType="int">
+
+		select count(id) from message_private_letter
+		<where>
+				<if test=" id != null and id != '' ">
+					and id=#{id} 
+				</if>
+				<if test=" roleId != null and roleId != '' ">
+					and roleId=#{roleId} 
+				</if>
+				<if test=" recruitId != null and recruitId != '' ">
+					and recruitId=#{recruitId} 
+				</if>
+				<if test=" senderId != null and senderId != '' ">
+					and senderId=#{senderId} 
+				</if>
+				<if test=" receiveId != null and receiveId != '' ">
+					and receiveId=#{receiveId} 
+				</if>
+				<if test=" type != null and type != '' ">
+					and type=#{type} 
+				</if>
+				<if test=" sendContent != null and sendContent != '' ">
+					and sendContent=#{sendContent} 
+				</if>
+				<if test=" sendDate != null and sendDate != '' ">
+					and sendDate=#{sendDate} 
+				</if>
+				<if test=" address != null and address != '' ">
+					and address=#{address} 
+				</if>
+				<if test=" replyContent != null and replyContent != '' ">
+					and replyContent=#{replyContent} 
+				</if>
+				<if test=" replyDate != null and replyDate != '' ">
+					and replyDate=#{replyDate} 
+				</if>
+				<if test=" status != null and status != '' ">
+					and status=#{status} 
+				</if>
+				<if test=" interviewDate != null and interviewDate != '' ">
+					and interviewDate=#{interviewDate} 
+				</if>
+				<if test=" recentlyId != null and recentlyId != '' ">
+					and recentlyId=#{recentlyId} 
+				</if>
+		</where>
+	</select>
+	<!-- 根据主键查询信息 -->
+	<select id="selectById"  resultMap="colomnResult">
+		select
+		<include refid="colomnResult" /> 
+		<![CDATA[
+			from message_private_letter where 
+			
+			   	 id=#{id} 
+		]]>
+		
+	</select>
+	
+	<!-- 批量删除 -->
+	<select id="selectByIds" parameterType="java.util.List" resultMap="colomnResult">
+		select
+		<include refid="colomnResult" /> 
+		 from message_private_letter where id in
+		<foreach item="idList" index="index" collection="list" open="(" separator="," close=")">
+  			#{idList}
+ 		</foreach>
+	</select>
+	
+	<select id="selectUnreadInfo" resultMap="unreadCountResult">
+		select recentlyId,count(id) unreadCount
+		  from message_private_letter
+		 where status = #{status} and receiveId = #{receiveId}
+		 group by recentlyId
+	</select>
+	
+	<select id="selectPrivateRecords" resultMap="colomnResult">
+		select * from 
+		(select <include refid="colomnResult" /> from message_private_letter 
+		 where senderId=#{contactId} and receiveId=#{memberId}
+		 union all
+		select <include refid="colomnResult" /> from message_private_letter
+		 where senderId=#{memberId} and receiveId=#{contactId}) t 
+		 order by t.sendDate desc
+	</select>
+	
+	<select id="selectPrivateRecordCount"  resultType="int">
+		select count(t.id) from 
+		(select <include refid="colomnResult" /> from message_private_letter 
+		 where senderId=#{contactId} and receiveId=#{memberId}
+		 union all
+		select <include refid="colomnResult" /> from message_private_letter
+		 where senderId=#{memberId} and receiveId=#{contactId}) t	
+	</select>
+		
+	<!-- 后台私信管理 -->	
+	<select id="selectPrivateMessageRecord" resultMap="colomnResult">
+		select
+			a.memberId,
+			b.nickname,
+			count(a.memberId) as contactNumber,
+			max(a.editTime) as recentContactDate,
+			a.type
+		from
+			message_private_message_recent a left JOIN
+			member_info b on a.memberId = b.id			
+		<where>
+			<if test="nickname != null and nickname != ''">
+				and b.nickname like concat('%','${nickname}','%' )
+			</if>
+		</where>		
+		group by a.memberId				
+	</select>	
+		
+	<!-- 根据条件查询数量 -->
+	<select id="selectPrivateMessageRecordCount"  resultType="int">
+		select count(*) 
+		  from message_private_letter a left join
+		  member_info b on a.memberId = b.id
+		<where>
+			<if test="nickname != null and nickname != ''">
+				and b.nickname like concat('%','${nickname}','%' )
+			</if>
+		</where>
+	</select>
+		
+	<!-- 批量删除 -->
+	<delete id="batchDelete" parameterType="java.util.List">
+		delete from message_private_letter where id in
+		<foreach item="idList" index="index" collection="list" open="(" separator="," close=")">
+  			#{idList}
+ 		</foreach>
+	</delete>
+	
+	<!-- 批量修改 -->
+	<update id="batchUpdate" parameterType="java.util.HashMap">
+		update message_private_letter
+		<set>
+			     <if test="id!=null">id=#{id},</if>
+			     <if test="roleId!=null">roleId=#{roleId},</if>
+			     <if test="recruitId!=null">recruitId=#{recruitId},</if>
+			     <if test="senderId!=null">senderId=#{senderId},</if>
+			     <if test="receiveId!=null">receiveId=#{receiveId},</if>
+			     <if test="type!=null">type=#{type},</if>
+			     <if test="sendContent!=null">sendContent=#{sendContent},</if>
+			     <if test="sendDate!=null">sendDate=#{sendDate},</if>
+			     <if test="address!=null">address=#{address},</if>
+			     <if test="replyContent!=null">replyContent=#{replyContent},</if>
+			     <if test="replyDate!=null">replyDate=#{replyDate},</if>
+			     <if test="status!=null">status=#{status},</if>
+			     <if test="interviewDate!=null">interviewDate=#{interviewDate},</if>
+			     <if test="recentlyId!=null">recentlyId=#{recentlyId},</if>			     
+		</set>
+		where id in
+		<foreach item="idList" index="index" collection="list" open="(" separator="," close=")">
+  			#{idList}
+ 		</foreach>
+	</update>
+</mapper> 

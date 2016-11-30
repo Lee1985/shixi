@@ -1,0 +1,267 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- namespace必须指向Dao接口 -->
+<mapper namespace="com.bluemobi.www.data.dao.system.SystemHomePageDao">
+
+	<resultMap id="colomnResult" type="com.bluemobi.www.data.model.system.SystemHomePage">
+		<id property="id" column="id" />
+		<result property="imgUuid" column="imgUuid" />
+		<result property="title" column="title" />
+		<result property="orderList" column="orderList" />
+		<result property="recruitId" column="recruitId" />
+		<result property="activityId" column="activityId" />
+		<result property="companyActivityId" column="companyActivityId" />
+		<result property="type" column="type" />
+		<result property="status" column="status" />
+		<result property="createDate" column="createDate" />
+		<association property="pictureInfo"
+			select="com.bluemobi.www.data.dao.system.SystemPictureInfoDao.selectEntityByUuid"
+			column="{uuid=imgUuid}"></association>
+		<association property="recruitInfo"
+			select="com.bluemobi.www.data.dao.recruit.RecruitInfoDao.selectById"
+			column="recruitId"></association>
+		<association property="activityInfo"
+			select="com.bluemobi.www.data.dao.activity.ActivityInfoDao.selectById"
+			column="activityId"></association>
+		<association property="companyInternal"
+			select="com.bluemobi.www.data.dao.activity.ActivityCompanyInternalDao.selectById"
+			column="companyActivityId"></association>
+	</resultMap>
+	<!-- 动态sql -->
+	<sql id="colomnResult">
+		<![CDATA[
+	     id,
+	     imgUuid,
+	     title,
+	     orderList,
+	     recruitId,
+	     activityId,
+	     companyActivityId,
+	     type,
+	     status,
+	     DATE_FORMAT(createDate,'%Y-%m-%d %H:%i:%S') as createDate
+	 ]]>
+	</sql>
+	<insert id="insert">
+	   insert into system_home_page  
+	   <trim prefix="(" suffix=")" suffixOverrides=",">
+			     <if test="id!=null">id,</if>
+			     <if test="imgUuid!=null">imgUuid,</if>
+			     <if test="title!=null">title,</if>
+			     <if test="orderList!=null">orderList,</if>
+			     <if test="recruitId!=null">recruitId,</if>
+			     <if test="activityId!=null">activityId,</if>
+			     <if test="companyActivityId!=null">companyActivityId,</if>
+			     <if test="type!=null">type,</if>
+			     <if test="status!=null">status,</if>
+			     <if test="createDate!=null">createDate,</if>
+		</trim>
+	   	<trim prefix="values(" suffix=")" suffixOverrides=",">
+			     <if test="id!=null">#{id},</if>
+			     <if test="imgUuid!=null">#{imgUuid},</if>
+			     <if test="title!=null">#{title},</if>
+			     <if test="orderList!=null">#{orderList},</if>
+			     <if test="recruitId!=null">#{recruitId},</if>
+			     <if test="activityId!=null">#{activityId},</if>
+			     <if test="companyActivityId!=null">#{companyActivityId},</if>
+			     <if test="type!=null">#{type},</if>
+			     <if test="status!=null">#{status},</if>
+			     <if test="createDate!=null">#{createDate},</if>
+		</trim>
+	</insert>
+
+	<update id="update">
+	   update system_home_page 
+	   <set>
+			     <if test="id!=null">id=#{id},</if>
+			     <if test="imgUuid!=null">imgUuid=#{imgUuid},</if>
+			     <if test="title!=null">title=#{title},</if>
+			     <if test="orderList!=null">orderList=#{orderList},</if>
+			     <if test="recruitId!=null">recruitId=#{recruitId},</if>
+			     <if test="activityId!=null">activityId=#{activityId},</if>
+			     <if test="companyActivityId!=null">companyActivityId=#{companyActivityId},</if>
+			     <if test="type!=null">type=#{type},</if>
+			     <if test="status!=null">status=#{status},</if>
+			     <if test="createDate!=null">createDate=#{createDate},</if>
+		</set>
+		where 
+	   		 id=#{id} 
+	</update>
+
+	<delete id="delete">
+	   delete from
+	     system_home_page 
+	   where 
+	    id=#{id} 
+	</delete>
+
+	<select id="selectEntity" resultMap="colomnResult">
+	   select 
+	<include refid="colomnResult" /> 
+	   from system_home_page
+	  <where>
+				<if test=" id != null and id != '' ">
+					and id=#{id} 
+				</if>
+				<if test=" imgUuid != null and imgUuid != '' ">
+					and imgUuid=#{imgUuid} 
+				</if>
+				<if test=" title != null and title != '' ">
+					and title=#{title} 
+				</if>
+				<if test=" orderList != null and orderList != '' ">
+					and orderList=#{orderList} 
+				</if>
+				<if test=" recruitId != null and recruitId != '' ">
+					and recruitId=#{recruitId} 
+				</if>
+				<if test=" activityId != null and activityId != '' ">
+					and activityId=#{activityId} 
+				</if>
+				<if test=" companyActivityId != null and companyActivityId != '' ">
+					and companyActivityId=#{companyActivityId} 
+				</if>
+				<if test=" type != null and type != '' ">
+					and type=#{type} 
+				</if>
+				<if test=" status != null and status != '' ">
+					and status=#{status} 
+				</if>
+				<if test=" createDate != null and createDate != '' ">
+					and createDate=#{createDate} 
+				</if>
+		</where>
+	</select>
+	
+	<!-- 根据条件信息 -->
+	<select id="selectAll"  resultMap="colomnResult">
+		select
+		<include refid="colomnResult" /> 
+		<![CDATA[
+			from system_home_page
+		]]>
+		<where>
+				<if test=" id != null and id != '' ">
+					and id=#{id} 
+				</if>
+				<if test=" imgUuid != null and imgUuid != '' ">
+					and imgUuid=#{imgUuid} 
+				</if>
+				<if test=" title != null and title != '' ">
+					and title=#{title} 
+				</if>
+				<if test=" orderList != null and orderList != '' ">
+					and orderList=#{orderList} 
+				</if>
+				<if test=" recruitId != null and recruitId != '' ">
+					and recruitId=#{recruitId} 
+				</if>
+				<if test=" activityId != null and activityId != '' ">
+					and activityId=#{activityId} 
+				</if>
+				<if test=" companyActivityId != null and companyActivityId != '' ">
+					and companyActivityId=#{companyActivityId} 
+				</if>
+				<if test=" type != null and type != '' ">
+					and type=#{type} 
+				</if>
+				<if test=" status != null and status != '' ">
+					and status=#{status} 
+				</if>
+				<if test=" createDate != null and createDate != '' ">
+					and createDate=#{createDate} 
+				</if>
+		</where>
+		<if test="sort != null">
+				order by ${sort} ${order}
+		</if>
+	</select>
+	<!-- 根据条件查询数量 -->
+	<select id="selectCount"  resultType="int">
+
+		select count(id) from system_home_page
+		<where>
+				<if test=" id != null and id != '' ">
+					and id=#{id} 
+				</if>
+				<if test=" imgUuid != null and imgUuid != '' ">
+					and imgUuid=#{imgUuid} 
+				</if>
+				<if test=" title != null and title != '' ">
+					and title=#{title} 
+				</if>
+				<if test=" orderList != null and orderList != '' ">
+					and orderList=#{orderList} 
+				</if>
+				<if test=" recruitId != null and recruitId != '' ">
+					and recruitId=#{recruitId} 
+				</if>
+				<if test=" activityId != null and activityId != '' ">
+					and activityId=#{activityId} 
+				</if>
+				<if test=" companyActivityId != null and companyActivityId != '' ">
+					and companyActivityId=#{companyActivityId} 
+				</if>
+				<if test=" type != null and type != '' ">
+					and type=#{type} 
+				</if>
+				<if test=" status != null and status != '' ">
+					and status=#{status} 
+				</if>
+				<if test=" createDate != null and createDate != '' ">
+					and createDate=#{createDate} 
+				</if>
+		</where>
+	</select>
+	<!-- 根据主键查询信息 -->
+	<select id="selectById"  resultMap="colomnResult">
+		select
+		<include refid="colomnResult" /> 
+		<![CDATA[
+			from system_home_page where 
+			
+			   	 id=#{id} 
+		]]>
+		
+	</select>
+	
+	<!-- 批量删除 -->
+	<select id="selectByIds" parameterType="java.util.List" resultMap="colomnResult">
+		select
+		<include refid="colomnResult" /> 
+		 from system_home_page where id in
+		<foreach item="idList" index="index" collection="list" open="(" separator="," close=")">
+  			#{idList}
+ 		</foreach>
+	</select>
+		
+	<!-- 批量删除 -->
+	<delete id="batchDelete" parameterType="java.util.List">
+		delete from system_home_page where id in
+		<foreach item="idList" index="index" collection="list" open="(" separator="," close=")">
+  			#{idList}
+ 		</foreach>
+	</delete>
+	
+	<!-- 批量修改 -->
+	<update id="batchUpdate" parameterType="java.util.HashMap">
+		update system_home_page
+		<set>
+			     <if test="id!=null">id=#{id},</if>
+			     <if test="imgUuid!=null">imgUuid=#{imgUuid},</if>
+			     <if test="title!=null">title=#{title},</if>
+			     <if test="orderList!=null">orderList=#{orderList},</if>
+			     <if test="recruitId!=null">recruitId=#{recruitId},</if>
+			     <if test="activityId!=null">activityId=#{activityId},</if>
+			     <if test="companyActivityId!=null">companyActivityId=#{companyActivityId},</if>
+			     <if test="type!=null">type=#{type},</if>
+			     <if test="status!=null">status=#{status},</if>
+			     <if test="createDate!=null">createDate=#{createDate},</if>
+		</set>
+		where id in
+		<foreach item="idList" index="index" collection="list" open="(" separator="," close=")">
+  			#{idList}
+ 		</foreach>
+	</update>
+</mapper> 

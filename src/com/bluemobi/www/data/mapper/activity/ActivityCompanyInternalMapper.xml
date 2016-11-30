@@ -1,0 +1,183 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- namespace必须指向Dao接口 -->
+<mapper namespace="com.bluemobi.www.data.dao.activity.ActivityCompanyInternalDao">
+
+	<resultMap id="colomnResult" type="com.bluemobi.www.data.model.activity.ActivityCompanyInternal">
+		<id property="id" column="id" />
+		<result property="title" column="title" />
+		<result property="imgUuid" column="imgUuid" />
+		<result property="content" column="content" />
+		<result property="createDate" column="createDate" />
+		<association property="pictureInfo"
+			select="com.bluemobi.www.data.dao.system.SystemPictureInfoDao.selectEntityByUuid"
+			column="{uuid=imgUuid}"></association>
+	</resultMap>
+	<!-- 动态sql -->
+	<sql id="colomnResult">
+		<![CDATA[
+	     id,
+	     title,
+	     imgUuid,
+	     content,
+	     DATE_FORMAT(createDate,'%Y-%m-%d %H:%i:%S') as createDate
+	 ]]>
+	</sql>
+	<insert id="insert">
+	   insert into activity_company_internal  
+	   <trim prefix="(" suffix=")" suffixOverrides=",">
+			     <if test="id!=null">id,</if>
+			     <if test="title!=null">title,</if>
+			     <if test="imgUuid!=null">imgUuid,</if>
+			     <if test="content!=null">content,</if>
+			     <if test="createDate!=null">createDate,</if>
+		</trim>
+	   	<trim prefix="values(" suffix=")" suffixOverrides=",">
+			     <if test="id!=null">#{id},</if>
+			     <if test="title!=null">#{title},</if>
+			     <if test="imgUuid!=null">#{imgUuid},</if>
+			     <if test="content!=null">#{content},</if>
+			     <if test="createDate!=null">#{createDate},</if>
+		</trim>
+	</insert>
+
+	<update id="update">
+	   update activity_company_internal 
+	   <set>
+			     <if test="id!=null">id=#{id},</if>
+			     <if test="title!=null">title=#{title},</if>
+			     <if test="imgUuid!=null">imgUuid=#{imgUuid},</if>
+			     <if test="content!=null">content=#{content},</if>
+			     <if test="createDate!=null">createDate=#{createDate},</if>
+		</set>
+		where 
+	   		 id=#{id} 
+	</update>
+
+	<delete id="delete">
+	   delete from
+	     activity_company_internal 
+	   where 
+	    id=#{id} 
+	</delete>
+
+	<select id="selectEntity" resultMap="colomnResult">
+	   select 
+	<include refid="colomnResult" /> 
+	   from activity_company_internal
+	  <where>
+				<if test=" id != null and id != '' ">
+					and id=#{id} 
+				</if>
+				<if test=" title != null and title != '' ">
+					and title=#{title} 
+				</if>
+				<if test=" imgUuid != null and imgUuid != '' ">
+					and imgUuid=#{imgUuid} 
+				</if>
+				<if test=" content != null and content != '' ">
+					and content=#{content} 
+				</if>
+				<if test=" createDate != null and createDate != '' ">
+					and createDate=#{createDate} 
+				</if>
+		</where>
+	</select>
+	
+	<!-- 根据条件信息 -->
+	<select id="selectAll"  resultMap="colomnResult">
+		select
+		<include refid="colomnResult" /> 
+		<![CDATA[
+			from activity_company_internal
+		]]>
+		<where>
+				<if test=" id != null and id != '' ">
+					and id=#{id} 
+				</if>
+				<if test=" title != null and title != '' ">
+					and title=#{title} 
+				</if>
+				<if test=" imgUuid != null and imgUuid != '' ">
+					and imgUuid=#{imgUuid} 
+				</if>
+				<if test=" content != null and content != '' ">
+					and content=#{content} 
+				</if>
+				<if test=" createDate != null and createDate != '' ">
+					and createDate=#{createDate} 
+				</if>
+		</where>
+		<if test="sort != null">
+				order by ${sort} ${order}
+		</if>
+	</select>
+	<!-- 根据条件查询数量 -->
+	<select id="selectCount"  resultType="int">
+
+		select count(id) from activity_company_internal
+		<where>
+				<if test=" id != null and id != '' ">
+					and id=#{id} 
+				</if>
+				<if test=" title != null and title != '' ">
+					and title=#{title} 
+				</if>
+				<if test=" imgUuid != null and imgUuid != '' ">
+					and imgUuid=#{imgUuid} 
+				</if>
+				<if test=" content != null and content != '' ">
+					and content=#{content} 
+				</if>
+				<if test=" createDate != null and createDate != '' ">
+					and createDate=#{createDate} 
+				</if>
+		</where>
+	</select>
+	<!-- 根据主键查询信息 -->
+	<select id="selectById"  resultMap="colomnResult">
+		select
+		<include refid="colomnResult" /> 
+		<![CDATA[
+			from activity_company_internal where 
+			
+			   	 id=#{id} 
+		]]>
+		
+	</select>
+	
+	<!-- 批量删除 -->
+	<select id="selectByIds" parameterType="java.util.List" resultMap="colomnResult">
+		select
+		<include refid="colomnResult" /> 
+		 from activity_company_internal where id in
+		<foreach item="idList" index="index" collection="list" open="(" separator="," close=")">
+  			#{idList}
+ 		</foreach>
+	</select>
+		
+	<!-- 批量删除 -->
+	<delete id="batchDelete" parameterType="java.util.List">
+		delete from activity_company_internal where id in
+		<foreach item="idList" index="index" collection="list" open="(" separator="," close=")">
+  			#{idList}
+ 		</foreach>
+	</delete>
+	
+	<!-- 批量修改 -->
+	<update id="batchUpdate" parameterType="java.util.HashMap">
+		update activity_company_internal
+		<set>
+			     <if test="id!=null">id=#{id},</if>
+			     <if test="title!=null">title=#{title},</if>
+			     <if test="imgUuid!=null">imgUuid=#{imgUuid},</if>
+			     <if test="content!=null">content=#{content},</if>
+			     <if test="createDate!=null">createDate=#{createDate},</if>
+		</set>
+		where id in
+		<foreach item="idList" index="index" collection="list" open="(" separator="," close=")">
+  			#{idList}
+ 		</foreach>
+	</update>
+</mapper> 

@@ -1,0 +1,214 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- namespace必须指向Dao接口 -->
+<mapper namespace="com.bluemobi.www.data.dao.message.MessageOfficialNoticeDao">
+
+	<resultMap id="colomnResult" type="com.bluemobi.www.data.model.message.MessageOfficialNotice">
+		<id property="id" column="id" />
+		<result property="title" column="title" />
+		<result property="imgUuid" column="imgUuid" />
+		<result property="description" column="description" />
+		<result property="status" column="status" />
+		<result property="createDate" column="createDate" />
+		<result property="content" column="content" />
+		<association property="pictureInfo"
+			select="com.bluemobi.www.data.dao.system.SystemPictureInfoDao.selectEntityByUuid"
+			column="{uuid=imgUuid}"></association>
+			
+	</resultMap>
+	<!-- 动态sql -->
+	<sql id="colomnResult">
+		<![CDATA[
+	     id,
+	     title,
+	     imgUuid,
+	     description,
+	     status,
+	     DATE_FORMAT(createDate,'%Y-%m-%d %H:%i:%S') as createDate,
+	     content
+	 ]]>
+	</sql>
+	<insert id="insert">
+	   insert into message_official_notice  
+	   <trim prefix="(" suffix=")" suffixOverrides=",">
+			     <if test="id!=null">id,</if>
+			     <if test="title!=null">title,</if>
+			     <if test="imgUuid!=null">imgUuid,</if>
+			     <if test="description!=null">description,</if>
+			     <if test="status!=null">status,</if>
+			     <if test="createDate!=null">createDate,</if>
+			     <if test="content!=null">content,</if>
+		</trim>
+	   	<trim prefix="values(" suffix=")" suffixOverrides=",">
+			     <if test="id!=null">#{id},</if>
+			     <if test="title!=null">#{title},</if>
+			     <if test="imgUuid!=null">#{imgUuid},</if>
+			     <if test="description!=null">#{description},</if>
+			     <if test="status!=null">#{status},</if>
+			     <if test="createDate!=null">#{createDate},</if>
+			     <if test="content!=null">#{content},</if>
+		</trim>
+	</insert>
+
+	<update id="update">
+	   update message_official_notice 
+	   <set>
+			     <if test="id!=null">id=#{id},</if>
+			     <if test="title!=null">title=#{title},</if>
+			     <if test="imgUuid!=null">imgUuid=#{imgUuid},</if>
+			     <if test="description!=null">description=#{description},</if>
+			     <if test="status!=null">status=#{status},</if>
+			     <if test="createDate!=null">createDate=#{createDate},</if>
+			     <if test="content!=null">content=#{content},</if>
+		</set>
+		where 
+	   		 id=#{id} 
+	</update>
+
+	<delete id="delete">
+	   delete from
+	     message_official_notice 
+	   where 
+	    id=#{id} 
+	</delete>
+
+	<select id="selectEntity" resultMap="colomnResult">
+	   select 
+	<include refid="colomnResult" /> 
+	   from message_official_notice
+	  <where>
+				<if test=" id != null and id != '' ">
+					and id=#{id} 
+				</if>
+				<if test=" title != null and title != '' ">
+					and title=#{title} 
+				</if>
+				<if test=" imgUuid != null and imgUuid != '' ">
+					and imgUuid=#{imgUuid} 
+				</if>
+				<if test=" description != null and description != '' ">
+					and description=#{description} 
+				</if>
+				<if test=" status != null and status != '' ">
+					and status=#{status} 
+				</if>
+				<if test=" createDate != null and createDate != '' ">
+					and createDate=#{createDate} 
+				</if>
+				<if test=" content != null and content != '' ">
+					and content=#{content} 
+				</if>
+		</where>
+	</select>
+	
+	<!-- 根据条件信息 -->
+	<select id="selectAll"  resultMap="colomnResult">
+		select
+		<include refid="colomnResult" /> 
+		<![CDATA[
+			from message_official_notice
+		]]>
+		<where>
+				<if test=" id != null and id != '' ">
+					and id=#{id} 
+				</if>
+				<if test=" title != null and title != '' ">
+					and title=#{title} 
+				</if>
+				<if test=" imgUuid != null and imgUuid != '' ">
+					and imgUuid=#{imgUuid} 
+				</if>
+				<if test=" description != null and description != '' ">
+					and description=#{description} 
+				</if>
+				<if test=" status != null and status != '' ">
+					and status=#{status} 
+				</if>
+				<if test=" createDate != null and createDate != '' ">
+					and createDate=#{createDate} 
+				</if>
+				<if test=" content != null and content != '' ">
+					and content=#{content} 
+				</if>
+		</where>
+		<if test="sort != null">
+				order by ${sort} ${order}
+		</if>
+	</select>
+	<!-- 根据条件查询数量 -->
+	<select id="selectCount"  resultType="int">
+
+		select count(id) from message_official_notice
+		<where>
+				<if test=" id != null and id != '' ">
+					and id=#{id} 
+				</if>
+				<if test=" title != null and title != '' ">
+					and title=#{title} 
+				</if>
+				<if test=" imgUuid != null and imgUuid != '' ">
+					and imgUuid=#{imgUuid} 
+				</if>
+				<if test=" description != null and description != '' ">
+					and description=#{description} 
+				</if>
+				<if test=" status != null and status != '' ">
+					and status=#{status} 
+				</if>
+				<if test=" createDate != null and createDate != '' ">
+					and createDate=#{createDate} 
+				</if>
+				<if test=" content != null and content != '' ">
+					and content=#{content} 
+				</if>
+		</where>
+	</select>
+	<!-- 根据主键查询信息 -->
+	<select id="selectById"  resultMap="colomnResult">
+		select
+		<include refid="colomnResult" /> 
+		<![CDATA[
+			from message_official_notice where 
+			
+			   	 id=#{id} 
+		]]>
+		
+	</select>
+	
+	<!-- 批量删除 -->
+	<select id="selectByIds" parameterType="java.util.List" resultMap="colomnResult">
+		select
+		<include refid="colomnResult" /> 
+		 from message_official_notice where id in
+		<foreach item="idList" index="index" collection="list" open="(" separator="," close=")">
+  			#{idList}
+ 		</foreach>
+	</select>
+		
+	<!-- 批量删除 -->
+	<delete id="batchDelete" parameterType="java.util.List">
+		delete from message_official_notice where id in
+		<foreach item="idList" index="index" collection="list" open="(" separator="," close=")">
+  			#{idList}
+ 		</foreach>
+	</delete>
+	
+	<!-- 批量修改 -->
+	<update id="batchUpdate" parameterType="java.util.HashMap">
+		update message_official_notice
+		<set>
+			     <if test="id!=null">id=#{id},</if>
+			     <if test="title!=null">title=#{title},</if>
+			     <if test="imgUuid!=null">imgUuid=#{imgUuid},</if>
+			     <if test="description!=null">description=#{description},</if>
+			     <if test="status!=null">status=#{status},</if>
+			     <if test="createDate!=null">createDate=#{createDate},</if>
+			     <if test="content!=null">content=#{content},</if>
+		</set>
+		where id in
+		<foreach item="idList" index="index" collection="list" open="(" separator="," close=")">
+  			#{idList}
+ 		</foreach>
+	</update>
+</mapper> 

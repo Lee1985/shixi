@@ -1,0 +1,494 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- namespace必须指向Dao接口 -->
+<mapper namespace="com.bluemobi.www.data.dao.recruit.RecruitInfoTempDao">
+
+	<resultMap id="colomnResult" type="com.bluemobi.www.data.model.recruit.RecruitInfoTemp">
+		<id property="id" column="id" />
+		<result property="recruitId" column="recruitId" />
+		<result property="memberId" column="memberId" />
+		<result property="title" column="title" />
+		<result property="type" column="type" />
+		<result property="cityCode" column="cityCode" />
+		<result property="lableCode" column="lableCode" />
+		<result property="director" column="director" />
+		<result property="screenwriter" column="screenwriter" />
+		<result property="startDate" column="startDate" />
+		<result property="endDate" column="endDate" />
+		<result property="deadline" column="deadline" />
+		<result property="deadlineDate" column="deadlineDate" />
+		<result property="status" column="status" />
+		<result property="scriptOutline" column="scriptOutline" />
+		<result property="remark" column="remark" />
+		<result property="createDate" column="createDate" />
+		<result property="isDelete" column="isDelete" />
+		<result property="startDateStr" column="startDateStr" />
+		<result property="endDateStr" column="endDateStr" />
+		<result property="deadlineStr" column="deadlineStr" />
+		<result property="reply" column="reply" />
+		<association property="memberInfo"
+			select="com.bluemobi.www.data.dao.member.MemberInfoDao.selectById"
+			column="memberId"></association>
+		<association property="category"
+			select="com.bluemobi.www.data.dao.recruit.RecruitCategoryDao.selectById"
+			column="lableCode"></association>
+		<association property="city"
+			select="com.bluemobi.www.data.dao.system.SystemHotspotCityDao.selectById"
+			column="cityCode"></association>
+	</resultMap>
+	<!-- 动态sql -->
+	<sql id="colomnResult">
+		<![CDATA[
+	     id,
+	     recruitId,
+	     memberId,
+	     title,
+	     type,
+	     cityCode,
+	     lableCode,
+	     director,
+	     screenwriter,
+	     DATE_FORMAT(startDate,'%Y-%m-%d') as startDate,
+	     DATE_FORMAT(endDate,'%Y-%m-%d') as endDate,
+	     DATE_FORMAT(deadline,'%Y-%m-%d') as deadline,
+	     deadline as deadlineDate,
+	     status,
+	     scriptOutline,
+	     remark,
+	     DATE_FORMAT(createDate,'%Y-%m-%d %H:%i:%S') as createDate,
+	     isDelete,
+	     DATE_FORMAT(startDate,'%Y年%m月%d日') as startDateStr,
+	     DATE_FORMAT(endDate,'%Y年%m月%d日') as endDateStr,
+	     DATE_FORMAT(deadline,'%Y年%m月%d日') as deadlineStr,
+	     reply
+	 ]]>
+	</sql>
+	<insert id="insert">
+	   insert into recruit_info_temp  
+	   <trim prefix="(" suffix=")" suffixOverrides=",">
+			     <if test="id!=null">id,</if>
+			     <if test="recruitId!=null">recruitId,</if>
+			     <if test="memberId!=null">memberId,</if>
+			     <if test="title!=null">title,</if>
+			     <if test="type!=null">type,</if>
+			     <if test="cityCode!=null">cityCode,</if>
+			     <if test="lableCode!=null">lableCode,</if>
+			     <if test="director!=null">director,</if>
+			     <if test="screenwriter!=null">screenwriter,</if>
+			     <if test="startDate!=null">startDate,</if>
+			     <if test="endDate!=null">endDate,</if>
+			     <if test="deadline!=null">deadline,</if>
+			     <if test="status!=null">status,</if>
+			     <if test="scriptOutline!=null">scriptOutline,</if>
+			     <if test="remark!=null">remark,</if>
+			     <if test="createDate!=null">createDate,</if>
+			     <if test="isDelete!=null">isDelete,</if>
+			     <if test="reply!=null">reply,</if>
+		</trim>
+	   	<trim prefix="values(" suffix=")" suffixOverrides=",">
+			     <if test="id!=null">#{id},</if>
+			     <if test="recruitId!=null">#{recruitId},</if>
+			     <if test="memberId!=null">#{memberId},</if>
+			     <if test="title!=null">#{title},</if>
+			     <if test="type!=null">#{type},</if>
+			     <if test="cityCode!=null">#{cityCode},</if>
+			     <if test="lableCode!=null">#{lableCode},</if>
+			     <if test="director!=null">#{director},</if>
+			     <if test="screenwriter!=null">#{screenwriter},</if>
+			     <if test="startDate!=null">#{startDate},</if>
+			     <if test="endDate!=null">#{endDate},</if>
+			     <if test="deadline!=null">#{deadline},</if>
+			     <if test="status!=null">#{status},</if>
+			     <if test="scriptOutline!=null">#{scriptOutline},</if>
+			     <if test="remark!=null">#{remark},</if>
+			     <if test="createDate!=null">#{createDate},</if>
+			     <if test="isDelete!=null">#{isDelete},</if>
+			     <if test="reply!=null">#{reply},</if>
+		</trim>
+	</insert>
+
+	<update id="update">
+	   update recruit_info_temp 
+	   <set>
+			     <if test="id!=null">id=#{id},</if>
+			     <if test="recruitId!=null">recruitId=#{recruitId},</if>
+			     <if test="memberId!=null">memberId=#{memberId},</if>
+			     <if test="title!=null">title=#{title},</if>
+			     <if test="type!=null">type=#{type},</if>
+			     <if test="cityCode!=null">cityCode=#{cityCode},</if>
+			     <if test="lableCode!=null">lableCode=#{lableCode},</if>
+			     <if test="director!=null">director=#{director},</if>
+			     <if test="screenwriter!=null">screenwriter=#{screenwriter},</if>
+			     <if test="startDate!=null">startDate=#{startDate},</if>
+			     <if test="endDate!=null">endDate=#{endDate},</if>
+			     <if test="deadline!=null">deadline=#{deadline},</if>
+			     <if test="status!=null">status=#{status},</if>
+			     <if test="scriptOutline!=null">scriptOutline=#{scriptOutline},</if>
+			     <if test="remark!=null">remark=#{remark},</if>
+			     <if test="createDate!=null">createDate=#{createDate},</if>
+			     <if test="isDelete!=null">isDelete=#{isDelete},</if>
+			     <if test="reply!=null">reply=#{reply},</if>
+		</set>
+		where 
+	   		 id=#{id} 
+	</update>
+
+	<delete id="delete">
+	   delete from
+	     recruit_info_temp 
+	   where 
+	    id=#{id} 
+	</delete>
+
+	<select id="selectEntity" resultMap="colomnResult">
+	   select 
+	<include refid="colomnResult" /> 
+	   from recruit_info_temp
+	  <where>
+				<if test=" id != null and id != '' ">
+					and id=#{id} 
+				</if>
+				<if test=" recruitId != null and recruitId != '' ">
+					and recruitId=#{recruitId} 
+				</if>
+				<if test=" memberId != null and memberId != '' ">
+					and memberId=#{memberId} 
+				</if>
+				<if test=" title != null and title != '' ">
+					and title=#{title} 
+				</if>
+				<if test=" type != null and type != '' ">
+					and type=#{type} 
+				</if>
+				<if test=" cityCode != null and cityCode != '' ">
+					and cityCode=#{cityCode} 
+				</if>
+				<if test=" lableCode != null and lableCode != '' ">
+					and lableCode=#{lableCode} 
+				</if>
+				<if test=" director != null and director != '' ">
+					and director=#{director} 
+				</if>
+				<if test=" screenwriter != null and screenwriter != '' ">
+					and screenwriter=#{screenwriter} 
+				</if>
+				<if test=" startDate != null and startDate != '' ">
+					and startDate=#{startDate} 
+				</if>
+				<if test=" endDate != null and endDate != '' ">
+					and endDate=#{endDate} 
+				</if>
+				<if test=" deadline != null and deadline != '' ">
+					and deadline=#{deadline} 
+				</if>
+				<if test=" status != null and status != '' ">
+					and status=#{status} 
+				</if>
+				<if test=" scriptOutline != null and scriptOutline != '' ">
+					and scriptOutline=#{scriptOutline} 
+				</if>
+				<if test=" remark != null and remark != '' ">
+					and remark=#{remark} 
+				</if>
+				<if test=" createDate != null and createDate != '' ">
+					and createDate=#{createDate} 
+				</if>
+				<if test=" isDelete != null and isDelete != '' ">
+					and isDelete=#{isDelete} 
+				</if>
+				<if test=" reply != null and reply != '' ">
+					and reply=#{reply} 
+				</if>
+		</where>
+	</select>
+	
+	<!-- 根据条件信息 -->
+	<select id="selectAll"  resultMap="colomnResult">
+		select
+		<include refid="colomnResult" /> 
+		<![CDATA[
+			from recruit_info_temp
+		]]>
+		<where>
+				<if test=" id != null and id != '' ">
+					and id=#{id} 
+				</if>
+				<if test=" recruitId != null and recruitId != '' ">
+					and recruitId=#{recruitId} 
+				</if>
+				<if test=" memberId != null and memberId != '' ">
+					and memberId=#{memberId} 
+				</if>
+				<if test=" title != null and title != '' ">
+					and title like '%${title}%'
+				</if>
+				<if test=" type != null and type != '' ">
+					and type=#{type} 
+				</if>
+				<if test=" cityCode != null and cityCode != '' ">
+					and cityCode=#{cityCode} 
+				</if>
+				<if test=" lableCode != null and lableCode != '' ">
+					and lableCode=#{lableCode} 
+				</if>
+				<if test=" director != null and director != '' ">
+					and director=#{director} 
+				</if>
+				<if test=" screenwriter != null and screenwriter != '' ">
+					and screenwriter=#{screenwriter} 
+				</if>
+				<if test=" startDate != null and startDate != '' ">
+					and startDate=#{startDate} 
+				</if>
+				<if test=" endDate != null and endDate != '' ">
+					and endDate=#{endDate} 
+				</if>
+				<if test=" deadline != null and deadline != '' ">
+					and deadline=#{deadline} 
+				</if>
+				<if test=" status != null and status != '' ">
+					and status=#{status} 
+				</if>
+				<if test=" scriptOutline != null and scriptOutline != '' ">
+					and scriptOutline=#{scriptOutline} 
+				</if>
+				<if test=" remark != null and remark != '' ">
+					and remark=#{remark} 
+				</if>
+				<if test=" createDate != null and createDate != '' ">
+					and createDate &lt; #{createDate} 
+				</if>
+				<if test=" isDelete != null and isDelete != '' ">
+					and isDelete=#{isDelete} 
+				</if>
+				<if test=" memberName != null and memberName != '' ">
+					and memberId in (select id from member_info where nickname = #{memberName}) 
+				</if>
+				<if test=" reply != null and reply != '' ">
+					and reply=#{reply} 
+				</if>
+		</where>
+		<if test="sort != null">
+				order by ${sort} ${order}
+		</if>
+	</select>
+	
+	
+	
+	<select id="selectAllByStatus"  resultMap="colomnResult">
+		select
+		r.id,
+	     r.recruitId,
+	     r.memberId,
+	     r.title,
+	     r.type,
+	     r.cityCode,
+	     r.lableCode,
+	     r.director,
+	     r.screenwriter,
+	     DATE_FORMAT(r.startDate,'%Y-%m-%d') as startDate,
+	     DATE_FORMAT(r.endDate,'%Y-%m-%d') as endDate,
+	     DATE_FORMAT(r.deadline,'%Y-%m-%d') as deadline,
+	     r.status,
+	     r.scriptOutline,
+	     r.remark,
+	     DATE_FORMAT(r.createDate,'%Y-%m-%d %H:%i:%S') as createDate,
+	     r.isDelete,
+	     DATE_FORMAT(r.startDate,'%Y年%m月%d日') as startDateStr,
+	     DATE_FORMAT(r.endDate,'%Y年%m月%d日') as endDateStr,
+	     DATE_FORMAT(r.deadline,'%Y年%m月%d日') as deadlineStr,
+	     reply
+		<![CDATA[
+			from recruit_info_temp r , member_info m
+		]]>
+		<where>
+				<if test=" 1 == 1 ">
+					and r.memberId = m.id
+					and (m.identityStatus = '1' or m.realNameStatus in ('1','3'))
+					and r.status != 4
+				</if>
+				<if test=" id != null and id != '' ">
+					and r.id=#{id} 
+				</if>
+				<if test=" recruitId != null and recruitId != '' ">
+					and r.recruitId=#{recruitId} 
+				</if>
+				<if test=" memberId != null and memberId != '' ">
+					and r.memberId=#{memberId} 
+				</if>
+				<if test=" title != null and title != '' ">
+					and r.title like '%${title}%'
+				</if>
+				<if test=" type != null and type != '' ">
+					and r.type=#{type} 
+				</if>
+				<if test=" cityCode != null and cityCode != '' ">
+					and r.cityCode=#{cityCode} 
+				</if>
+				<if test=" lableCode != null and lableCode != '' ">
+					and r.lableCode=#{lableCode} 
+				</if>
+				<if test=" director != null and director != '' ">
+					and r.director=#{director} 
+				</if>
+				<if test=" screenwriter != null and screenwriter != '' ">
+					and r.screenwriter=#{screenwriter} 
+				</if>
+				<if test=" startDate != null and startDate != '' ">
+					and r.startDate=#{startDate} 
+				</if>
+				<if test=" endDate != null and endDate != '' ">
+					and r.endDate=#{endDate} 
+				</if>
+				<if test=" deadline != null and deadline != '' ">
+					and r.deadline=#{deadline} 
+				</if>				
+				<if test=" scriptOutline != null and scriptOutline != '' ">
+					and r.scriptOutline=#{scriptOutline} 
+				</if>
+				<if test=" remark != null and remark != '' ">
+					and r.remark=#{remark} 
+				</if>
+				<if test=" createDate != null and createDate != '' ">
+					and r.createDate &lt; #{createDate} 
+				</if>
+				<if test=" isDelete != null and isDelete != '' ">
+					and r.isDelete=#{isDelete} 
+				</if>
+				<if test=" memberName != null and memberName != '' ">
+					and r.memberId in (select id from member_info where nickname = #{memberName}) 
+				</if>
+				<if test=" reply != null and reply != '' ">
+					and r.reply=#{reply} 
+				</if>
+				<if test=" status != null and status != '' ">
+					and r.status=#{status} 
+				</if>
+		</where>
+		<if test="sort != null">
+				order by ${sort} ${order}
+		</if>
+	</select>
+	
+	
+	<!-- 根据条件查询数量 -->
+	<select id="selectCount"  resultType="int">
+
+		select count(id) from recruit_info_temp
+		<where>
+				<if test=" id != null and id != '' ">
+					and id=#{id} 
+				</if>
+				<if test=" recruitId != null and recruitId != '' ">
+					and recruitId=#{recruitId} 
+				</if>
+				<if test=" memberId != null and memberId != '' ">
+					and memberId=#{memberId} 
+				</if>
+				<if test=" title != null and title != '' ">
+					and title=#{title} 
+				</if>
+				<if test=" type != null and type != '' ">
+					and type=#{type} 
+				</if>
+				<if test=" cityCode != null and cityCode != '' ">
+					and cityCode=#{cityCode} 
+				</if>
+				<if test=" lableCode != null and lableCode != '' ">
+					and lableCode=#{lableCode} 
+				</if>
+				<if test=" director != null and director != '' ">
+					and director=#{director} 
+				</if>
+				<if test=" screenwriter != null and screenwriter != '' ">
+					and screenwriter=#{screenwriter} 
+				</if>
+				<if test=" startDate != null and startDate != '' ">
+					and startDate=#{startDate} 
+				</if>
+				<if test=" endDate != null and endDate != '' ">
+					and endDate=#{endDate} 
+				</if>
+				<if test=" deadline != null and deadline != '' ">
+					and deadline=#{deadline} 
+				</if>
+				<if test=" status != null and status != '' ">
+					and status=#{status} 
+				</if>
+				<if test=" scriptOutline != null and scriptOutline != '' ">
+					and scriptOutline=#{scriptOutline} 
+				</if>
+				<if test=" remark != null and remark != '' ">
+					and remark=#{remark} 
+				</if>
+				<if test=" createDate != null and createDate != '' ">
+					and createDate=#{createDate} 
+				</if>
+				<if test=" isDelete != null and isDelete != '' ">
+					and isDelete=#{isDelete} 
+				</if>
+				<if test=" reply != null and reply != '' ">
+					and reply=#{reply} 
+				</if>
+		</where>
+	</select>
+	<!-- 根据主键查询信息 -->
+	<select id="selectById"  resultMap="colomnResult">
+		select
+		<include refid="colomnResult" /> 
+		<![CDATA[
+			from recruit_info_temp where 
+			
+			   	 id=#{id} 
+		]]>
+		
+	</select>
+	
+	<!-- 批量删除 -->
+	<select id="selectByIds" parameterType="java.util.List" resultMap="colomnResult">
+		select
+		<include refid="colomnResult" /> 
+		 from recruit_info_temp where id in
+		<foreach item="idList" index="index" collection="list" open="(" separator="," close=")">
+  			#{idList}
+ 		</foreach>
+	</select>
+		
+	<!-- 批量删除 -->
+	<delete id="batchDelete" parameterType="java.util.List">
+		delete from recruit_info_temp where id in
+		<foreach item="idList" index="index" collection="list" open="(" separator="," close=")">
+  			#{idList}
+ 		</foreach>
+	</delete>
+	
+	<!-- 批量修改 -->
+	<update id="batchUpdate" parameterType="java.util.HashMap">
+		update recruit_info_temp
+		<set>
+			     <if test="id!=null and id != ''">id=#{id},</if>
+			     <if test="recruitId!=null and recruitId!=''">recruitId=#{recruitId},</if>
+			     <if test="memberId!=null and memberId!=''">memberId=#{memberId},</if>
+			     <if test="title!=null and title!=''">title=#{title},</if>
+			     <if test="type!=null and type!=''">type=#{type},</if>
+			     <if test="cityCode!=null and cityCode!=''">cityCode=#{cityCode},</if>
+			     <if test="lableCode!=null and lableCode!=''">lableCode=#{lableCode},</if>
+			     <if test="director!=null and director!=''">director=#{director},</if>
+			     <if test="screenwriter!=null and screenwriter!=''">screenwriter=#{screenwriter},</if>
+			     <if test="startDate!=null and startDate!=''">startDate=#{startDate},</if>
+			     <if test="endDate!=null and endDate!=''">endDate=#{endDate},</if>
+			     <if test="deadline!=null and deadline!=''">deadline=#{deadline},</if>
+			     <if test="status!=null and status!=''">status=#{status},</if>
+			     <if test="scriptOutline!=null and scriptOutline!=''">scriptOutline=#{scriptOutline},</if>
+			     <if test="remark!=null and remark!=''">remark=#{remark},</if>
+			     <if test="createDate!=null and createDate!=''">createDate=#{createDate},</if>
+			     <if test="isDelete!=null and isDelete!=''">isDelete=#{isDelete},</if>
+			     <if test="reply!=null and reply!=''">reply=#{reply},</if>
+		</set>
+		where id in
+		<foreach item="idList" index="index" collection="list" open="(" separator="," close=")">
+  			#{idList}
+ 		</foreach>
+	</update>
+</mapper> 
