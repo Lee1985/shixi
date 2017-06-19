@@ -57,7 +57,8 @@
 		$('#dg').datagrid('load', {
 			nickname : $('#nickname').val(),
 			realName : $('#realName').val(),
-			mobile : $('#mobile').val()
+			mobile : $('#mobile').val(),
+			identityStatus:$('#identityStatus').combobox('getValue')
 		});
 	}
 	function save() {
@@ -193,11 +194,9 @@
 		identityInfo = row.identityInfo;
 	}
 		if (value==1) {
-			return "<a href=\"javascript:void(0)\" class=\"detailok\" onclick=\"doEditIdentity('"+row.id+"','"+identityInfo+"')\">通过</a>";
-		} else if (value==2) {
-			return "<a href=\"javascript:void(0)\" class=\"detailerror\" onclick=\"doEditIdentity('"+row.id+"','"+identityInfo+"')\">拒绝</a>";
+			return "<a href=\"javascript:void(0)\" class=\"detailok\" onclick=\"doEditIdentity('"+row.id+"','"+identityInfo+"')\">已认证</a>";
 		} else {
-			return "<a href=\"javascript:void(0)\" class=\"detailcls\" onclick=\"doEditIdentity('"+row.id+"','"+identityInfo+"')\">待审核</a>";
+			return "<a href=\"javascript:void(0)\" class=\"detailcls\" onclick=\"doEditIdentity('"+row.id+"','"+identityInfo+"')\">未认证</a>";
 		}
 	}
 	function formatRealNameStatus(value, row) {
@@ -324,7 +323,7 @@
 
 	<div id="content" region="center" title="列表" style="padding:5px;width: 98%;height: 98%">
 		<table id="dg" class="easyui-datagrid"
-			style="" url="member/memberInfoAjaxPage.do"
+			style="" url="member/memberInfoAjaxPage.do?type=1"
 			iconCls="icon-save" rownumbers="true" pagination="true" fit="true" singleSelect="false" 
 			singleSelect="true" toolbar="#toolbar" data-options="onLoadSuccess:function(data){ 
 	         $('.detailcls').linkbutton(
@@ -352,7 +351,8 @@
 					<th field="nickname" align="center" width="100" formatter="formatContent">昵称</th>
 					<th field="realName" align="center" width="100" formatter="formatContent">真实姓名</th>
 					<th field="sex" align="center" width="100" formatter="formatSex">性别</th>
-					<th field="identityStatus" align="center" width="100" formatter="formatIdentityStatus">身份认证</th>
+					<th field="identityStatus" align="center" width="100" formatter="formatIdentityStatus">是否认证</th>
+					<th field="identityInfo" align="center" width="200">身份认证信息</th>
 					<th field="createDate" align="center" width="200">创建时间</th>
 				</tr>
 			</thead>
@@ -362,6 +362,14 @@
 				昵称: <input id="nickname" class="easyui-textbox" style="width:180px">
 				真实姓名: <input id="realName" class="easyui-textbox" style="width:180px">
 				手机: <input id="mobile" class="easyui-textbox" style="width:180px">
+				状态: <select class="easyui-combobox" id="identityStatus" name="identityStatus"
+						style="width:120px;"
+						data-options="panelHeight:'auto',editable:false,required:false">
+						<option value="">全部</option>
+						<option value="0">未认证</option>
+						<option value="1">已认证</option>
+					</select>
+			
 				<a href="javaScript:void()" onclick="searchData()"
 					class="easyui-linkbutton" iconCls="icon-search">搜索</a>
 			</div>
@@ -383,9 +391,6 @@
 			<a href="javascript:void(0)" class="easyui-linkbutton c6"
 				iconCls="icon-ok" onclick="javascript:$('#dlg').dialog('close')" style="width:90px">确定</a> 
 		</div>
-		
-		
-		
 		
 		<div id="dlgIdentity" class="easyui-dialog"
 			data-options="iconCls:'icon-save',resizable:true,modal:true"

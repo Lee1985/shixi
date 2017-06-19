@@ -111,7 +111,12 @@ public class RecruitApplyInfoController extends BaseController {
 			info.setNickname(queryLikeParamHandler(info.getNickname()));
 			info.setRecruitName(queryLikeParamHandler(info.getRecruitName()));
 			info.setRoleName(queryLikeParamHandler(info.getRoleName()));
-			info.setPublishName(queryLikeParamHandler(info.getPublishName()));			
+			info.setPublishName(queryLikeParamHandler(info.getPublishName()));
+			if(StringUtils.isBlank(info.getVideoStatus())){
+				info.setVideoStatus("0");
+			}else if("99".equals(info.getVideoStatus())){
+				info.setVideoStatus(null);
+			}
 			pageInfo.setPage(page);
 			pageInfo.setPageSize(rows);
 			if (info.getSort().equals("id")) {

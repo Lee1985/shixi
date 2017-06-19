@@ -74,6 +74,11 @@ public class RecruitInfoTempController extends BaseController {
 		info.setIsDelete("0");
 		info.setTitle(queryLikeParamHandler(info.getTitle()));
 		info.setMemberName(queryLikeParamHandler(info.getMemberName()));
+		if(StringUtils.isBlank(info.getStatus())){
+			info.setStatus("0");
+		}else if("99".equals(info.getStatus())){
+			info.setStatus(null);
+		}
 		
 		if(info.getSort().equals("id")){
 			info.setSort("r.createDate");

@@ -57,7 +57,8 @@
 		$('#dg').datagrid('load', {
 			nickname : $('#nickname').val(),
 			realName : $('#realName').val(),
-			mobile : $('#mobile').val()
+			mobile : $('#mobile').val(),
+			vip:$('#vip').combobox('getValue')
 		});
 	}
 	function save() {
@@ -227,7 +228,7 @@
 		if (value==1) {
 			return "会员";
 		} else {
-			return "";
+			return "非会员";
 		}
 	}
 	function formatStatusBlack(value, row) {
@@ -322,7 +323,7 @@
 
 	<div id="content" region="center" title="列表" style="padding:5px;width: 98%;height: 98%">
 		<table id="dg" class="easyui-datagrid"
-			style="" url="member/memberInfoAjaxPage.do"
+			style="" url="member/memberInfoAjaxPage.do?type=4"
 			iconCls="icon-save" rownumbers="true" pagination="true" fit="true" singleSelect="false" 
 			singleSelect="true" toolbar="#toolbar" data-options="onLoadSuccess:function(data){ 
 	         $('.detailcls').linkbutton(
@@ -361,6 +362,14 @@
 				昵称: <input id="nickname" class="easyui-textbox" style="width:180px">
 				真实姓名: <input id="realName" class="easyui-textbox" style="width:180px">
 				手机: <input id="mobile" class="easyui-textbox" style="width:180px">
+				<select class="easyui-combobox" id="vip" name="vip"
+						style="width:120px;"
+						data-options="panelHeight:'auto',editable:false,required:false">
+						<option value="99">全部</option>
+						<option value="0">非会员</option>
+						<option value="1">会员</option>
+					</select>
+				
 				<a href="javaScript:void()" onclick="searchData()"
 					class="easyui-linkbutton" iconCls="icon-search">搜索</a>
 			</div>

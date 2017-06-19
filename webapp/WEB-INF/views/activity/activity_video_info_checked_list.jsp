@@ -238,7 +238,7 @@
 				类型： <select class="easyui-combobox" id="status"
 								name="type" style="width:150px;"
 								data-options="panelHeight:'auto',editable:false">
-								<option value="">全部</option>
+								<option value="99">全部</option>
 								<option value="0">未审核</option>
 								<option value="1">通过</option>
 								<option value="2">拒绝</option>

@@ -66,7 +66,8 @@
 		$('#dg').datagrid('load', {
 			nickname : $('#nickname').val(),
 			realName : $('#realName').val(),
-			mobile : $('#mobile').val()
+			mobile : $('#mobile').val(),
+			realNameStatus:$('#realNameStatus').combobox('getValue')
 		});
 	}
 	function save() {
@@ -219,7 +220,7 @@
 		} else if (value==2) {
 			return "<a href=\"javascript:void(0)\" class=\"detailerror\" onclick=\"doEditIdentity('"+row.id+"','"+identityInfo+"')\">拒绝</a>";
 		} else {
-			return "<a href=\"javascript:void(0)\" class=\"detailcls\" onclick=\"doEditIdentity('"+row.id+"','"+identityInfo+"')\">待审核</a>";
+			return "<a href=\"javascript:void(0)\" class=\"detailcls\" onclick=\"doEditIdentity('"+row.id+"','"+identityInfo+"')\">审核中</a>";
 		}
 	}
 	function formatRealNameStatus(value, row) {
@@ -228,7 +229,7 @@
 		} else if (value==2) {
 			return "<a href=\"javascript:void(0)\" class=\"detailerror\" onclick=\"doEditRealName('"+row.id+"','"+row.nickname+"','"+row.realName+"','"+row.idCardpictureInfoA.urlPath+"','"+row.idCardpictureInfoB.urlPath+"')\">拒绝</a>";
 		} else if (value==3) {
-			return "<a href=\"javascript:void(0)\" class=\"detailcls\" onclick=\"doEditRealName('"+row.id+"','"+row.nickname+"','"+row.realName+"','"+row.idCardpictureInfoA.urlPath+"','"+row.idCardpictureInfoB.urlPath+"')\">待审核</a>";
+			return "<a href=\"javascript:void(0)\" class=\"detailcls\" onclick=\"doEditRealName('"+row.id+"','"+row.nickname+"','"+row.realName+"','"+row.idCardpictureInfoA.urlPath+"','"+row.idCardpictureInfoB.urlPath+"')\">审核中</a>";
 		} else {
 			return "未提交";
 		}
@@ -345,7 +346,7 @@
 
 	<div id="content" region="center" title="列表" style="padding:5px;width: 98%;height: 98%">
 		<table id="dg" class="easyui-datagrid"
-			style="" url="member/memberInfoAjaxPage.do"
+			style="" url="member/memberInfoAjaxPage.do?type=2"
 			iconCls="icon-save" rownumbers="true" pagination="true" fit="true" singleSelect="false" 
 			singleSelect="true" toolbar="#toolbar" data-options="onLoadSuccess:function(data){ 
 	         $('.detailcls').linkbutton(
@@ -383,6 +384,16 @@
 				昵称: <input id="nickname" class="easyui-textbox" style="width:180px">
 				真实姓名: <input id="realName" class="easyui-textbox" style="width:180px">
 				手机: <input id="mobile" class="easyui-textbox" style="width:180px">
+				状态:<select class="easyui-combobox" id="realNameStatus" name="realNameStatus"
+						style="width:120px;"
+						data-options="panelHeight:'auto',editable:false,required:false">
+						<option value="99">全部</option>
+						<option value="0">未提交</option>
+						<option value="3">审核中</option>
+						<option value="1">通过</option>
+						<option value="2">拒绝</option>
+					</select>
+				
 				<a href="javaScript:void()" onclick="searchData()"
 					class="easyui-linkbutton" iconCls="icon-search">搜索</a>
 			</div>

@@ -66,7 +66,7 @@ public class MemberInfoController extends BaseController {
 	@ResponseBody
 	public PageInfo<MemberInfo> memberInfoAjaxPage(HttpServletRequest request,
 			HttpServletResponse response, MemberInfo info, Integer page,
-			Integer rows) {
+			Integer rows,String type) {
 		PageInfo<MemberInfo> pageInfo = new PageInfo<MemberInfo>();
 		pageInfo.setPage(page);
 		pageInfo.setPageSize(rows);
@@ -76,6 +76,30 @@ public class MemberInfoController extends BaseController {
 		if(StringUtils.isNotBlank(info.getRealName())){
 			info.setRealName(queryLikeParamHandler(info.getRealName()));
 		}
+		
+		if("1".equals(type)){
+			//默认认证状态
+			if(StringUtils.isBlank(info.getIdentityStatus())){
+				info.setIdentityStatus("0");
+			}else if("99".equals(info.getIdentityStatus())){
+				info.setIdentityStatus(null);
+			}
+		}else if("2".equals(type)){
+			//默认实名认证状态
+			if(StringUtils.isBlank(info.getRealNameStatus())){
+				info.setRealNameStatus("3");
+			}else if("99".equals(info.getRealNameStatus())){
+				info.setRealNameStatus(null);
+			}
+		}else if("3".equals(type)){
+			//默认学历认证状态
+			if(StringUtils.isBlank(info.getEducationStatus())){
+				info.setEducationStatus("3");
+			}else if("99".equals(info.getEducationStatus())){
+				info.setEducationStatus(null);
+			}
+		}
+		
 		service.selectAll(info, pageInfo);
 		List<MemberInfo> memberList = pageInfo.getRows();
 		if(memberList != null){

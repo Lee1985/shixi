@@ -8,6 +8,7 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.commons.lang.StringUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -54,6 +55,11 @@ public class ActivityVideoInfoController extends BaseController {
 		pageInfo.setPageSize(rows);
 		
 		info.setMemberName(queryLikeParamHandler(info.getMemberName()));
+		if(StringUtils.isBlank(info.getStatus())){
+			info.setStatus("0");
+		}else if("99".equals(info.getStatus())){
+			info.setStatus(null);
+		}
 		
 		if(info.getSort().equals("id")){
 			info.setSort("createDate");
