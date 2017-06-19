@@ -107,6 +107,11 @@ public class RecruitApplyInfoController extends BaseController {
 		PageInfo<RecruitApplyInfo> pageInfo = new PageInfo<RecruitApplyInfo>();
 		if(!resumeIdList.isEmpty()){
 			info.setResumeIdList(resumeIdList);
+			info.setRealname(queryLikeParamHandler(info.getRealname()));
+			info.setNickname(queryLikeParamHandler(info.getNickname()));
+			info.setRecruitName(queryLikeParamHandler(info.getRecruitName()));
+			info.setRoleName(queryLikeParamHandler(info.getRoleName()));
+			info.setPublishName(queryLikeParamHandler(info.getPublishName()));			
 			pageInfo.setPage(page);
 			pageInfo.setPageSize(rows);
 			if (info.getSort().equals("id")) {
@@ -127,11 +132,26 @@ public class RecruitApplyInfoController extends BaseController {
 		PageInfo<MemberResumeTemplate> pageInfo = new PageInfo<MemberResumeTemplate>();
 		pageInfo.setPage(page);
 		pageInfo.setPageSize(rows);
+		
+		if(info.getStatus() == null){
+			info.setShowStatus("true");
+		}else if(info.getStatus() == 99){
+			info.setStatus(null);
+		}
+		
+		if(StringUtils.isNotBlank(info.getMemberName())){
+			info.setMemberName(queryLikeParamHandler(info.getMemberName()));
+		}
+		
+		if(StringUtils.isNotBlank(info.getRealName())){
+			info.setRealName(queryLikeParamHandler(info.getRealName()));
+		}
+		
 		if (info.getSort().equals("id")) {
 			info.setSort("createDate");
 			info.setOrder("desc");			
 		}
-		info.setShowStatus("true");
+		
 		memberResumeTemplateService.selectAll(info, pageInfo);
 		return pageInfo;
 	}
@@ -184,7 +204,6 @@ public class RecruitApplyInfoController extends BaseController {
 			HttpServletRequest request, HttpServletResponse response,
 			RecruitApplyInfo info) {
 		int result = 0;
-		String msg = "";
 			if(!info.getIds().isEmpty()){
 				String[] ids = info.getIds().split(",");
 				for (int i = 0; i < ids.length; i++) {
@@ -220,7 +239,6 @@ public class RecruitApplyInfoController extends BaseController {
 						}
 					}
 				}
-			msg = "修改失败！";
 		}
 		return getJsonResult(result, "操作成功", "操作失败");
 	}

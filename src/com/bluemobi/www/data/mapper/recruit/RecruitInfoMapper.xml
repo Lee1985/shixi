@@ -242,7 +242,7 @@
 					and memberId=#{memberId} 
 				</if>
 				<if test=" title != null and title != '' ">
-					and (title like '%${title}%' or memberId in (select id from member_info where nickname = #{title}) )
+					and title like CONCAT('%',#{title},'%')
 				</if>
 				<if test=" type != null and type != '' ">
 					and type=#{type} 
@@ -296,7 +296,7 @@
 					and isDelete=#{isDelete} 
 				</if>
 				<if test=" memberName != null and memberName != '' ">
-					and memberId in (select id from member_info where nickname = #{memberName}) 
+					and memberId in (select id from member_info where nickname like CONCAT('%',#{memberName},'%')) 
 				</if>
 				<if test=" viewNum != null and viewNum != '' ">
 					and viewNum=#{viewNum} 

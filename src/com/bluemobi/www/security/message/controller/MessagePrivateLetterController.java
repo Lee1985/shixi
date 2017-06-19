@@ -68,6 +68,7 @@ public class MessagePrivateLetterController extends BaseController {
 		List<MessagePrivateMessageRecent> list = pageInfo.getRows();
 		if(list != null && !list.isEmpty()){
 			for(MessagePrivateMessageRecent messageInfo : list){
+				messageInfo.setNickname(decodeParam(messageInfo.getNickname()));
 				Date recentContactDate = messageInfo.getRecentContactDate();
 				String dateStr = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(recentContactDate);
 				messageInfo.setRecentContactDateStr(dateStr);
@@ -77,8 +78,10 @@ public class MessagePrivateLetterController extends BaseController {
 	}
 	
 	@RequestMapping(value = "message/contactUsers")
-	public String contactUsers(HttpServletRequest request,HttpServletResponse response,String memberId) {		
-		request.setAttribute("memberInfo", memberInfoService.selectById(memberId));
+	public String contactUsers(HttpServletRequest request,HttpServletResponse response,String memberId) {	
+		MemberInfo memberInfo = memberInfoService.selectById(memberId);
+		memberInfo.setNickname(decodeParam(memberInfo.getNickname()));
+		request.setAttribute("memberInfo", memberInfo);
 		return "message/message_private_contact_list";
 	}
 	
@@ -90,6 +93,7 @@ public class MessagePrivateLetterController extends BaseController {
 		PageInfo<MessagePrivateMessageRecent> pageInfo = new PageInfo<MessagePrivateMessageRecent>();
 		pageInfo.setPage(page);
 		pageInfo.setPageSize(rows);
+		info.setNickname(queryLikeParamHandler(info.getNickname()));
 		messagePrivateMessageRecentService.selectRecentContactRecord(info, pageInfo);
 		List<MessagePrivateMessageRecent> list = pageInfo.getRows();
 		if(list != null && !list.isEmpty()){
@@ -97,12 +101,8 @@ public class MessagePrivateLetterController extends BaseController {
 				Date recentContactDate = messageInfo.getRecentContactDate();
 				String dateStr = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(recentContactDate);
 				messageInfo.setRecentContactDateStr(dateStr);		
-				String content = messageInfo.getRecentContent();
-				try {
-					messageInfo.setRecentContent(URLDecoder.decode(content,"UTF-8"));
-				} catch (UnsupportedEncodingException e) {
-					e.printStackTrace();
-				}
+				messageInfo.setRecentContent(decodeParam(messageInfo.getRecentContent()));
+				messageInfo.setNickname(decodeParam(messageInfo.getNickname()));
 			}
 		}		
 		return pageInfo;

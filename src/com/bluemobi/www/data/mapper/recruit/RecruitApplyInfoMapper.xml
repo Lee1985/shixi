@@ -213,14 +213,14 @@
 				</if>
 				<if test=" publishName != null and publishName != '' ">
 					and roleId in (select r.id from recruit_role_info r, recruit_info i, member_info m 
-					where r.recruitId = i.id and i.memberId = m.id and m.nickname = #{publishName}) 
+					where r.recruitId = i.id and i.memberId = m.id and m.nickname like CONCAT('%',#{publishName},'%')) 
 				</if>
 				<if test=" roleName != null and roleName != '' ">
-					and roleId in (select id from recruit_role_info where name = #{roleName})
+					and roleId in (select id from recruit_role_info where name like CONCAT('%',#{roleName},'%'))
 				</if>
 				<if test=" recruitName != null and recruitName != '' ">
 					and roleId in (select a.id from recruit_role_info a , recruit_info b 
-					where a.recruitId = b.id and b.title = #{recruitName})
+					where a.recruitId = b.id and b.title like CONCAT('%',#{recruitName},'%'))
 				</if>
 				<if test=" optional != null and optional != '' ">
 					and optional=#{optional} 
@@ -235,10 +235,10 @@
 					and level in ('3','4','5') 
 				</if>
 				<if test=" realname != null and realname != ''">
-					and memberId in (select id from member_info where realName = #{realname}) 
+					and memberId in (select id from member_info where realName like CONCAT('%',#{realname},'%')) 
 				</if>
 				<if test=" nickname != null and nickname != ''">
-					and memberId in (select id from member_info where nickname = #{nickname}) 
+					and memberId in (select id from member_info where nickname like CONCAT('%',#{nickname},'%')) 
 				</if>
 				<if test=" identityType != null and identityType != '' and identityType == '1'">
 					and memberId in (select id from member_info where identityStatus = '1') 

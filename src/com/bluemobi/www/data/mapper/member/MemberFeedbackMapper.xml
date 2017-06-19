@@ -120,7 +120,7 @@
 					and status=#{status} 
 				</if>
 				<if test=" memberName != null and memberName != '' ">
-					and memberId in (select id from member_info where nickname = #{memberName}) 
+					and memberId in (select id from member_info where nickname like CONCAT('%',#{memberName},'%') ) 
 				</if>
 				<if test=" startDate != null and startDate != '' ">
 					and createDate >= #{startDate} 

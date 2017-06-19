@@ -301,7 +301,7 @@
 		  WHERE
 			memberId = #{memberId}
 			<if test="nickname != null and nickname != ''">
-				and b.nickname like concat('%','${nickname}','%' )
+				and b.nickname like concat('%',#{nickname},'%' )
 			</if>
 	</select>
 </mapper> 

@@ -164,6 +164,10 @@ public class RecruitRoleInfoController extends BaseController {
 				info.setStatus("1");
 				info.setIsDelete("0");
 				info.setCreateDate(DateUtils.currentStringDate());
+				info.setName(encodeParam(info.getName()));
+				info.setDialogue(encodeParam(info.getDialogue()));
+				info.setLableCode(encodeParam(info.getLableCode()));
+				info.setRequirement(encodeParam(info.getRequirement()));
 				result = service.insert(info);
 				
 				String recruitId = info.getRecruitId();
@@ -179,6 +183,10 @@ public class RecruitRoleInfoController extends BaseController {
 				
 				msg = "保存失败！";
 			} else {
+				info.setName(encodeParam(info.getName()));
+				info.setDialogue(encodeParam(info.getDialogue()));
+				info.setLableCode(encodeParam(info.getLableCode()));
+				info.setRequirement(encodeParam(info.getRequirement()));
 				result = service.update(info);
 				
 				Map<String,Object> roleParams = new HashMap<String,Object>();

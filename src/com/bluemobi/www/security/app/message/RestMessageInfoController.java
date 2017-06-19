@@ -55,8 +55,6 @@ public class RestMessageInfoController extends BaseController{
 	@Resource
 	private MessageOfficialNoticeService noticeService;
 	@Resource
-	private MessagePushNotificationService notificationService;
-	@Resource
 	private MessagePrivateLetterService letterService;	
 	@Resource
 	private MessagePrivateMessageRecentService messagePrivateMessageRecentService;
@@ -160,7 +158,7 @@ public class RestMessageInfoController extends BaseController{
 		info.setStatus("1");
 		info.setSort("createDate");
 		info.setOrder("desc");
-		notificationService.selectAll(info, pageInfo);
+		messagePushNotificationService.selectAll(info, pageInfo);
 		map.put("totle", pageInfo.getTotal());
 		map.put("page", pageInfo.getPage());
 		map.put("pageSize", pageInfo.getPageSize());
@@ -172,8 +170,8 @@ public class RestMessageInfoController extends BaseController{
 			for(MessagePushNotification notification : pageInfo.getRows()){
 				Map<String,Object> resultMap = new HashMap<String,Object>();
 				resultMap.put("id", notification.getId());
-				resultMap.put("title", notification.getTitle());
-				resultMap.put("content", notification.getContent());
+				resultMap.put("title", decodeParam(notification.getTitle()));
+				resultMap.put("content", decodeParam(notification.getContent()));
 				resultMap.put("createDate", notification.getCreateDate());
 				resultList.add(resultMap);
 			}
@@ -199,7 +197,7 @@ public class RestMessageInfoController extends BaseController{
 			MessagePushNotification info){
 		Map<String,Object> map = new HashMap<String,Object>();
 		int result = 0;
-		result = notificationService.delete(info);
+		result = messagePushNotificationService.delete(info);
 		if (result > 0) {
 			map.put("success", "yes");
 			map.put("message", "操作成功");

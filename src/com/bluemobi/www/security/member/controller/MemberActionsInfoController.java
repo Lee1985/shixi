@@ -8,6 +8,7 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.commons.lang.StringUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -28,6 +29,7 @@ import com.bluemobi.www.utils.UUIDUtil;
  */
 @Controller
 public class MemberActionsInfoController extends BaseController {
+	
 	@Resource
 	private MemberActionsInfoService service;
 
@@ -45,6 +47,9 @@ public class MemberActionsInfoController extends BaseController {
 		PageInfo<MemberActionsInfo> pageInfo = new PageInfo<MemberActionsInfo>();
 		pageInfo.setPage(page);
 		pageInfo.setPageSize(rows);
+		if(StringUtils.isNotBlank(info.getMemberName())){
+			info.setMemberName(queryLikeParamHandler(info.getMemberName()));
+		}
 		info.setSort("createDate");
 		info.setOrder("desc");
 		service.selectAll(info, pageInfo);

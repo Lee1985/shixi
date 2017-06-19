@@ -113,7 +113,7 @@
 					and id=#{id} 
 				</if>
 				<if test=" title != null and title != '' ">
-					and title=#{title} 
+					and title like CONCAT('%',#{title},'%')
 				</if>
 				<if test=" imgUuid != null and imgUuid != '' ">
 					and imgUuid=#{imgUuid} 

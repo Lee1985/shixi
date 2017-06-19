@@ -58,10 +58,9 @@
 	function searchData() {
 		$('#dg').datagrid('load', {
 			status : $('#status').combobox('getValue'),
-			videoStatus : $('#videoStatus').combobox('getValue'),
-			realname : $('#realname').val(),
-			nickname : $('#nickname').val(),
-			identityType : $('#identityType').combobox('getValue')
+			realName : $('#realname').val(),
+			memberName : $('#nickname').val(),
+			identityStatus : $('#identityType').combobox('getValue')
 		});
 	}
 	function save() {
@@ -373,18 +372,20 @@
 				简历状态: <select class="easyui-combobox" id="status" name="status"
 					style="width:120px;"
 					data-options="panelHeight:'auto',editable:false,required:false">
-					<option value="">全部</option>
-					<option value="0">未审核</option>
-					<option value="1">通过</option>
-					<option value="2">拒绝</option>
+					<option value="99">全部</option>
+					<option value="0">未提交</option>
+					<option value="1">新建审核中</option>
+					<option value="2">审核通过</option>
+					<option value="3">审核拒绝</option>
+					<option value="4">修改审核中</option>					
 				</select>
 				身份类型: <select class="easyui-combobox" id="identityType" name="identityType"
 					style="width:120px;" data-options="panelHeight:'auto',editable:false,required:false">
 					<option value="">全部</option>
 					<option value="1">官方认证</option>
-					<option value="2">私人</option>
+					<option value="0">私人</option>
 				</select>
-				<a href="javascript:void();" onclick="searchData()" class="easyui-linkbutton" iconCls="icon-search">搜索</a>
+				<a href="javascript:void(0);" onclick="searchData()" class="easyui-linkbutton" iconCls="icon-search">搜索</a>
 				
 				
 			</div>

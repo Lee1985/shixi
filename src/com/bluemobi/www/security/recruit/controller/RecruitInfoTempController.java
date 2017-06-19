@@ -72,6 +72,9 @@ public class RecruitInfoTempController extends BaseController {
 		pageInfo.setPage(page);
 		pageInfo.setPageSize(rows);
 		info.setIsDelete("0");
+		info.setTitle(queryLikeParamHandler(info.getTitle()));
+		info.setMemberName(queryLikeParamHandler(info.getMemberName()));
+		
 		if(info.getSort().equals("id")){
 			info.setSort("r.createDate");
 			info.setOrder("desc");

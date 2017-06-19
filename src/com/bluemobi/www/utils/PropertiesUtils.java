@@ -20,6 +20,7 @@ import org.springframework.stereotype.Component;
  */
 @Component
 public class PropertiesUtils {
+	
 	@Autowired
 	private PropertyPlaceholderConfigurer propertyResourceConfigurer;
 	private static PropertiesUtils piu;

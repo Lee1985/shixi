@@ -53,7 +53,21 @@
 </style>
 
 <script type="text/javascript">
-var basePath = "<%=basePath%>"; 
+	var basePath = "<%=basePath%>"; 
+
+	$(function(){
+		$.ajax({
+			url:"activity/activityInfoAjaxAll.do?sort=orderList&order=asc&status=0",
+			type:'POST',
+			dataType:'json',
+			success:function(data){
+				 var defaultVal = {'id':'','title':'全部'};
+				 data.splice(0, 0, defaultVal);
+				 $('#activityId').combobox('loadData',data);
+			}
+		});
+	});
+
 	function searchData() {
 		$('#dg').datagrid('load', {
 			memberName : $('#memberName').val(),
@@ -219,9 +233,7 @@ var basePath = "<%=basePath%>";
 		<div id="toolbar">
 			<div>
 				活动: <input id="activityId" class="easyui-combobox" style="width:180px"
-							name="activityId" data-options="url:'activity/activityInfoAjaxAll.do?sort=orderList&order=asc&status=1',
-							method:'get',valueField:'id',textField:'title',panelHeight:'150',
-							editable:false,required:false"/>
+							name="activityId" data-options="panelHeight:'auto',editable:false,valueField:'id',textField:'title'" />
 				上传用户: <input id="memberName" class="easyui-textbox" style="width:180px">
 				类型： <select class="easyui-combobox" id="status"
 								name="type" style="width:150px;"

@@ -9,6 +9,7 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.commons.lang.StringUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -69,6 +70,12 @@ public class MemberInfoController extends BaseController {
 		PageInfo<MemberInfo> pageInfo = new PageInfo<MemberInfo>();
 		pageInfo.setPage(page);
 		pageInfo.setPageSize(rows);
+		if(StringUtils.isNotBlank(info.getNickname())){
+			info.setNickname(queryLikeParamHandler(info.getNickname()));
+		}
+		if(StringUtils.isNotBlank(info.getRealName())){
+			info.setRealName(queryLikeParamHandler(info.getRealName()));
+		}
 		service.selectAll(info, pageInfo);
 		List<MemberInfo> memberList = pageInfo.getRows();
 		if(memberList != null){

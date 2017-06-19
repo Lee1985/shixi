@@ -12,9 +12,11 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.bluemobi.www.data.model.member.MemberInfo;
 import com.bluemobi.www.data.model.message.MessagePushNotification;
 import com.bluemobi.www.page.PageInfo;
 import com.bluemobi.www.security.base.controller.BaseController;
+import com.bluemobi.www.security.member.service.MemberInfoService;
 import com.bluemobi.www.security.message.service.MessagePushNotificationService;
 import com.bluemobi.www.utils.DateUtils;
 import com.bluemobi.www.utils.UUIDUtil;
@@ -29,8 +31,12 @@ import com.bluemobi.www.utils.UUIDUtil;
  */
 @Controller
 public class MessagePushNotificationController extends BaseController {
+	
 	@Resource
 	private MessagePushNotificationService service;
+	
+	@Resource
+	private MemberInfoService memberInfoService; 
 
 	@RequestMapping(value = "message/messagePushNotificationList")
 	public String messagePushNotificationList(HttpServletRequest request,
@@ -48,7 +54,16 @@ public class MessagePushNotificationController extends BaseController {
 		pageInfo.setPageSize(rows);
 		info.setSort("createDate");
 		info.setOrder("desc");
-		service.selectAll(info, pageInfo);
+		pageInfo = service.selectAll(info, pageInfo);
+		List<MessagePushNotification> msgList = pageInfo.getRows();
+		if(msgList != null && !msgList.isEmpty()){
+			for(MessagePushNotification notification : msgList){
+				notification.setTitle(decodeParam(notification.getTitle()));
+				String nickName = decodeParam(notification.getReceiveInfo().getNickname());
+				notification.getReceiveInfo().setNickname(nickName);;
+			}
+		}
+		
 		return pageInfo;
 	}
 
@@ -70,6 +85,8 @@ public class MessagePushNotificationController extends BaseController {
 		if (info.getId() == null || info.getId().equals("")) {
 			info.setId(UUIDUtil.getUUID());
 			info.setCreateDate(DateUtils.currentStringDate());
+			MemberInfo memberInfo = memberInfoService.selectById(info.getReceiveId());
+			info.setCid(memberInfo.getCid());
 			result = service.insert(info);
 			msg = "保存失败！";
 		} else {

@@ -419,7 +419,7 @@ var flag = 0;
 				昵称: <input id="nickname" class="easyui-textbox" style="width:180px">
 				真实姓名: <input id="realName" class="easyui-textbox" style="width:180px">
 				手机: <input id="mobile" class="easyui-textbox" style="width:180px">
-				<a href="javaScript:void()" onclick="searchData()"
+				<a href="javascript:void(0);" onclick="searchData()"
 					class="easyui-linkbutton" iconCls="icon-search">搜索</a>
 			</div>
 			<div style="margin-bottom:5px">

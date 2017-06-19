@@ -32,6 +32,7 @@ import com.bluemobi.www.utils.CustomPropertiesUtils;
 import com.bluemobi.www.utils.DateUtils;
 import com.bluemobi.www.utils.FileTool;
 import com.bluemobi.www.utils.NumbericUtils;
+import com.bluemobi.www.utils.PushUtils;
 import com.bluemobi.www.utils.UUIDUtil;
 import com.bluemobi.www.utils.YunPianUtils;
 import com.bluemobi.www.utils.email.SimpleMailSender;
@@ -361,6 +362,21 @@ public class AppAccountInfoIfController extends BaseController{
 	}
 	
 	/**
+	 * 修改密码
+	 * @param request
+	 * @param response
+	 * @param memberId
+	 * @param oldPass
+	 * @param newPass
+	 * @return
+	 */
+	@RequestMapping(value = "/set_badge_if")
+	@ResponseBody
+	public Map<String,Object> set_badge_if(HttpServletRequest request,HttpServletResponse response,String cid,String badge){
+		return PushUtils.setBadgeForDeviceToken(cid, badge);
+	}
+	
+	/**
 	 * 用户登录
 	 * @param request
 	 * @param response
@@ -395,6 +411,7 @@ public class AppAccountInfoIfController extends BaseController{
 			memberInfo.setCid(cid);
 			memberInfoService.update(memberInfo);
 		}				
+		PushUtils.setBadgeForDeviceToken(cid,"0");
 		map.put("success", "yes");
 		map.put("message", "欢迎您," + memberInfo.getNickname());
 		String memberId = memberList.get(0).getId();

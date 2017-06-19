@@ -48,15 +48,24 @@ public class RecruitInfoController extends BaseController {
 			HttpServletResponse response) {
 		return "recruit/recruit_info_list";
 	}
-
+	
 	@RequestMapping(value = "recruit/recruitInfoAjaxPage")
 	@ResponseBody
 	public PageInfo<RecruitInfo> recruitInfoAjaxPage(HttpServletRequest request,
 			HttpServletResponse response, RecruitInfo info, Integer page,
 			Integer rows) {
+		
 		PageInfo<RecruitInfo> pageInfo = new PageInfo<RecruitInfo>();
 		pageInfo.setPage(page);
 		pageInfo.setPageSize(rows);
+		
+		if(StringUtils.isNotBlank(info.getTitle())){			
+			info.setTitle(queryLikeParamHandler(info.getTitle()));
+		}
+		if(StringUtils.isNotBlank(info.getMemberName())){
+			info.setMemberName(queryLikeParamHandler(info.getMemberName()));
+		}
+		
 		info.setIsDelete("0");
 		info.setStatus("2");
 		info.setSort("");
@@ -98,6 +107,10 @@ public class RecruitInfoController extends BaseController {
 				info.setStatus("1");
 				info.setIsDelete("0");
 				info.setCreateDate(DateUtils.currentStringDate());
+				info.setTitle(encodeParam(info.getTitle()));
+				info.setDirector(encodeParam(info.getDirector()));
+				info.setScreenwriter(encodeParam(info.getScreenwriter()));
+				info.setScriptOutline(encodeParam(info.getScriptOutline()));
 				result = tempService.insert(info);
 				
 				RecruitInfo recruitInfo = new RecruitInfo();				
@@ -116,6 +129,10 @@ public class RecruitInfoController extends BaseController {
 				params.put("recruitId", info.getId());
 				RecruitInfoTemp infoTemp = tempService.selectEntity(params);
 				info.setId(infoTemp.getId());
+				info.setTitle(encodeParam(info.getTitle()));
+				info.setDirector(encodeParam(info.getDirector()));
+				info.setScreenwriter(encodeParam(info.getScreenwriter()));
+				info.setScriptOutline(encodeParam(info.getScriptOutline()));
 				result = tempService.update(info);
 				BeanUtils.copyProperties(info, recruitInfo);
 				recruitInfo.setId(recruitId);

@@ -57,7 +57,6 @@
 	var basePath = "<%=basePath%>"; 			
 	function searchData() {
 		$('#dg').datagrid('load', {
-			status : $('#status').combobox('getValue'),
 			videoStatus : $('#videoStatus').combobox('getValue'),
 			recruitName : $('#recruitName').val(),
 			roleName : $('#roleName').val(),

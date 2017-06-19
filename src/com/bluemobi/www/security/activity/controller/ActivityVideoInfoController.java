@@ -52,6 +52,9 @@ public class ActivityVideoInfoController extends BaseController {
 		PageInfo<ActivityVideoInfo> pageInfo = new PageInfo<ActivityVideoInfo>();
 		pageInfo.setPage(page);
 		pageInfo.setPageSize(rows);
+		
+		info.setMemberName(queryLikeParamHandler(info.getMemberName()));
+		
 		if(info.getSort().equals("id")){
 			info.setSort("createDate");
 			info.setOrder("desc");

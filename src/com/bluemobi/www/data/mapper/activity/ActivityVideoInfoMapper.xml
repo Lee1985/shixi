@@ -191,13 +191,13 @@
 					and createDate=#{createDate} 
 				</if>
 				<if test=" status != null and status != '' ">
-					and status=#{status} 
+					and status=#{status}
 				</if>
 				<if test=" isHot != null and isHot != '' ">
 					and isHot=#{isHot} 
 				</if>
 				<if test=" memberName != null and memberName != '' ">
-					and memberId in (select id from member_info where nickname = #{memberName}) 
+					and memberId in (select id from member_info where nickname like CONCAT('%',#{memberName},'%')) 
 				</if>
 				<if test=" phoneType != null and phoneType != '' ">
 					and phoneType=#{phoneType} 

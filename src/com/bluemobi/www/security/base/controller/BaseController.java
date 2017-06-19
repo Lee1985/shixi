@@ -6,6 +6,7 @@ import java.net.URLDecoder;
 import java.net.URLEncoder;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.regex.Matcher;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -36,6 +37,13 @@ public class BaseController {
 		}
 		data = AesUtil.Decrypt(data, Utils.EncodingAesKey);
 		return URLDecoder.decode(data, "utf-8");
+	}
+	
+	public String queryLikeParamHandler(String param){
+		if(StringUtils.isNotBlank(param)){
+			return encodeParam(param).replaceAll("%", Matcher.quoteReplacement("\\%"));
+		}
+		return param;
 	}
 
 	/**

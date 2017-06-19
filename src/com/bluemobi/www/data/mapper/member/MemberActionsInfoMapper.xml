@@ -101,7 +101,7 @@
 					and createDate=#{createDate} 
 				</if>
 				<if test=" memberName != null and memberName != '' ">
-					and memberId in (select id from member_info where nickname = #{memberName}) 
+					and memberId in (select id from member_info where nickname like CONCAT('%',#{memberName},'%'))
 				</if>
 		</where>
 		<if test="sort != null">

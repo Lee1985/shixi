@@ -292,11 +292,14 @@
 				<if test=" id != null and id != '' ">
 					and id=#{id} 
 				</if>
-				<if test=" memberId != null and memberId != '' ">
-					and memberId=#{memberId} 
+				<if test=" memberName != null and memberName != '' ">
+					and memberId in (select id from member_info where nickname like CONCAT('%',#{memberName},'%'))
+				</if>
+				<if test=" identityStatus != null and identityStatus != '' ">
+					and memberId in (select id from member_info where identityStatus = #{identityStatus})
 				</if>
 				<if test=" realName != null and realName != '' ">
-					and realName=#{realName} 
+					and realName like CONCAT('%',#{realName},'%') 
 				</if>
 				<if test=" sex != null and sex != '' ">
 					and sex=#{sex} 
@@ -320,9 +323,9 @@
 					and skillLabel=#{skillLabel} 
 				</if>
 				<if test=" imgUuid != null and imgUuid != '' ">
-					and imgUuid=#{imgUuid} 
+					and imgUuid=#{imgUuid}
 				</if>
-				<if test=" status != null and status != '' ">
+				<if test=" status != null ">
 					and status=#{status} 
 				</if>
 				<if test=" imgUuid1 != null and imgUuid1 != '' ">
@@ -368,7 +371,7 @@
 					and completion=#{completion} 
 				</if>
 				<if test=" showStatus != null and showStatus != '' ">
-					and status in (1,2,3,4) 
+					and status in (1,4) 
 				</if>				
 		</where>
 		<if test="sort != null">

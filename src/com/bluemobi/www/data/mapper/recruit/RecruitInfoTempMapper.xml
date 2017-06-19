@@ -221,7 +221,7 @@
 					and memberId=#{memberId} 
 				</if>
 				<if test=" title != null and title != '' ">
-					and title like '%${title}%'
+					and title like CONCAT('%',#{title},'%')
 				</if>
 				<if test=" type != null and type != '' ">
 					and type=#{type} 
@@ -263,7 +263,7 @@
 					and isDelete=#{isDelete} 
 				</if>
 				<if test=" memberName != null and memberName != '' ">
-					and memberId in (select id from member_info where nickname = #{memberName}) 
+					and memberId in (select id from member_info where nickname like CONCAT('%',#{memberName},'%')) 
 				</if>
 				<if test=" reply != null and reply != '' ">
 					and reply=#{reply} 
@@ -318,7 +318,7 @@
 					and r.memberId=#{memberId} 
 				</if>
 				<if test=" title != null and title != '' ">
-					and r.title like '%${title}%'
+					and r.title like CONCAT('%',#{title},'%')
 				</if>
 				<if test=" type != null and type != '' ">
 					and r.type=#{type} 
@@ -357,7 +357,7 @@
 					and r.isDelete=#{isDelete} 
 				</if>
 				<if test=" memberName != null and memberName != '' ">
-					and r.memberId in (select id from member_info where nickname = #{memberName}) 
+					and r.memberId in (select id from member_info where nickname like CONCAT('%',#{memberName},'%')) 
 				</if>
 				<if test=" reply != null and reply != '' ">
 					and r.reply=#{reply} 

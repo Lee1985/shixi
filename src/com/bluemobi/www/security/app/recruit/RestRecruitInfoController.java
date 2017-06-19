@@ -1701,4 +1701,42 @@ public class RestRecruitInfoController extends BaseController {
 		}
 		return uuid;
 	}
+	
+	@RequestMapping(value = "rest/recruit/encodeRecruitTempData")
+	@ResponseBody
+	public Map<String, Object> encodeRecruitTempData(HttpServletRequest request,
+			HttpServletResponse response, String recruitTempId){
+		Map<String, Object> map = new HashMap<String, Object>();
+		int result = 0;
+		List<RecruitInfoTemp> list = tempService.selectAll();
+		if(list == null || list.isEmpty()){
+			map.put("success", "no");
+			map.put("message", "没有数据!");
+			return map;
+		}
+		for(RecruitInfoTemp recruitInfoTemp : list){
+			String title = decodeParam(recruitInfoTemp.getTitle());
+			recruitInfoTemp.setTitle(encodeParam(title));
+			
+			String director = decodeParam(recruitInfoTemp.getDirector());
+			recruitInfoTemp.setDirector(encodeParam(director));
+			
+			String screenwriter = decodeParam(recruitInfoTemp.getScreenwriter());
+			recruitInfoTemp.setScreenwriter(encodeParam(screenwriter));
+			
+			String scriptOutline = decodeParam(recruitInfoTemp.getScriptOutline());
+			recruitInfoTemp.setScriptOutline(encodeParam(scriptOutline));
+			
+			result = tempService.update(recruitInfoTemp);
+		}
+		
+		if(result > 0){
+			map.put("success", "yes");
+			map.put("message", "操作成功");
+		}else{
+			map.put("success", "no");
+			map.put("message", "操作失败");
+		}
+		return map;
+	}
 }

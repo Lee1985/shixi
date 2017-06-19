@@ -266,7 +266,7 @@
 					and id=#{id} 
 				</if>
 				<if test=" mobile != null and mobile != '' ">
-					and mobile=#{mobile} 
+					and mobile like CONCAT('%',#{mobile},'%')
 				</if>
 				<if test=" email != null and email != '' ">
 					and email=#{email} 
@@ -278,7 +278,7 @@
 					and imgUuid=#{imgUuid} 
 				</if>
 				<if test=" nickname != null and nickname != '' ">
-					and nickname=#{nickname} 
+					and nickname like CONCAT('%',#{nickname},'%')
 				</if>
 				<if test=" sex != null and sex != '' ">
 					and sex=#{sex} 
@@ -287,7 +287,7 @@
 					and cityCode=#{cityCode} 
 				</if>
 				<if test=" realName != null and realName != '' ">
-					and realName=#{realName} 
+					and realName like CONCAT('%',#{realName},'%')
 				</if>
 				<if test=" identityStatus != null and identityStatus != '' ">
 					and identityStatus=#{identityStatus} 
@@ -348,7 +348,7 @@
 					and id=#{id} 
 				</if>
 				<if test=" mobile != null and mobile != '' ">
-					and mobile=#{mobile} 
+					and mobile like CONCAT('%',#{mobile},'%')
 				</if>
 				<if test=" email != null and email != '' ">
 					and email=#{email} 
@@ -360,7 +360,7 @@
 					and imgUuid=#{imgUuid} 
 				</if>
 				<if test=" nickname != null and nickname != '' ">
-					and nickname=#{nickname} 
+					and nickname like CONCAT('%',#{nickname},'%')
 				</if>
 				<if test=" sex != null and sex != '' ">
 					and sex=#{sex} 
@@ -369,7 +369,7 @@
 					and cityCode=#{cityCode} 
 				</if>
 				<if test=" realName != null and realName != '' ">
-					and realName=#{realName} 
+					and realName like CONCAT('%',#{realName},'%')
 				</if>
 				<if test=" identityStatus != null and identityStatus != '' ">
 					and identityStatus=#{identityStatus} 

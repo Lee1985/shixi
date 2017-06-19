@@ -26,6 +26,7 @@ import com.bluemobi.www.security.member.service.MemberInfoService;
  */
 @Controller
 public class RestMemberInfoController extends BaseController {
+	
 	@Resource
 	private MemberInfoService service;
 

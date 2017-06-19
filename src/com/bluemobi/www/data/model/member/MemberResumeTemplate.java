@@ -56,6 +56,10 @@ public class MemberResumeTemplate extends BaseEntity implements Serializable {
 	private SystemPictureInfo pictureInfo5 = new SystemPictureInfo();// 右45度
 	private SystemPictureInfo pictureInfo6 = new SystemPictureInfo();// 全身照
 	private SystemFileInfo fileInfo = new SystemFileInfo();//自我介绍
+	
+	private String memberName;
+	private String identityStatus;
+	
 	/**
      * 获取属性
      *
@@ -618,5 +622,22 @@ public class MemberResumeTemplate extends BaseEntity implements Serializable {
 
 	public void setRoleLabelName(String roleLabelName) {
 		this.roleLabelName = roleLabelName;
-	} 			
+	}
+
+	public String getMemberName() {
+		return memberName;
+	}
+
+	public void setMemberName(String memberName) {
+		this.memberName = memberName;
+	}
+
+	public String getIdentityStatus() {
+		return identityStatus;
+	}
+
+	public void setIdentityStatus(String identityStatus) {
+		this.identityStatus = identityStatus;
+	}
+
 }

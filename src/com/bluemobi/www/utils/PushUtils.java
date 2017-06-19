@@ -1,7 +1,12 @@
 package com.bluemobi.www.utils;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+
 import com.bluemobi.www.constant.Constant;
 import com.gexin.rp.sdk.base.IPushResult;
+import com.gexin.rp.sdk.base.IQueryResult;
 import com.gexin.rp.sdk.base.impl.SingleMessage;
 import com.gexin.rp.sdk.base.impl.Target;
 import com.gexin.rp.sdk.base.payload.APNPayload;
@@ -69,8 +74,7 @@ public class PushUtils {
 
 //		NotificationTemplate template = getNotificationTemplate(title, text,
 //				transmissionContent);
-		TransmissionTemplate template = getTransmissionTemplate(title, text,
-				transmissionContent);
+		TransmissionTemplate template = getTransmissionTemplate(title, text,transmissionContent);
 		SingleMessage message = new SingleMessage();
 		message.setOffline(true);
 		// 离线有效时间，单位为毫秒，可选
@@ -116,7 +120,7 @@ public class PushUtils {
 		//template.set
 
 	    APNPayload payload = new APNPayload();
-	    //payload.setBadge(2);
+	    payload.setAutoBadge("+1");
 	    payload.setContentAvailable(1);
 	    payload.setSound("default");
 	    payload.setCategory("");
@@ -201,6 +205,15 @@ public class PushUtils {
 		template.setAndroidMark("");
 		return template;
 	}
+	
+	public static Map<String,Object> setBadgeForDeviceToken(String cid,String badge) {
+        List<String> deviceTokenList = new ArrayList<String>();
+        deviceTokenList.add(cid);
+        IGtPush push = new IGtPush(appkey, master);
+        IQueryResult res = push.setBadgeForDeviceToken(badge, appId, deviceTokenList);
+        System.out.println(res.getResponse());
+        return res.getResponse();
+    }
 
 	public static void main(String[] args) {
 		try {
@@ -212,5 +225,4 @@ public class PushUtils {
 			e.printStackTrace();
 		}
 	}
-
 }
